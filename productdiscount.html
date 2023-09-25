@@ -344,9 +344,10 @@
                             <h6 class="m-0 font-weight-bold text-primary">Records</h6>
                             <form class="form-inline mr-auto w-100 navbar-search" style="margin-left: 630px;">
                                 <div class="input-group">
-                                  
-                                    <input type="text" style="border-radius: 3px;" class="form-control bg-light border-1 small"
-                                        placeholder="Tìm Kiếm" aria-label="Search" aria-describedby="basic-addon2">
+
+                                    <input type="text" style="border-radius: 3px;"
+                                        class="form-control bg-light border-1 small" placeholder="Tìm Kiếm"
+                                        aria-label="Search" aria-describedby="basic-addon2">
                                     <div class="input-group-append">
                                         <button class="btn btn-primary" type="button">
                                             <i class="fas fa-search fa-sm"></i>
@@ -357,92 +358,95 @@
                         </div>
                         <form class="row g-2" style="width: 600px;margin-left: 15px;margin-top: 15px;">
                             <div class="col-md-7">
-                              <label for="inputEmail4" class="form-label">Tên Voucher</label>
-                              <input type="email" class="form-control input-sm" id="inputEmail4" placeholder="">
+                                <label for="inputEmail4" class="form-label">Tên Voucher</label>
+                                <input type="email" class="form-control input-sm" id="inputEmail4" placeholder="">
                             </div><br>
-                           
+
                             <div class="col-3">
-                              <label for="inputAddress2" class="form-label">Giá trị (%)</label>
-                              <input type="text" style="color: crimson;" class="form-control" id="inputAddress2" placeholder="">
+                                <label for="inputAddress2" class="form-label">Giá trị (%)</label>
+                                <input type="text" style="color: crimson;" class="form-control" id="inputAddress2"
+                                    placeholder="">
                             </div> <br>
-                              <div class="col-5"  style="margin-top: 10px;">
+                            <div class="col-5" style="margin-top: 10px;">
                                 <label for="inputCity" class="form-label">Ngày bắt đầu</label>
                                 <input type="date" class="form-control" id="inputCity" placeholder="">
-                              </div>
-                              <div class="col-5"  style="margin-top: 10px;">
+                            </div>
+                            <div class="col-5" style="margin-top: 10px;">
                                 <label for="inputCity" class="form-label">Ngày kết thúc</label>
                                 <input type="date" class="form-control" id="inputCity" placeholder="">
-                              </div> 
-                              
-                              <div style="margin-top: 10px;margin-left: 105px; ">
-                                <button style="margin-left: 20px;" type="button" class="btn"> <a href="#" class="btn btn-success" style="width: 100px;">
-                                    Create <i class="fas fa-plus"></i>
-                                 </a></button>
-                                 <button style="margin-left: 20px;" type="button" class="btn"> <a href="#" class="btn btn-success" style="width: 120px;">
-                                    Áp Dụng <i class="fas fa-plus"></i>
-                                 </a></button>
-                              </div> 
-                          </form>
-                    <div class="card-body" style="margin-top: -200px">
-                        <div class="table-responsive">
-                            <table class="table table-sm" id="dataTable" width="100%" cellspacing="0"
-                                style="font-weight: 400; width: 400px;font-size: small;margin-left: 500px;">
-                                <thead>
-                                    <tr>
-                                        <th>Tên</th>
-                                        <th>Giá trị (%)</th>
-                                        <th>Ngày Bắt Đầu</th>
-                                        <th>Ngày Kết Thúc</th>
-                                        <th>Trạng Thái</th>
-                                        <th></th>
-                                        
-                                    </tr>
-                                </thead>
+                            </div>
 
-                                <tbody>
-                                <tbody>
+                            <div style="margin-top: 10px;margin-left: 105px; ">
+                                <button style="margin-left: 20px;" type="button" class="btn"> <a href="#"
+                                        class="btn btn-success" style="width: 100px;">
+                                        Create <i class="fas fa-plus"></i>
+                                    </a></button>
+                                <button style="margin-left: 20px;" type="button" class="btn"> <a href="#"
+                                        class="btn btn-success" style="width: 120px;">
+                                        Áp Dụng <i class="fas fa-plus"></i>
+                                    </a></button>
+                            </div>
+                        </form>
+                        <div class="card-body" style="margin-top: -200px">
+                            <div class="table-responsive">
+                                <table class="table table-sm" id="dataTable" width="100%" cellspacing="0"
+                                    style="font-weight: 400; width: 400px;font-size: small;margin-left: 500px;">
+                                    <thead>
+                                        <tr>
+                                            <th>Tên</th>
+                                            <th>Giá trị (%)</th>
+                                            <th>Ngày Bắt Đầu</th>
+                                            <th>Ngày Kết Thúc</th>
+                                            <th>Trạng Thái</th>
+                                            <th></th>
 
-                                    <tr>
-                                        <td>KM1</td>
-                                        <td>10%</td>
-                                        <td>20-9-2023</td>
-                                        <td>25-9-2023</td>
-                                        <td>Còn Hạn</td>
-                                        <td>
-                                            <input type="checkbox" /><br />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>KM2</td>
-                                        <td>15%</td>
-                                        <td>20-9-2023</td>
-                                        <td>25-9-2023</td>
-                                        <td>Hết Hạn</td>
-                                        <td>
-                                            <input type="checkbox" /><br />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>KM3</td>
-                                        <td>20%</td>
-                                        <td>20-9-2023</td>
-                                        <td>25-9-2023</td>
-                                        <td>Hết Hạn</td>
-                                        <td>
-                                            <input type="checkbox" /><br />
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <ul class="pagination" style="position:relative;padding-left: 637px;font-size: small;">
-                                <li class="page-item"><a class="page-link" href="">
-                                        << </a>
-                                </li>
-                                <li class="page-item"><a class="page-link" href="">1 / 5</a></li>
-                                <li class="page-item"><a class="page-link" href="">>></a></li>
-                            </ul>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                    <tbody>
+
+                                        <tr>
+                                            <td>KM1</td>
+                                            <td>10%</td>
+                                            <td>20-9-2023</td>
+                                            <td>25-9-2023</td>
+                                            <td>Còn Hạn</td>
+                                            <td>
+                                                <input type="checkbox" name="check" onclick="onlyOne(this)">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>KM2</td>
+                                            <td>15%</td>
+                                            <td>20-9-2023</td>
+                                            <td>25-9-2023</td>
+                                            <td>Hết Hạn</td>
+                                            <td>
+                                                <input type="checkbox" name="check" onclick="onlyOne(this)">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>KM3</td>
+                                            <td>20%</td>
+                                            <td>20-9-2023</td>
+                                            <td>25-9-2023</td>
+                                            <td>Hết Hạn</td>
+                                            <td>
+                                                <input type="checkbox" name="check" onclick="onlyOne(this)">
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <ul class="pagination" style="position:relative;padding-left: 637px;font-size: small;">
+                                    <li class="page-item"><a class="page-link" href="">
+                                            << </a>
+                                    </li>
+                                    <li class="page-item"><a class="page-link" href="">1 / 5</a></li>
+                                    <li class="page-item"><a class="page-link" href="">>></a></li>
+                                </ul>
+                            </div>
                         </div>
-                    </div>
                     </div>
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
@@ -450,9 +454,10 @@
                             <h6 class="m-0 font-weight-bold text-primary">Sản Phẩm</h6>
                             <form class="form-inline mr-auto w-100 navbar-search" style="margin-left: 630px;">
                                 <div class="input-group">
-                                  
-                                    <input type="text" style="border-radius: 3px;" class="form-control bg-light border-1 small"
-                                        placeholder="Tìm Kiếm" aria-label="Search" aria-describedby="basic-addon2">
+
+                                    <input type="text" style="border-radius: 3px;"
+                                        class="form-control bg-light border-1 small" placeholder="Tìm Kiếm"
+                                        aria-label="Search" aria-describedby="basic-addon2">
                                     <div class="input-group-append">
                                         <button class="btn btn-primary" type="button">
                                             <i class="fas fa-search fa-sm"></i>
@@ -474,8 +479,8 @@
                                             <th>Giá</th>
                                             <th>Ngày Tạo</th>
                                             <th>Trạng Thái</th>
-                                            <th><input type="checkbox" onclick="toggle(this);" /><br/></th>
-                                            
+                                            <th><input type="checkbox" onclick="toggle(this);" /><br /></th>
+
                                         </tr>
                                     </thead>
 
@@ -484,7 +489,8 @@
 
                                         <tr>
                                             <td>1</td>
-                                            <td><img src="https://sneakerhs.com/wp-content/uploads/2020/12/giay-Nike-Air-Jordan-1-Mid-SE-GS-Swoosh-Logo-Grey-Camo-rep-11-4-2048x2048.jpg" style="width: 100px;height: 100px;"></td>
+                                            <td><img src="https://sneakerhs.com/wp-content/uploads/2020/12/giay-Nike-Air-Jordan-1-Mid-SE-GS-Swoosh-Logo-Grey-Camo-rep-11-4-2048x2048.jpg"
+                                                    style="width: 100px;height: 100px;"></td>
                                             <td>Nike Air Jodan Mid 1 SE</td>
                                             <td>100</td>
                                             <td style="color: crimson;font-weight: 600;">2.300.000 VNĐ</td>
@@ -496,7 +502,8 @@
                                         </tr>
                                         <tr>
                                             <td>2</td>
-                                            <td><img src="https://tennisus.vn/uploads/plugin/product_items/207/gi-y-tennis-asics-court-ff-2-4.jpg" style="width: 100px;height: 100px;"></td>
+                                            <td><img src="https://tennisus.vn/uploads/plugin/product_items/207/gi-y-tennis-asics-court-ff-2-4.jpg"
+                                                    style="width: 100px;height: 100px;"></td>
                                             <td>Asics Corout Valik 2</td>
                                             <td>150</td>
                                             <td style="color: crimson;font-weight: 600;">4.500.000 VNĐ</td>
@@ -508,7 +515,8 @@
                                         </tr>
                                         <tr>
                                             <td>3</td>
-                                            <td><img src="https://sneakerhs.com/wp-content/uploads/2020/12/giay-Nike-Air-Jordan-1-Mid-SE-GS-Swoosh-Logo-Grey-Camo-rep-11-4-2048x2048.jpg" style="width: 100px;height: 100px;"></td>
+                                            <td><img src="https://sneakerhs.com/wp-content/uploads/2020/12/giay-Nike-Air-Jordan-1-Mid-SE-GS-Swoosh-Logo-Grey-Camo-rep-11-4-2048x2048.jpg"
+                                                    style="width: 100px;height: 100px;"></td>
                                             <td>Adidas SuperStar OG Vintage RP1</td>
                                             <td>50</td>
                                             <td style="color: crimson;font-weight: 600;">1.600.000 VNĐ</td>
@@ -580,90 +588,100 @@
 
 
 
-   
+
     <!-- Button trigger modal -->
 
     <!-- Modal -->
     <div class="modal fade" id="hahaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true" style="width: 1400px;">
-    <div class="modal-dialog modal-lg" role="document" style="font-weight: 600;">
-        <div class="modal-content">
-           
+        aria-hidden="true" style="width: 1400px;">
+        <div class="modal-dialog modal-lg" role="document" style="font-weight: 600;">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" style="font-weight: 600;color: cornflowerblue;" id="exampleModalLabel"> Tạo Voucher</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
+
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" style="font-weight: 600;color: cornflowerblue;" id="exampleModalLabel">
+                            Tạo Voucher</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="row g-10" style="font-size: small;">
+                            <div class="col-md-6">
+                                <label for="inputEmail4" class="form-label">Tên Voucher</label>
+                                <input type="email" class="form-control" id="inputEmail4" placeholder="">
+                            </div><br>
+                            <div class="col-md-6">
+                                <label for="inputPassword4" class="form-label">Mã Voucher</label>
+                                <input type="text" class="form-control" id="inputPassword4" placeholder="">
+                            </div><br>
+                            <div class="col-2">
+                                <label for="inputAddress" class="form-label">Số Lượng</label>
+                                <div class="buttons_added">
+                                    <input
+                                        style="height: 38px;width:120px;border: 1px solid;border-color: rgb(201, 199, 213);border-radius: 5px;"
+                                        quantity" class="input-qty" max="Số tối đa" min="Số tối thiểu" name=""
+                                        type="number" value="">
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <label for="inputAddress2" class="form-label">Giá trị</label>
+                                <input type="text" style="color: crimson;" class="form-control" id="inputAddress2"
+                                    placeholder="% hoặc VNĐ">
+                            </div>
+                            <div style="margin-top: 10px;margin-left: 15px;">
+                                <label for="inputAddress2" class="form-label">Hình thức giảm</label>
+                                <br>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                        id="inlineRadio1" value="option1">
+                                    <label class="form-check-label" for="inlineRadio1">VNĐ</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                        id="inlineRadio2" value="option2">
+                                    <label class="form-check-label" for="inlineRadio2">%</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6" style="margin-top: 10px;">
+                                <label for="inputEmail4" class="form-label">Giá trị tối đa (Áp dụng cho voucher
+                                    %)</label>
+                                <input type="email" class="form-control" id="inputEmail4" placeholder="">
+                            </div><br>
+                            <div class="col-md-6" style="margin-top: 10px;">
+                                <label for="inputPassword4" class="form-label">Điều kiện sử dụng</label>
+                                <input type="text" class="form-control" id="inputPassword4"
+                                    placeholder="Cho đơn hàng trên :">
+                            </div><br>
+                            <div class="col-6" style="margin-top: 10px;">
+                                <label for="inputCity" class="form-label">Ngày bắt đầu</label>
+                                <input type="date" class="form-control" id="inputCity" placeholder="">
+                            </div>
+                            <div class="col-6" style="margin-top: 10px;">
+                                <label for="inputCity" class="form-label">Ngày kết thúc</label>
+                                <input type="date" class="form-control" id="inputCity" placeholder="">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button style="margin-left: 20px;" type="button" class="btn"> <a href="#"
+                                class="btn btn-success" style="width: 100px;">
+                                Create <i class="fas fa-plus"></i>
+                            </a></button>
+                    </div>
                 </div>
-                <div class="modal-body">
-                    <form class="row g-10" style="font-size: small;">
-                        <div class="col-md-6">
-                          <label for="inputEmail4" class="form-label">Tên Voucher</label>
-                          <input type="email" class="form-control" id="inputEmail4" placeholder="">
-                        </div><br>
-                        <div class="col-md-6">
-                          <label for="inputPassword4" class="form-label">Mã Voucher</label>
-                          <input type="text" class="form-control" id="inputPassword4" placeholder="">
-                        </div><br>
-                        <div class="col-2">
-                          <label for="inputAddress" class="form-label">Số Lượng</label>
-                          <div class="buttons_added">
-                            <input style="height: 38px;width:120px;border: 1px solid;border-color: rgb(201, 199, 213);border-radius: 5px;"quantity" class="input-qty" max="Số tối đa" min="Số tối thiểu" name="" type="number" value="">
-                          </div>
-                        </div>
-                        <div class="col-4">
-                          <label for="inputAddress2" class="form-label">Giá trị</label>
-                          <input type="text" style="color: crimson;" class="form-control" id="inputAddress2" placeholder="% hoặc VNĐ">
-                        </div>
-                        <div style="margin-top: 10px;margin-left: 15px;">
-                            <label for="inputAddress2" class="form-label">Hình thức giảm</label>
-                            <br>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-                                <label class="form-check-label" for="inlineRadio1">VNĐ</label>
-                              </div>
-                              <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-                                <label class="form-check-label" for="inlineRadio2">%</label>
-                              </div>
-                        </div>
-                        
-                        <div class="col-md-6" style="margin-top: 10px;">
-                            <label for="inputEmail4" class="form-label">Giá trị tối đa (Áp dụng cho voucher %)</label>
-                            <input type="email" class="form-control" id="inputEmail4" placeholder="">
-                          </div><br>
-                          <div class="col-md-6" style="margin-top: 10px;">
-                            <label for="inputPassword4" class="form-label">Điều kiện sử dụng</label>
-                            <input type="text" class="form-control" id="inputPassword4" placeholder="Cho đơn hàng trên :">
-                          </div><br>
-                          <div class="col-6"  style="margin-top: 10px;">
-                            <label for="inputCity" class="form-label">Ngày bắt đầu</label>
-                            <input type="date" class="form-control" id="inputCity" placeholder="">
-                          </div>
-                          <div class="col-6"  style="margin-top: 10px;">
-                            <label for="inputCity" class="form-label">Ngày kết thúc</label>
-                            <input type="date" class="form-control" id="inputCity" placeholder="">
-                          </div>
-                      </form>
-                </div>
-                <div class="modal-footer">
-                    <button style="margin-left: 20px;" type="button" class="btn"> <a href="#" class="btn btn-success" style="width: 100px;">
-                       Create <i class="fas fa-plus"></i>
-                    </a></button>
-                </div>
+
             </div>
-
         </div>
+        <!-- Button trigger modal -->
+
+        <!-- Modal -->
     </div>
-    <!-- Button trigger modal -->
+    </div>
 
-    <!-- Modal -->
-</div>
-</div>
-  
 
-   
+
 
 
     <!-- Bootstrap core JavaScript-->
