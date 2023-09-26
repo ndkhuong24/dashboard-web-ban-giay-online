@@ -346,12 +346,13 @@
                             <h6 class="m-0 font-weight-bold text-primary">Records</h6>
                             <form class="form-inline mr-auto w-100 navbar-search" style="margin-left: 460px;">
                                 <div class="input-group">
-                                    <button class="btn btn-primary" style="border-radius: 6px;" type="button"  data-toggle="modal"
-                                    data-target="#hahaModal">
-                                        Thêm Thương Hiệu  <i class="fas fa-plus fa-sm"></i>
+                                    <button class="btn btn-primary" style="border-radius: 6px;" type="button"
+                                        data-toggle="modal" data-target="#hahaModal">
+                                        Thêm Thương Hiệu <i class="fas fa-plus fa-sm"></i>
                                     </button>&nbsp;&nbsp;
-                                    <input type="text" style="border-radius: 3px;" class="form-control bg-light border-1 small"
-                                        placeholder="Tìm Kiếm" aria-label="Search" aria-describedby="basic-addon2">
+                                    <input type="text" style="border-radius: 3px;"
+                                        class="form-control bg-light border-1 small" placeholder="Tìm Kiếm"
+                                        aria-label="Search" aria-describedby="basic-addon2">
                                     <div class="input-group-append">
                                         <button class="btn btn-primary" type="button">
                                             <i class="fas fa-search fa-sm"></i>
@@ -362,86 +363,24 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table" id="dataTable" width="100%" cellspacing="0"
+                                <table class="table" id="data-table" width="100%" cellspacing="0"
                                     style="font-weight: 400;">
                                     <thead>
                                         <tr>
-                                            <th>STT</th>
+                                        
                                             <th>Mã Thương Hiệu</th>
                                             <th>Tên Thương Hiệu</th>
+                                            <th>Trạng Thái</th>
                                             <th></th>
-                                            
+
                                         </tr>
                                     </thead>
-
-                                    <tbody>
                                     <tbody>
 
-                                        <tr>
-                                            <td>1</td>
-                                            <td>BR01</td>
-                                            <td>Nike</td>
-                                            <td>
-                                                <div class="dropdown no-arrow" style="width: 1px;">
-                                                    <a class="dropdown-toggle" role="button" id="dropdownMenuLink"
-                                                        data-toggle="dropdown" aria-haspopup="true"
-                                                        aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-700"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                        aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" href="" data-toggle="modal"
-                                                            data-target="#hihiModal">Sửa Thông Tin</a>
-                                                            <a class="dropdown-item" href="" data-toggle="modal"
-                                                            data-target="#hihiModal">Xóa</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>BR02</td>
-                                            <td>Adidas</td>
-                                            <td>
-                                                <div class="dropdown no-arrow" style="width: 1px;">
-                                                    <a class="dropdown-toggle" role="button" id="dropdownMenuLink"
-                                                        data-toggle="dropdown" aria-haspopup="true"
-                                                        aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-700"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                        aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" href="" data-toggle="modal"
-                                                            data-target="#hihiModal">Sửa Thông Tin</a>
-                                                            <a class="dropdown-item" href="" data-toggle="modal"
-                                                            data-target="#hihiModal">Xóa</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>BR03</td>
-                                            <td>Acsis</td>
-                                            <td>
-                                                <div class="dropdown no-arrow" style="width: 1px;">
-                                                    <a class="dropdown-toggle" role="button" id="dropdownMenuLink"
-                                                        data-toggle="dropdown" aria-haspopup="true"
-                                                        aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-700"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                        aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" href="" data-toggle="modal"
-                                                            data-target="#hihiModal">Sửa Thông Tin</a>
-                                                            <a class="dropdown-item" href="" data-toggle="modal"
-                                                            data-target="">Xóa</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
+
                                     </tbody>
                                 </table>
+
                                 <ul class="pagination" style="position:relative;padding-left: 350px;">
                                     <li class="page-item"><a class="page-link" href="">
                                             << </a>
@@ -503,40 +442,48 @@
 
 
     <div class="modal fade" id="hahaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true" style="width: 1400px;">
-    <div class="modal-dialog modal-fullscreen-sm-down" role="document" style="font-weight: 400;">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" style="font-weight: 600;" id="exampleModalLabel"> Thêm Thông Tin Thương Hiệu</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form class="row g-10">
-                    <div class="col-md-6">
-                      <label for="inputEmail4" class="form-label">Mã Thương Hiệu</label>
-                      <input type="email" class="form-control" id="inputEmail4" placeholder="">
-                    </div><br>
-                    <div class="col-md-6">
-                      <label for="inputPassword4" class="form-label">Tên Thương Hiệu</label>
-                      <input type="text" class="form-control" id="inputPassword4" placeholder="">
-                    </div><br>
-                    
-                  </form>
-            </div>
-            <div class="modal-footer">
-                <button style="margin-left: 20px;" type="button" class="btn"> <a href="#" class="btn btn-success" style="width: 100px;">
-                   Create <i class="fas fa-plus"></i>
-                </a></button>
+        aria-hidden="true" style="width: 1400px;">
+        <div class="modal-dialog modal-fullscreen-sm-down" role="document" style="font-weight: 400;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" style="font-weight: 600;" id="exampleModalLabel"> Thêm Thông Tin Thương Hiệu
+                    </h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="row g-10" id="myForm">
+                        <div class="col-md-6">
+                            <label for="inputPassword4" class="form-label">Tên Thương Hiệu</label>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="">
+                        </div><br>
+                        <div style="margin-top: 20px;margin-left: 15px;">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" id="status" value="1">
+                                <label class="form-check-label" for="inlineRadio1">Hoạt Động</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio"  id="status" value="0">
+                                <label class="form-check-label" for="inlineRadio2">Không Hoạt Động</label>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button style="margin-left: 20px;" type="submit" class="btn"> <a class="btn btn-success"
+                                    style="width: 100px;">
+                                    Create <i class="fas fa-plus"></i>
+                                </a></button>
+                        </div>
+                    </form>
+                </div>
+
             </div>
         </div>
-    </div>
     </div>
     <!-- Button trigger modal -->
 
     <!-- Modal -->
-    <div class="modal fade" id="hihiModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <!-- <div class="modal fade" id="hihiModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true" style="width: 1400px;">
     <div class="modal-dialog modal-fullscreen-sm-down" role="document" style="font-weight: 400;">
         <div class="modal-content">
@@ -547,7 +494,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form class="row g-10">
+                <form class="row g-10" id="myForm">
                     <div class="col-md-6">
                       <label for="inputEmail4" class="form-label">Mã Thương Hiệu</label>
                       <input type="email" class="form-control" id="inputEmail4" placeholder="">
@@ -556,22 +503,22 @@
                       <label for="inputPassword4" class="form-label">Tên Thương Hiệu</label>
                       <input type="text" class="form-control" id="inputPassword4" placeholder="">
                     </div><br>
-                    
+                    <div class="modal-footer">
+                        <button style="margin-left: 20px;" type="submit" class="btn"> <a href="#" class="btn btn-success" style="width: 100px;">
+                           Update  <i class="fas fa-check"></i>
+                        </a></button>
+                    </div>
                   </form>
             </div>
-            <div class="modal-footer">
-                <button style="margin-left: 20px;" type="button" class="btn"> <a href="#" class="btn btn-success" style="width: 100px;">
-                   Update  <i class="fas fa-check"></i>
-                </a></button>
-            </div>
+           
         </div>
     </div>
     </div>
 </div>
-</div>
-  
+</div> -->
 
-   
+
+
 
 
     <!-- Bootstrap core JavaScript-->
@@ -589,8 +536,7 @@
     <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
     <!-- Page level custom scripts -->
-    <script src="js/demo/datatables-demo.js"></script>
-
+    <script src="js/brand.js"></script>
 </body>
 
 </html>
