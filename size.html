@@ -84,6 +84,8 @@
                         <h6 class="collapse-header">Danh Mục</h6>
                         <a class="collapse-item" href="brand.html">Thương Hiệu</a>
                         <a class="collapse-item" href="size.html">Size</a>
+                        <a class="collapse-item" href="material.html">Chất Liệu</a>
+                        <a class="collapse-item" href="style.html">Style</a>
                     </div>
                 </div>
             </li>
@@ -362,92 +364,28 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table" id="dataTable" width="100%" cellspacing="0"
+                                <table class="table" id="data-table" width="100%" cellspacing="0"
                                     style="font-weight: 400;">
                                     <thead>
                                         <tr>
-                                            <th>STT</th>
+
                                             <th>Mã Size</th>
-                                            <th>Tên Size</th>
+                                            <th>Size</th>
+                                            <th>Trạng Thái</th>
                                             <th></th>
-                                            
+
                                         </tr>
                                     </thead>
-
-                                    <tbody>
                                     <tbody>
 
-                                        <tr>
-                                            <td>1</td>
-                                            <td>SZ01</td>
-                                            <td>39</td>
-                                            <td>
-                                                <div class="dropdown no-arrow" style="width: 1px;">
-                                                    <a class="dropdown-toggle" role="button" id="dropdownMenuLink"
-                                                        data-toggle="dropdown" aria-haspopup="true"
-                                                        aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-700"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                        aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" href="" data-toggle="modal"
-                                                            data-target="#hihiModal">Sửa Thông Tin</a>
-                                                            <a class="dropdown-item" href="" data-toggle="modal"
-                                                            data-target="#hihiModal">Xóa</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Sz02</td>
-                                            <td>40</td>
-                                            <td>
-                                                <div class="dropdown no-arrow" style="width: 1px;">
-                                                    <a class="dropdown-toggle" role="button" id="dropdownMenuLink"
-                                                        data-toggle="dropdown" aria-haspopup="true"
-                                                        aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-700"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                        aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" href="" data-toggle="modal"
-                                                            data-target="#hihiModal">Sửa Thông Tin</a>
-                                                            <a class="dropdown-item" href="" data-toggle="modal"
-                                                            data-target="#hihiModal">Xóa</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>SZ03</td>
-                                            <td>41</td>
-                                            <td>
-                                                <div class="dropdown no-arrow" style="width: 1px;">
-                                                    <a class="dropdown-toggle" role="button" id="dropdownMenuLink"
-                                                        data-toggle="dropdown" aria-haspopup="true"
-                                                        aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-700"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                        aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" href="" data-toggle="modal"
-                                                            data-target="#hihiModal">Sửa Thông Tin</a>
-                                                            <a class="dropdown-item" href="" data-toggle="modal"
-                                                            data-target="">Xóa</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
+
                                     </tbody>
                                 </table>
+
                                 <ul class="pagination" style="position:relative;padding-left: 350px;">
-                                    <li class="page-item"><a class="page-link" href="">
-                                            << </a>
-                                    </li>
-                                    <li class="page-item"><a class="page-link" href="">1 / 5</a></li>
-                                    <li class="page-item"><a class="page-link" href="">>></a></li>
+                                    <li class="page-item"><a class="page-link" href="#" id="prevPage"><<</a></li>
+                                    <li class="page-item"><a class="page-link" href="#" id="currentPage">1 / 5</a></li>
+                                    <li class="page-item"><a class="page-link" href="#" id="nextPage">>></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -513,16 +451,22 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form class="row g-10">
-                    <div class="col-md-6">
-                      <label for="inputEmail4" class="form-label">Mã Size</label>
-                      <input type="email" class="form-control" id="inputEmail4" placeholder="">
-                    </div><br>
+                <form class="row g-10" >
+                   
                     <div class="col-md-6">
                       <label for="inputPassword4" class="form-label">Tên Size</label>
                       <input type="text" class="form-control" id="inputPassword4" placeholder="">
                     </div><br>
-                    
+                    <div style="margin-top: 20px;margin-left: 15px;">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" id="status" value="1">
+                            <label class="form-check-label" for="inlineRadio1">Hoạt Động</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" id="status" value="0">
+                            <label class="form-check-label" for="inlineRadio2">Không Hoạt Động</label>
+                        </div>
+                    </div>
                   </form>
             </div>
             <div class="modal-footer">
@@ -548,7 +492,7 @@
             </div>
             <div class="modal-body">
                 <form class="row g-10">
-                    <div class="col-md-6">
+                    <div class="col-md-6" id="myForm2">
                       <label for="inputEmail4" class="form-label">Mã Size</label>
                       <input type="email" class="form-control" id="inputEmail4" placeholder="">
                     </div><br>
@@ -556,7 +500,16 @@
                       <label for="inputPassword4" class="form-label">Tên Size</label>
                       <input type="text" class="form-control" id="inputPassword4" placeholder="">
                     </div><br>
-                    
+                    <div style="margin-top: 20px;margin-left: 15px;">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" id="status" value="1">
+                            <label class="form-check-label" for="inlineRadio1">Hoạt Động</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" id="status" value="0">
+                            <label class="form-check-label" for="inlineRadio2">Không Hoạt Động</label>
+                        </div>
+                    </div>
                   </form>
             </div>
             <div class="modal-footer">
@@ -589,8 +542,8 @@
     <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
     <!-- Page level custom scripts -->
-    <script src="js/demo/datatables-demo.js"></script>
-
+  
+    <script src="js/size.js"></script>
 </body>
 
 </html>
