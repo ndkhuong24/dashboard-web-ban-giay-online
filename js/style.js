@@ -1,5 +1,5 @@
 // URL of the API you want to call
-const apiUrl = 'http://localhost:8080/api/style';
+const apiUrl = 'http://localhost:8080/api/Style';
 
 // Get a reference to the table
 const table = document.getElementById('data-table');
