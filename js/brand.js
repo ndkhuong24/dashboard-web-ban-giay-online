@@ -44,10 +44,9 @@ fetch(apiUrl)
 // Hàm thêm dữ liệu từ form vào table
 document.getElementById('myForm').addEventListener('submit', function (event) {   
     event.preventDefault();
-
     const formData = {
         name: document.getElementById('name').value,
-        status: document.getElementById('status').value
+        status: document.querySelector('input[name="status"]:checked').value
     };
 
     // Gọi API để thêm dữ liệu vào cơ sở dữ liệu
@@ -71,34 +70,34 @@ document.getElementById('myForm').addEventListener('submit', function (event) {
 
 });
 //Hàm Update từ form vào table:
-document.getElementById('myForm2').addEventListener('submit', function (event) {   
-    event.preventDefault();
+// document.getElementById('myForm2').addEventListener('submit', function (event) {   
+//     event.preventDefault();
 
-    const formData = {
-        name: document.getElementById('name').value,
-        status: document.getElementById('status').value
-    };
+//     const formData = {
+//         name: document.getElementById('name').value,
+//         status: document.getElementById('status').value
+//     };
 
-    // Gọi API để thêm dữ liệu vào cơ sở dữ liệu
-    fetch('http://localhost:8080/rest/brand/{id}', {
+//     // Gọi API để thêm dữ liệu vào cơ sở dữ liệu
+//     fetch('http://localhost:8080/rest/brand/{id}', {
         
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-    })
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
-            alert("Update dữ liệu thành công!");
+//         method: 'PUT',
+//         headers: {
+//             'Content-Type': 'application/json'
+//         },
+//         body: JSON.stringify(formData)
+//     })
+//         .then(response => response.json())
+//         .then(data => {
+//             console.log(data);
+//             alert("Update dữ liệu thành công!");
 
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+//         })
+//         .catch(error => {
+//             console.error('Error:', error);
+//         });
 
-});
+// });
 
 
 

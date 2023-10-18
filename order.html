@@ -11,6 +11,69 @@
 
     <title>Quản Lý Nhân Viên</title>
 
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            /* max-width: 800px; */
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        #imageList {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .star-icon {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            color: gold;
+            /* Màu vàng cho ngôi sao, bạn có thể thay đổi màu sắc tùy ý */
+            padding: 5px;
+            cursor: pointer;
+        }
+
+        .thumbnail {
+            /* width: 100px; */
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .remove-button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            color: gray;
+            padding: 5px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .table {
+            display: none;
+            border: 1px solid black;
+            padding: 10px;
+        }
+
+        button {
+            margin: 5px;
+        }
+    </style>
+
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
@@ -39,7 +102,8 @@
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
 
-                <div class="sidebar-brand-text mx-3"><img src="img/logo.jfif"  style="width: 200px;border-radius: 10px;" alt="" srcset=""><sup></sup></div>
+                <div class="sidebar-brand-text mx-3"><img src="img/logo.jfif" style="width: 200px;border-radius: 10px;"
+                        alt="" srcset=""><sup></sup></div>
             </a>
 
             <!-- Divider -->
@@ -60,7 +124,7 @@
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link" href="order.html">
+                <a class="nav-link" href="">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Đơn Hàng</span></a>
             </li>
@@ -334,24 +398,37 @@
 
                 </nav>
                 <!-- End of Topbar -->
+                <div class="container-fluid">
 
+                    <!-- Page Heading -->
+                    <h1 class="h3 mb-2 text-gray-800">Quản Lý Đơn Hàng</h1>
+                    <br>
+
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+
+                        <div class="card-body">
+                            <div class="card-header py-3">
+                               
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Chất Liệu</h1>
+                    <h1 class="h3 mb-2 text-gray-800">Quản Lý Đơn Hàng</h1>
                     <br>
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">Records</h6>
-                            <form class="form-inline mr-auto w-100 navbar-search" style="margin-left: 530px;">
+                            <form class="form-inline mr-auto w-100 navbar-search" style="margin-left: 670px;">
                                 <div class="input-group">
-                                    <button class="btn btn-primary" style="border-radius: 6px;" type="button"
-                                        data-toggle="modal" data-target="#hahaModal">
-                                        Thêm Chất Liệu <i class="fas fa-plus fa-sm"></i>
-                                    </button>&nbsp;&nbsp;
+
                                     <input type="text" style="border-radius: 3px;"
                                         class="form-control bg-light border-1 small" placeholder="Tìm Kiếm"
                                         aria-label="Search" aria-describedby="basic-addon2">
@@ -365,28 +442,34 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table" id="data-table" width="100%" cellspacing="0"
-                                    style="font-weight: 400;">
+                                <table class="table" id="dataTable" width="100%" cellspacing="0"
+                                    style="font-weight: 400;font-size: small;">
                                     <thead>
                                         <tr>
-
-                                            <th>Mã Chất Liệu</th>
-                                            <th>Tên Chất Liệu</th>
+                                            <th>STT</th>
+                                            <th>Khách Hàng</th>
+                                            <th>Ngày Tạo</th>
+                                            <th>Số Lượng</th>
+                                            <th>Thành Tiền</th>
+                                            <th>Ngày Tạo</th>
                                             <th>Trạng Thái</th>
                                             <th></th>
 
                                         </tr>
                                     </thead>
+
+                                    <tbody>
                                     <tbody>
 
 
                                     </tbody>
                                 </table>
-
                                 <ul class="pagination" style="position:relative;padding-left: 350px;">
-                                    <li class="page-item"><a class="page-link" href="#" id="prevPage"><<</a></li>
-                                    <li class="page-item"><a class="page-link" href="#" id="currentPage">1 / 5</a></li>
-                                    <li class="page-item"><a class="page-link" href="#" id="nextPage">>></a></li>
+                                    <li class="page-item"><a class="page-link" href="">
+                                            << </a>
+                                    </li>
+                                    <li class="page-item"><a class="page-link" href="">1 / 5</a></li>
+                                    <li class="page-item"><a class="page-link" href="">>></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -442,85 +525,149 @@
 
 
     <div class="modal fade" id="hahaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true" style="width: 1400px;">
-        <div class="modal-dialog modal-fullscreen-sm-down" role="document" style="font-weight: 400;">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" style="font-weight: 600;" id="exampleModalLabel"> Thêm Thông Tin Chất Liệu
-                    </h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form class="row g-10" id="myForm">
-                        <div class="col-md-6">
-                            <label for="inputPassword4" class="form-label">Tên Chất Liệu</label>
-                            <input type="text" class="form-control" id="name" name="name" placeholder="">
-                        </div><br>
-                        <div style="margin-top: 20px;margin-left: 15px;">
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" id="status" value="1">
-                                <label class="form-check-label" for="inlineRadio1">Hoạt Động</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" id="status" value="0">
-                                <label class="form-check-label" for="inlineRadio2">Không Hoạt Động</label>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button style="margin-left: 20px;" id="reloadButton" type="submit" class="btn"> <a
-                                    class="btn btn-success" style="width: 100px;">
-                                    Create <i class="fas fa-plus"></i>
-                                </a></button>
-                        </div>
-                    </form>
-                </div>
+        aria-hidden="true"">
+    <div class=" modal-dialog modal-xl" role="document" style="font-weight: 400;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" style="font-weight: 600;" id="exampleModalLabel"> Thêm Thông Tin Sản Phẩm</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body" style="font-weight: 600;">
+                <form class="col-md-12 g-10">
+                    <div class="row" style="padding: 5px;">
+                        <label for="inputEmail4" class="form-label">Tên Sản Phẩm</label>
+                        <input type="email" style="font-weight: 700;height: 50px;" class="form-control"
+                            id="inputEmail4">
+                    </div>
+                    <div class="row" style="padding: 5px;padding-top: 15px;">
+                        <label for="inputPassword4" class="form-label"></label>
+                        <input type="text" class="form-control" id="inputPassword4" placeholder="Mô Tả Sản Phẩm"
+                            style="height: 60px;">
+                    </div>
+                    <div class="row" style="margin: 0 auto;padding: 5px;margin-left: -22px;">
+                        <div class="col-md-3">
+                            <label for="inputPassword4" class="form-label">Thương Hiệu</label> <br>
+                            <select class="form-combobox"
+                                style="height: 38px;width: 260px;border-color: rgb(201, 199, 213);border-radius: 5px;">
+                                <option selected>Kinh Doanh</option>
+                                <option value="1">Ngừng Kinh Doanh</option>
 
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="inputPassword4" class="form-label">Size</label> <br>
+                            <select class="form-combobox"
+                                style="height: 38px;width: 260px;border-color: rgb(201, 199, 213);border-radius: 5px;">
+                                <option selected>Kinh Doanh</option>
+                                <option value="1">Ngừng Kinh Doanh</option>
+
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="inputPassword4" class="form-label">Chất Liệu</label> <br>
+                            <select class="form-combobox"
+                                style="height: 38px;width: 260px;border-color: rgb(201, 199, 213);border-radius: 5px;">
+                                <option selected>Kinh Doanh</option>
+                                <option value="1">Ngừng Kinh Doanh</option>
+
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="inputPassword4" class="form-label">Style</label> <br>
+                            <select class="form-combobox"
+                                style="height: 38px;width260px: rgb(201, 199, 213);border-radius: 5px;">
+                                <option selected>Kinh Doanh</option>
+                                <option value="1">Ngừng Kinh Doanh</option>
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row" style="padding: 5px;">
+                        <div class="col-md-4" style="margin-top: 10px;margin-left: -9px;">
+                            <label for="inputPassword4" class="form-label">Giá (VNĐ)</label>
+                            <input type="text" style="color: crimson;font-weight: 700;width: 360px;"
+                                class="form-control" id="inputPassword4" placeholder="">
+                        </div><br>
+                        <div class="col-2" style="margin-top: 10px;margin-left: 12px;">
+                            <label for="inputAddress" class="form-label">Số Lượng</label>
+                            <div class="buttons_added">
+                                <input
+                                    style="height: 38px;width:155px;border: 1px solid;border-color: rgb(201, 199, 213);border-radius: 5px;"
+                                    quantity" class="input-qty" max="Số tối đa" min="Số tối thiểu" name="" type="number"
+                                    value="">
+                            </div>
+                        </div>
+                        <div style="padding: 5px;margin-top: 10px;">
+                            <label for="inputPassword4" class="form-label">Trạng Thái</label> <br>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
+                                    value="option1" checked>
+                                <label class="form-check-label" for="inlineRadio1">Kinh Doanh</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
+                                    value="option2">
+                                <label class="form-check-label" for="inlineRadio2">Ngừng Kinh Doanh</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="margin: 0 auto;padding: 5px;margin-left: -5px;">
+                        <label for="inputPassword4" class="form-label">Ảnh Sản Phẩm</label> <br>
+                        <input type="file" id="fileInput" accept="image/*" multiple>
+                        <div id="imageList" style="display: flex;flex-wrap: wrap;gap: 10px;margin-top: 20px;"></div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button style="margin-left: 20px;" type="button" class="btn">
+                    <a href="#" class="btn btn-success" style="width: 100px;"> Create <i class="fas fa-plus"></i>
+                    </a>
+                </button>
             </div>
         </div>
     </div>
+    </div>
+    <!-- Button trigger modal -->
+
+    <!-- Modal -->
     <div class="modal fade" id="hihiModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true" style="width: 1400px;">
         <div class="modal-dialog modal-fullscreen-sm-down" role="document" style="font-weight: 400;">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" style="font-weight: 600;" id="exampleModalLabel"> Sửa Thông Tin Chất Liệu
+                    <h5 class="modal-title" style="font-weight: 600;" id="exampleModalLabel"> Chỉnh Sửa Thông Tin Size
                     </h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form class="row g-10" id="myForm2">
-                       
+                    <form class="row g-10">
                         <div class="col-md-6">
-                            <label for="inputPassword4" class="form-label">Tên Chất Liệu</label>
-                            <input type="text" class="form-control" id="name" name="name" placeholder="">
+                            <label for="inputEmail4" class="form-label">Mã Size</label>
+                            <input type="email" class="form-control" id="inputEmail4" placeholder="">
                         </div><br>
-                        <div style="margin-top: 20px;margin-left: 15px;">
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" id="status" value="1">
-                                <label class="form-check-label" for="inlineRadio1">Hoạt Động</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" id="status" value="0">
-                                <label class="form-check-label" for="inlineRadio2">Không Hoạt Động</label>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button style="margin-left: 20px;" id="reloadButton" type="submit" class="btn"> <a
-                                    class="btn btn-success" style="width: 100px;">
-                                    Update <i class="fas fa-check"></i>
-                                </a></button>
-                        </div>
+                        <div class="col-md-6">
+                            <label for="inputPassword4" class="form-label">Tên Size</label>
+                            <input type="text" class="form-control" id="inputPassword4" placeholder="">
+                        </div><br>
+
                     </form>
                 </div>
-
+                <div class="modal-footer">
+                    <button style="margin-left: 20px;" type="button" class="btn"> <a href="#" class="btn btn-success"
+                            style="width: 100px;">
+                            Update <i class="fas fa-check"></i>
+                        </a></button>
+                </div>
             </div>
         </div>
     </div>
-</div>
+    </div>
+    </div>
 
 
 
@@ -541,61 +688,34 @@
     <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
     <!-- Page level custom scripts -->
-    <script src="js/material.js"></script>
+    <script src="js/demo/datatables-demo.js"></script>
     <script>
-        // const pagination = document.querySelector(".pagination");
-        // const prevPageLink = document.getElementById("prevPage");
-        // const currentPageLink = document.getElementById("currentPage");
-        // const nextPageLink = document.getElementById("nextPage");
-    
-        // const pageSize = 3; // Số lượng mục trên mỗi trang
-        // let currentPage = 1; // Trang hiện tại
-    
-        // // Hàm để cập nhật nội dung phân trang
-        // function updatePaginationContent(page, totalPages) {
-        //     currentPageLink.textContent = `${page} / ${totalPages}`;
-        //     prevPageLink.disabled = page === 1;
-        //     nextPageLink.disabled = page === totalPages;
-        // }
-    
-        // // Hàm để gọi API và cập nhật phân trang
-        // function fetchAndDisplayPage(page) {
-        //     fetch(`http://localhost:8080/rest/brand?page=${page}`)
-        //         .then(response => response.json())
-        //         .then(data => {
-        //             // Cập nhật nội dung bảng dữ liệu ở đây
-    
-        //             // Cập nhật nội dung phân trang
-        //             const totalPages = Math.ceil(data.totalItems / pageSize);
-        //             updatePaginationContent(page, totalPages);
-        //         })
-        //         .catch(error => {
-        //             console.error("Error fetching data:", error);
-        //         });
-        // }
-    
-        // // Bắt sự kiện khi người dùng bấm vào nút chuyển trang trước
-        // prevPageLink.addEventListener("click", () => {
-        //     if (currentPage > 1) {
-        //         currentPage--;
-        //         fetchAndDisplayPage(currentPage);
-        //     }
-        // });
-    
-        // // Bắt sự kiện khi người dùng bấm vào nút chuyển trang tiếp theo
-        // nextPageLink.addEventListener("click", () => {
-        //     // Thực hiện kiểm tra nếu currentPage < totalPages
-        //     // Trong trường hợp này, chúng ta giả định totalPages = 5
-        //     if (currentPage < totalPages) {
-        //         currentPage++;
-        //         fetchAndDisplayPage(currentPage);
-        //     }
-        // });
-    
-        // // Hiển thị trang đầu tiên khi trang web được tải
-        // fetchAndDisplayPage(currentPage);
+        document.getElementById("btn1").addEventListener("click", function () {
+            hideAllTables();
+            document.getElementById("table1").style.display = "block";
+        });
+
+        document.getElementById("btn2").addEventListener("click", function () {
+            hideAllTables();
+            document.getElementById("table2").style.display = "block";
+        });
+
+        document.getElementById("btn3").addEventListener("click", function () {
+            hideAllTables();
+            document.getElementById("table3").style.display = "block";
+        });
+
+        function hideAllTables() {
+            const tables = document.querySelectorAll(".table");
+            tables.forEach((table) => {
+                table.style.display = "none";
+            });
+        }
+
     </script>
-    
+
+
+
 </body>
 
 </html>
