@@ -28,7 +28,6 @@
 </head>
 
 <body id="page-top">
-
     <!-- Page Wrapper -->
     <div id="wrapper">
 
@@ -39,7 +38,8 @@
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
 
-                <div class="sidebar-brand-text mx-3"><img src="img/logo.jfif"  style="width: 200px;border-radius: 10px;" alt="" srcset=""><sup></sup></div>
+                <div class="sidebar-brand-text mx-3"><img src="img/logo.jfif" style="width: 200px;border-radius: 10px;"
+                        alt="" srcset=""><sup></sup></div>
             </a>
 
             <!-- Divider -->
@@ -86,9 +86,6 @@
                         <a class="collapse-item" href="size.html">Size</a>
                         <a class="collapse-item" href="material.html">Chất Liệu</a>
                         <a class="collapse-item" href="style.html">Style</a>
-                        <a class="collapse-item" href="color.html">Màu Sắc</a>
-                        <a class="collapse-item" href="category.html">Category</a>
-                        <a class="collapse-item" href="sole.html">Sole</a>
                     </div>
                 </div>
             </li>
@@ -352,7 +349,7 @@
                             <form class="form-inline mr-auto w-100 navbar-search" style="margin-left: 550px;">
                                 <div class="input-group">
                                     <button class="btn btn-primary" style="border-radius: 6px;" type="button"
-                                        data-toggle="modal" data-target="#hahaModal">
+                                        data-toggle="modal" data-target="#AddModal">
                                         Thêm Style <i class="fas fa-plus fa-sm"></i>
                                     </button>&nbsp;&nbsp;
                                     <input type="text" style="border-radius: 3px;"
@@ -372,12 +369,10 @@
                                     style="font-weight: 400;">
                                     <thead>
                                         <tr>
-
                                             <th>Mã Style</th>
                                             <th>Style</th>
                                             <th>Trạng Thái</th>
-                                            <th></th>
-
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -386,10 +381,16 @@
                                     </tbody>
                                 </table>
 
-                                <ul class="pagination" style="position:relative;padding-left: 350px;">
-                                    <li class="page-item"><a class="page-link" href="#" id="prevPage"><<</a></li>
-                                    <li class="page-item"><a class="page-link" href="#" id="currentPage">1 / 5</a></li>
-                                    <li class="page-item"><a class="page-link" href="#" id="nextPage">>></a></li>
+                                <ul class="pagination d-flex justify-content-center" style="position:relative">
+                                    <li class="page-item">
+                                        <a class="page-link" href="#" id="prevPage"> Previous </a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#" id="currentPage"> 1/5 </a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#" id="nextPage"> Next </a>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -428,9 +429,9 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
+                    <h5 class="modal-title" id="exampleModalLabel">Xác nhận cập nhật</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
@@ -442,92 +443,67 @@
         </div>
     </div>
 
-
-
-    <div class="modal fade" id="hahaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true" style="width: 1400px;">
-        <div class="modal-dialog modal-fullscreen-sm-down" role="document" style="font-weight: 400;">
+    <!-- Update Modal-->
+    <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" style="font-weight: 600;" id="exampleModalLabel"> Thêm Thông Tin 
-                    </h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
+                    <h5 class="modal-title" id="exampleModalLabel">Xác nhận cập nhật</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form class="row g-10" id="myForm">
-                        <div class="col-md-6">
-                            <label for="inputPassword4" class="form-label">Tên Style</label>
-                            <input type="text" class="form-control" id="name" name="name" placeholder="">
-                        </div><br>
-                        <div style="margin-top: 20px;margin-left: 15px;">
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" id="status" value="1">
-                                <label class="form-check-label" for="inlineRadio1">Hoạt Động</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" id="status" value="0">
-                                <label class="form-check-label" for="inlineRadio2">Không Hoạt Động</label>
-                            </div>
+                    Bạn có chắc chắn muốn cập nhật dữ liệu?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <button id="confirmUpdate" type="button" class="btn btn-primary">Xác nhận</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Add Modal-->
+    <div class="modal fade" id="AddModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Xác nhận cập nhật</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="name">Tên:</label>
+                            <input type="text" class="form-control" id="name">
                         </div>
-                        <div class="modal-footer">
-                            <button style="margin-left: 20px;" id="reloadButton" type="submit" class="btn"> <a
-                                    class="btn btn-success" style="width: 100px;">
-                                    Create <i class="fas fa-plus"></i>
-                                </a></button>
-                        </div>
+                        <fieldset>
+                            <legend>Trạng thái</legend>
+                            <label>
+                                <input type="radio" id="active" name="status" value="1" checked>
+                                Hoạt động
+                            </label>
+                            <label>
+                                <input type="radio" id="inactive" name="status" value="0">
+                                Không hoạt động
+                            </label>
+                        </fieldset>
                     </form>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                        <button type="button" class="btn btn-primary" id="saveChanges">Thêm</button>
+                    </div>
                 </div>
 
             </div>
         </div>
     </div>
-    <div class="modal fade" id="hihiModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true" style="width: 1400px;">
-        <div class="modal-dialog modal-fullscreen-sm-down" role="document" style="font-weight: 400;">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" style="font-weight: 600;" id="exampleModalLabel"> Sửa Thông Tin 
-                    </h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form class="row g-10" id="myForm2">
-                       
-                        <div class="col-md-6">
-                            <label for="inputPassword4" class="form-label">Tên Style</label>
-                            <input type="text" class="form-control" id="name" name="name" placeholder="">
-                        </div><br>
-                        <div style="margin-top: 20px;margin-left: 15px;">
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" id="status" value="1">
-                                <label class="form-check-label" for="inlineRadio1">Hoạt Động</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" id="status" value="0">
-                                <label class="form-check-label" for="inlineRadio2">Không Hoạt Động</label>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button style="margin-left: 20px;" id="reloadButton" type="submit" class="btn"> <a
-                                    class="btn btn-success" style="width: 100px;">
-                                    Update <i class="fas fa-check"></i>
-                                </a></button>
-                        </div>
-                    </form>
-                </div>
-
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-
 
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
@@ -545,60 +521,8 @@
 
     <!-- Page level custom scripts -->
     <script src="js/style.js"></script>
-    <script>
-        // const pagination = document.querySelector(".pagination");
-        // const prevPageLink = document.getElementById("prevPage");
-        // const currentPageLink = document.getElementById("currentPage");
-        // const nextPageLink = document.getElementById("nextPage");
-    
-        // const pageSize = 3; // Số lượng mục trên mỗi trang
-        // let currentPage = 1; // Trang hiện tại
-    
-        // // Hàm để cập nhật nội dung phân trang
-        // function updatePaginationContent(page, totalPages) {
-        //     currentPageLink.textContent = `${page} / ${totalPages}`;
-        //     prevPageLink.disabled = page === 1;
-        //     nextPageLink.disabled = page === totalPages;
-        // }
-    
-        // // Hàm để gọi API và cập nhật phân trang
-        // function fetchAndDisplayPage(page) {
-        //     fetch(`http://localhost:8080/rest/brand?page=${page}`)
-        //         .then(response => response.json())
-        //         .then(data => {
-        //             // Cập nhật nội dung bảng dữ liệu ở đây
-    
-        //             // Cập nhật nội dung phân trang
-        //             const totalPages = Math.ceil(data.totalItems / pageSize);
-        //             updatePaginationContent(page, totalPages);
-        //         })
-        //         .catch(error => {
-        //             console.error("Error fetching data:", error);
-        //         });
-        // }
-    
-        // // Bắt sự kiện khi người dùng bấm vào nút chuyển trang trước
-        // prevPageLink.addEventListener("click", () => {
-        //     if (currentPage > 1) {
-        //         currentPage--;
-        //         fetchAndDisplayPage(currentPage);
-        //     }
-        // });
-    
-        // // Bắt sự kiện khi người dùng bấm vào nút chuyển trang tiếp theo
-        // nextPageLink.addEventListener("click", () => {
-        //     // Thực hiện kiểm tra nếu currentPage < totalPages
-        //     // Trong trường hợp này, chúng ta giả định totalPages = 5
-        //     if (currentPage < totalPages) {
-        //         currentPage++;
-        //         fetchAndDisplayPage(currentPage);
-        //     }
-        // });
-    
-        // // Hiển thị trang đầu tiên khi trang web được tải
-        // fetchAndDisplayPage(currentPage);
-    </script>
-    
+
+
 </body>
 
 </html>

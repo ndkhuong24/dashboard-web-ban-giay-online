@@ -105,3 +105,52 @@ table.addEventListener("click", function (event) {
       });
   }
 });
+
+document.getElementById("saveChanges").addEventListener("click", function () {
+  // Lấy giá trị từ input tên và radio button
+  const name = document.getElementById("name").value;
+  const status = parseInt(
+    document.querySelector('input[name="status"]:checked').value
+  );
+
+  // Kiểm tra xem trường "name" có giá trị không
+  if (name.trim() === "") {
+    alert("Vui lòng nhập tên trước khi thêm.");
+    return; // Dừng việc gửi yêu cầu nếu trường "name" trống
+  }
+
+  // Tạo dữ liệu để gửi lên API
+  const dataToAdd = {
+    name: name,
+    status: status,
+  };
+  console.log(dataToAdd);
+
+  // Tùy chọn yêu cầu POST
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json", // Định dạng dữ liệu là JSON
+    },
+    body: JSON.stringify(dataToAdd), // Chuyển đổi dữ liệu thành chuỗi JSON
+  };
+
+  // Đường dẫn của API
+  const apiUrl = "https://192.168.109.128/api/Style"; // Thay thế bằng đường dẫn thực tế của API
+
+  // Thực hiện yêu cầu POST bằng fetch
+  fetch(apiUrl, requestOptions)
+    .then((response) => {
+      if (response.ok) {
+        // Nếu thành công, có thể thêm logic hiển thị thông báo hoặc làm mới trang
+        alert("Thêm dữ liệu thành công.");
+        // Sau đó có thể làm mới trang hoặc tải lại dữ liệu
+        location.reload();
+      } else {
+        alert("Có lỗi xảy ra khi thêm dữ liệu.");
+      }
+    })
+    .catch((error) => {
+      console.error("Lỗi: " + error.message);
+    });
+});
