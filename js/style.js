@@ -6,7 +6,6 @@ const table = document.getElementById("data-table");
 const tbody = table.querySelector("tbody");
 
 const perPage = 5; // Số lượng mục trên mỗi trang
-const totalPages = 1;
 let currentPage = 1; // Trang hiện tại
 
 // Định nghĩa biến data và khởi tạo nó là một mảng trống
@@ -36,7 +35,10 @@ function renderTable(data, page) {
   }
 }
 
-// Hàm để lấy dữ liệu từ API và cập nhật bảng
+// Thêm biến totalPages để tính tổng số trang
+let totalPages = 1;
+
+// Sửa hàm fetchDataAndPopulateTable để tính totalPages
 function fetchDataAndPopulateTable() {
   // Lấy dữ liệu từ API và render trang đầu tiên
   fetch(apiUrl)
@@ -44,6 +46,14 @@ function fetchDataAndPopulateTable() {
     .then((apiData) => {
       // Gán giá trị của apiData cho biến data
       data = apiData;
+
+      // Tính totalPages dựa trên số mục và số mục trên mỗi trang
+      totalPages = Math.ceil(data.length / perPage);
+
+      // Hiển thị thông tin trang hiện tại và tổng số trang
+      updatePageInfo();
+
+      // Render trang đầu tiên
       renderTable(data, currentPage);
     })
     .catch((error) => {
@@ -58,16 +68,27 @@ function fetchDataAndPopulateTable() {
     if (currentPage > 1) {
       currentPage--;
       renderTable(data, currentPage);
+      updatePageInfo();
     }
   });
 
   nextButton.addEventListener("click", () => {
-    if (currentPage < Math.ceil(data.length / perPage)) {
+    if (currentPage < totalPages) {
       currentPage++;
       renderTable(data, currentPage);
+      updatePageInfo();
     }
   });
 }
+
+// Thêm hàm để cập nhật thông tin trang
+function updatePageInfo() {
+  const currentPageElement = document.getElementById("currentPage");
+  currentPageElement.textContent = `${currentPage}/${totalPages}`;
+}
+
+// Gọi hàm fetchDataAndPopulateTable để khởi tạo và render dữ liệu
+fetchDataAndPopulateTable();
 
 fetchDataAndPopulateTable();
 
