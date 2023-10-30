@@ -1,117 +1,108 @@
 // URL of the API you want to call
-const apiUrl = 'http://localhost:8080/api/Style';
+const apiUrl = "https://192.168.109.128/api/Style";
 
 // Get a reference to the table
-const table = document.getElementById('data-table');
-const tbody = table.querySelector('tbody');
+const table = document.getElementById("data-table");
+const tbody = table.querySelector("tbody");
 
 // Make the API request using fetch
 fetch(apiUrl)
-    .then(response => response.json())
-    .then(data => {
-        // Clear any existing data in the table body
-        tbody.innerHTML = '';
+  .then((response) => response.json())
+  .then((data) => {
+    // Clear any existing data in the table body
+    tbody.innerHTML = "";
 
-        // Loop through the data from the API and add it to the table
-        data.forEach(item => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-         <td>${item.id}</td>
-         <td>${item.name}</td>
-         <td>${item.status == 1 ? 'Hoạt động' : 'Không hoạt động'}</td>
-         <td>
-                                                <div class="dropdown no-arrow" style="width: 1px;">
-                                                    <a class="dropdown-toggle" role="button" id="dropdownMenuLink"
-                                                        data-toggle="dropdown" aria-haspopup="true"
-                                                        aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-700"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                        aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" href="" data-toggle="modal"
-                                                            data-target="#hihiModal">Sửa Thông Tin</a>
-                                                            <a class="dropdown-item" href="">Xóa</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-     `;
-            tbody.appendChild(row);
-        });
-    })
-    .catch(error => {
-        console.error('Error while calling the API:', error);
+    // Loop through the data from the API and add it to the table
+    data.forEach((item) => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+                <td>${item.id}</td>
+                <td>${item.name}</td>
+                <td>${item.status == 1 ? "Hoạt động" : "Không hoạt động"}</td>
+                <td>
+                    <button class="btn btn-secondary">Cập nhật</button>
+                </td>
+            `;
+      tbody.appendChild(row);
     });
-// Hàm thêm dữ liệu từ form vào table
-document.getElementById('myForm').addEventListener('submit', function (event) {   
-    event.preventDefault();
+  })
+  .catch((error) => {
+    console.error("Error while calling the API:", error);
+  });
 
-    const formData = {
-        name: document.getElementById('name').value,
-        status: document.getElementById('status').value
-    };
+table.addEventListener("click", function (event) {
+  if (event.target.classList.contains("btn-secondary")) {
+    // Hỏi người dùng xác nhận
+    const confirmation = confirm("Bạn có chắc chắn muốn cập nhật dữ liệu?");
 
-    // Gọi API để thêm dữ liệu vào cơ sở dữ liệu
-    fetch(apiUrl, {
-        
-        method: 'POST',
+    if (confirmation) {
+      // Người dùng đã xác nhận
+      // Thực hiện cập nhật dữ liệu
+      const clickedRow = event.target.closest("tr");
+      const cells = clickedRow.querySelectorAll("td");
+      const id = parseInt(cells[0].textContent, 10);
+      const name = cells[1].textContent;
+      const status = cells[2].textContent;
+
+      const newStatus = status === "Hoạt động" ? 0 : 1;
+
+      var dataToUpdate = {
+        id: id,
+        name: name,
+        status: newStatus,
+      };
+
+      // Tùy chọn yêu cầu PUT
+      const requestOptions = {
+        method: "PUT",
         headers: {
-            'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData)
-    })
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
-            alert("Thêm dữ liệu thành công!");
+        body: JSON.stringify(dataToUpdate),
+      };
 
+      fetch(apiUrl, requestOptions)
+        .then((response) => {
+          if (response.ok) {
+            alert("Dữ liệu đã được cập nhật thành công.");
+            // Xóa dữ liệu cũ và cập nhật bảng
+            tbody.innerHTML = "";
+            fetchDataAndPopulateTable();
+          } else {
+            response.text().then((data) => {
+              console.log("Lỗi: " + data);
+            });
+          }
         })
-        .catch(error => {
-            console.error('Error:', error);
+        .catch((error) => {
+          console.log("Lỗi: " + error.message);
         });
-
-});
-//Hàm Update từ form vào table:
-document.getElementById('myForm2').addEventListener('submit', function (event) {   
-    event.preventDefault();
-
-    const formData = {
-        name: document.getElementById('name').value,
-        status: document.getElementById('status').value
-    };
-
-    // Gọi API để thêm dữ liệu vào cơ sở dữ liệu
-    fetch('http://localhost:8080/api/style/{id}', {
-        
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-    })
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
-            alert("Update dữ liệu thành công!");
-
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-
+    }
+  }
 });
 
+// Hàm để lấy dữ liệu từ API và cập nhật bảng
+function fetchDataAndPopulateTable() {
+  fetch(apiUrl)
+    .then((response) => response.json())
+    .then((data) => {
+      data.forEach((item) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td>${item.id}</td>
+            <td>${item.name}</td>
+            <td>${item.status == 1 ? "Hoạt động" : "Không hoạt động"}</td>
+            <td>
+              <button class="btn btn-secondary">Cập nhật</button>
+            </td>
+          `;
+        tbody.appendChild(row);
+      });
+    })
+    .catch((error) => {
+      console.error("Lỗi khi gọi API:", error);
+    });
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// Gọi hàm để lấy dữ liệu và cập nhật bảng khi trang tải
+fetchDataAndPopulateTable();
