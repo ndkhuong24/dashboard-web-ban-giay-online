@@ -59,7 +59,6 @@ function fetchData(page) {
       });
       totalItems = data.length; // Cập nhật tổng số mục dữ liệu
       totalPages = Math.ceil(totalItems / itemsPerPage); // Tính toán tổng số tran
-      totalPages += 1;
       updatePagination();
     })
     .catch((error) => {
@@ -71,15 +70,21 @@ fetchData(currentPage);
 function updatePagination() {
   currentPageSpan.textContent = currentPage;
   const totalPagesSpan = document.getElementById("totalPages");
-  totalPagesSpan.textContent = totalPages;
+  totalPagesSpan.textContent = totalPages+1;
 }
+function updateNextPrev(){
+    currentPageSpan.textContent = currentPage;
+    prevButton.disabled = currentPage === 1;
+    nextButton.disabled = currentPage===totalPages+1;
+  
+  }
 
 // Xử lý sự kiện khi nhấn nút "Previous"
 prevButton.addEventListener("click", () => {
   if (currentPage > 1) {
     currentPage--;
     fetchData(currentPage);
-    updatePagination();
+    updateNextPrev();
   }
 });
 
@@ -88,7 +93,7 @@ nextButton.addEventListener("click", () => {
   if (tbody.children.length === itemsPerPage) {
     currentPage++;
     fetchData(currentPage);
-    updatePagination();
+    updateNextPrev();
   }
 });
 // Hàm thêm dữ liệu từ form vào table
