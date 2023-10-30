@@ -5,53 +5,71 @@ const apiUrl = "https://192.168.109.128/api/Style";
 const table = document.getElementById("data-table");
 const tbody = table.querySelector("tbody");
 
-// Make the API request using fetch
-fetch(apiUrl)
-  .then((response) => response.json())
-  .then((data) => {
-    // Loop through the data from the API and add it to the table
-    data.forEach((item) => {
-      const row = document.createElement("tr");
-      row.innerHTML = `
-                <td>${item.id}</td>
-                <td>${item.name}</td>
-                <td>${item.status == 1 ? "Hoạt động" : "Không hoạt động"}</td>
-                <td>
-                    <button class="btn btn-secondary">Cập nhật</button>
-                </td>
-            `;
-      tbody.appendChild(row);
-    });
-  })
-  .catch((error) => {
-    console.error("Error while calling the API:", error);
-  });
+const perPage = 5; // Số lượng mục trên mỗi trang
+const totalPages = 1;
+let currentPage = 1; // Trang hiện tại
+
+// Định nghĩa biến data và khởi tạo nó là một mảng trống
+let data = [];
+
+function renderTable(data, page) {
+  // Xóa toàn bộ dữ liệu trong tbody
+  tbody.innerHTML = "";
+
+  // Tính chỉ mục bắt đầu và chỉ mục kết thúc cho trang hiện tại
+  const startIndex = (page - 1) * perPage;
+  const endIndex = page * perPage;
+
+  // Lặp qua các mục dựa trên chỉ mục bắt đầu và kết thúc
+  for (let i = startIndex; i < endIndex && i < data.length; i++) {
+    const item = data[i];
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td>${item.id}</td>
+      <td>${item.name}</td>
+      <td>${item.status == 1 ? "Hoạt động" : "Không hoạt động"}</td>
+      <td>
+        <button class="btn btn-secondary">Cập nhật</button>
+      </td>
+    `;
+    tbody.appendChild(row);
+  }
+}
 
 // Hàm để lấy dữ liệu từ API và cập nhật bảng
 function fetchDataAndPopulateTable() {
+  // Lấy dữ liệu từ API và render trang đầu tiên
   fetch(apiUrl)
     .then((response) => response.json())
-    .then((data) => {
-      // Clear any existing data in the table body
-      tbody.innerHTML = "";
-
-      data.forEach((item) => {
-        const row = document.createElement("tr");
-        row.innerHTML = `
-              <td>${item.id}</td>
-              <td>${item.name}</td>
-              <td>${item.status == 1 ? "Hoạt động" : "Không hoạt động"}</td>
-              <td>
-                <button class="btn btn-secondary">Cập nhật</button>
-              </td>
-            `;
-        tbody.appendChild(row);
-      });
+    .then((apiData) => {
+      // Gán giá trị của apiData cho biến data
+      data = apiData;
+      renderTable(data, currentPage);
     })
     .catch((error) => {
       console.error("Lỗi khi gọi API:", error);
     });
+
+  // Thêm nút điều hướng phân trang
+  const prevButton = document.getElementById("prev-button");
+  const nextButton = document.getElementById("next-button");
+
+  prevButton.addEventListener("click", () => {
+    if (currentPage > 1) {
+      currentPage--;
+      renderTable(data, currentPage);
+    }
+  });
+
+  nextButton.addEventListener("click", () => {
+    if (currentPage < Math.ceil(data.length / perPage)) {
+      currentPage++;
+      renderTable(data, currentPage);
+    }
+  });
 }
+
+fetchDataAndPopulateTable();
 
 table.addEventListener("click", function (event) {
   if (event.target.classList.contains("btn-secondary")) {
@@ -134,9 +152,6 @@ document.getElementById("saveChanges").addEventListener("click", function () {
     },
     body: JSON.stringify(dataToAdd), // Chuyển đổi dữ liệu thành chuỗi JSON
   };
-
-  // Đường dẫn của API
-  const apiUrl = "https://192.168.109.128/api/Style"; // Thay thế bằng đường dẫn thực tế của API
 
   // Thực hiện yêu cầu POST bằng fetch
   fetch(apiUrl, requestOptions)
