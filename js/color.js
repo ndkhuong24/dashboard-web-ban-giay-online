@@ -75,21 +75,27 @@ function updatePagination() {
   totalPagesSpan.textContent = totalPages;
 }
 
-// Xử lý sự kiện khi nhấn nút "Previous"
-prevButton.addEventListener("click", () => {
-  if (currentPage > 1) {
-    currentPage--;
-    fetchData(currentPage);
-    updatePagination();
-  }
-});
+function updateNextPrev(){
+  currentPageSpan.textContent = currentPage;
+  prevButton.disabled = currentPage === 1;
+  nextButton.disabled = tbody.children.length === itemsPerPage;
+}
 
-// Xử lý sự kiện khi nhấn nút "Next"
-nextButton.addEventListener("click", () => {
+// Xử lý sự kiện khi nhấn nút "Previous"
+prevButton.addEventListener('click', () => {
+  if (currentPage > 1) {
+  currentPage--;
+  fetchData(currentPage);
+  updatePagination();
+  }
+  });
+  
+  // Xử lý sự kiện khi nhấn nút "Next"
+  nextButton.addEventListener('click', () => {
   if (tbody.children.length === itemsPerPage) {
-    currentPage++;
-    fetchData(currentPage);
-    updatePagination();
+  currentPage++;
+  fetchData(currentPage);
+  updatePagination();
   }
 });
 // Hàm thêm dữ liệu từ form vào table
