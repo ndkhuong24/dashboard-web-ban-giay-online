@@ -64,6 +64,8 @@ function fetchData(page) {
       console.error("Error while calling the API:", error);
     });
 }
+// Gọi hàm fetchData để lấy dữ liệu ban đầu
+fetchData(currentPage);
 
 // Hàm để cập nhật trạng thái phân trang
 function updatePagination() {
@@ -173,5 +175,31 @@ table.addEventListener("click", function (event) {
   }
 });
 
-// Gọi hàm fetchData để lấy dữ liệu ban đầu
-fetchData(currentPage);
+//search
+var searchInput = document.getElementById('searchInput');
+var searchButton = document.getElementById('searchButton');
+searchButton.addEventListener('click', function() {
+  // Get the value from the input field
+  var inputValue = searchInput.value;
+  var searchapi = 'http://localhost:8080/api/Category/' + inputValue;
+  fetch(searchapi)
+  .then((response) => response.json())
+      .then((data)=> {
+        tbody.innerHTML = "";
+
+          const row = document.createElement("tr");
+          row.innerHTML = `
+                <td>${data.id}</td>
+                <td>${data.name}</td>
+                <td>${data.status == 1 ? "Hoạt động" : "Không hoạt động"}</td>
+                <td>
+                  <button class="btn btn-secondary">Cập nhật</button>
+                </td>
+              `;
+          tbody.appendChild(row);
+        
+      })
+      .catch(function(error) {
+        alert("không có dữ liệu")
+      });
+});
