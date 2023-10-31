@@ -342,21 +342,22 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Size</h1>
+                    <h1 class="h3 mb-2 text-gray-800">Sole</h1>
                     <br>
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">Records</h6>
-                            <form class="form-inline mr-auto w-100 navbar-search" style="margin-left: 510px;">
+                            <form class="form-inline mr-auto w-100 navbar-search" style="margin-left: 460px;">
                                 <div class="input-group">
-                                    <button class="btn btn-primary" style="border-radius: 6px;" type="button"  data-toggle="modal"
-                                    data-target="#AddModal">
-                                        Thêm Size  <i class="fas fa-plus fa-sm"></i>
+                                    <button class="btn btn-primary" style="border-radius: 6px;" type="button"
+                                        data-toggle="modal" data-target="#hahaModal">
+                                        Thêm Size <i class="fas fa-plus fa-sm"></i>
                                     </button>&nbsp;&nbsp;
-                                    <input type="text" style="border-radius: 3px;" class="form-control bg-light border-1 small"
-                                        placeholder="Tìm Kiếm" aria-label="Search" aria-describedby="basic-addon2">
+                                    <input type="text" style="border-radius: 3px;"
+                                        class="form-control bg-light border-1 small" placeholder="Tìm Kiếm"
+                                        aria-label="Search" aria-describedby="basic-addon2">
                                     <div class="input-group-append">
                                         <button class="btn btn-primary" type="button">
                                             <i class="fas fa-search fa-sm"></i>
@@ -371,10 +372,12 @@
                                     style="font-weight: 400;">
                                     <thead>
                                         <tr>
-                                            <th>Mã Style</th>
-                                            <th>Style</th>
+
+                                            <th>Mã Size</th>
+                                            <th>Tên Size</th>
                                             <th>Trạng Thái</th>
-                                            <th>Action</th>
+                                            <th></th>
+
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -442,132 +445,89 @@
 
 
 
-<<<<<<< HEAD
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Xác nhận cập nhật</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
-                </div>
-=======
     <div class="modal fade" id="hahaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true" style="width: 1400px;">
-    <div class="modal-dialog modal-fullscreen-sm-down" role="document" style="font-weight: 400;">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" style="font-weight: 600;" id="exampleModalLabel"> Thêm Thông Tin Size</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form class="row g-10" >
-                   
-                    <div class="col-md-6">
-                      <label for="inputPassword4" class="form-label">Tên Size</label>
-                      <input type="text" class="form-control" id="inputPassword4" placeholder="">
-                    </div><br>
-                    <div style="margin-top: 20px;margin-left: 15px;">
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" id="status" value="1">
-                            <label class="form-check-label" for="inlineRadio1">Hoạt Động</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" id="status" value="0">
-                            <label class="form-check-label" for="inlineRadio2">Không Hoạt Động</label>
-                        </div>
-                    </div>
-                  </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                <button style="margin-left: 20px;" type="button" class="btn"> <a href="#" class="btn btn-success" style="width: 100px;">
-                   Create <i class="fas fa-plus"></i>
-                </a></button>
->>>>>>> 24aa584b2594805fd5d72034a16361dbdd06282b
-            </div>
-        </div>
-    </div>
-
-    <!-- Update Modal-->
-    <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        aria-hidden="true" style="width: 1400px;">
+        <div class="modal-dialog modal-fullscreen-sm-down" role="document" style="font-weight: 400;">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Xác nhận cập nhật</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+                    <h5 class="modal-title" style="font-weight: 600;" id="exampleModalLabel"> Thêm Size
+                    </h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    Bạn có chắc chắn muốn cập nhật dữ liệu?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                    <button id="confirmUpdate" type="button" class="btn btn-primary">Xác nhận</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <!-- Add Modal-->
-    <div class="modal fade" id="AddModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Xác nhận cập nhật</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form id="myForm">
-                        <div class="form-group">
-                            <label for="name">Tên:</label>
-                            <input type="text" class="form-control" id="name">
+                    <form class="row g-10" id="myForm">
+                        <div class="col-md-6">
+                            <label for="inputPassword4" class="form-label">Tên Size</label>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="">
+                        </div><br>
+                        <div style="margin-top: 20px;margin-left: 15px;">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="status" id="status" value="1" checked="true">
+                                <label class="form-check-label" for="inlineRadio1">Hoạt Động</label>
+                            
+                                <input class="form-check-input" type="radio" name="status" id="status" value="0">
+                                <label class="form-check-label" for="inlineRadio2">Không Hoạt Động</label>
+                            </div>
                         </div>
-                        <fieldset>
-                            <legend>Trạng thái</legend>
-                            <label>
-                                <input type="radio" id="active" name="status" value="1" checked>
-                                Hoạt động
-                            </label>
-                            <label>
-                                <input type="radio" id="inactive" name="status" value="0">
-                                Không hoạt động
-                            </label>
-                        </fieldset>
+                        <div class="modal-footer"> 
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                            <button style="margin-left: 20px;" id="reloadButton" type="submit" class="btn"> <a
+                                    class="btn btn-success" style="width: 100px;">
+                                    Create <i class="fas fa-plus"></i>
+                                </a></button>
+                        </div>
                     </form>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                        <button type="button" class="btn btn-primary" id="saveChanges">Thêm</button>
-                    </div>
                 </div>
 
             </div>
         </div>
     </div>
-    <!-- Button trigger modal -->
+    <div class="modal fade" id="hihiModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true" style="width: 1400px;">
+        <div class="modal-dialog modal-fullscreen-sm-down" role="document" style="font-weight: 400;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" style="font-weight: 600;" id="exampleModalLabel"> Sửa Size
+                    </h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="row g-10" id="myForm2">
+                       
+                        <div class="col-md-6">
+                            <label for="inputPassword4" class="form-label">Tên Size</label>
+                            <input type="text" class="form-control" id="name1" name="name" placeholder="">
+                        </div><br>
+                        <div style="margin-top: 20px;margin-left: 15px;">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="status1" id="status1" value="1" checked="true">
+                                <label class="form-check-label" for="inlineRadio1">Hoạt Động</label>
+                            
+                                <input class="form-check-input" type="radio" name="status1" id="status1" value="0">
+                                <label class="form-check-label" for="inlineRadio2">Không Hoạt Động</label>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                            <button style="margin-left: 20px;" id="reloadButton" type="submit" class="btn"> <a
+                                    class="btn btn-success" style="width: 100px;">
+                                    Create <i class="fas fa-plus"></i>
+                                </a></button>
+                        </div>
+                    </form>
+                </div>
 
-   
+            </div>
+        </div>
     </div>
 </div>
-</div>
-  
 
-   
+
+
 
 
     <!-- Bootstrap core JavaScript-->
@@ -585,8 +545,61 @@
     <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
     <!-- Page level custom scripts -->
-  
     <script src="js/size.js"></script>
+    <!-- <script>
+        const pagination = document.querySelector(".pagination");
+        const prevPageLink = document.getElementById("prevPage");
+        const currentPageLink = document.getElementById("currentPage");
+        const nextPageLink = document.getElementById("nextPage");
+    
+        const pageSize = 3; // Số lượng mục trên mỗi trang
+        let currentPage = 1; // Trang hiện tại
+    
+        // Hàm để cập nhật nội dung phân trang
+        function updatePaginationContent(page, totalPages) {
+            currentPageLink.textContent = `${page} / ${totalPages}`;
+            prevPageLink.disabled = page === 1;
+            nextPageLink.disabled = page === totalPages;
+        }
+    
+        // Hàm để gọi API và cập nhật phân trang
+        function fetchAndDisplayPage(page) {
+            fetch(`http://localhost:8080/rest/brand?page=${page}`)
+                .then(response => response.json())
+                .then(data => {
+                    // Cập nhật nội dung bảng dữ liệu ở đây
+    
+                    // Cập nhật nội dung phân trang
+                    const totalPages = Math.ceil(data.totalItems / pageSize);
+                    updatePaginationContent(page, totalPages);
+                })
+                .catch(error => {
+                    console.error("Error fetching data:", error);
+                });
+        }
+    
+        // Bắt sự kiện khi người dùng bấm vào nút chuyển trang trước
+        prevPageLink.addEventListener("click", () => {
+            if (currentPage > 1) {
+                currentPage--;
+                fetchAndDisplayPage(currentPage);
+            }
+        });
+    
+        // Bắt sự kiện khi người dùng bấm vào nút chuyển trang tiếp theo
+        nextPageLink.addEventListener("click", () => {
+            // Thực hiện kiểm tra nếu currentPage < totalPages
+            // Trong trường hợp này, chúng ta giả định totalPages = 5
+            if (currentPage < totalPages) {
+                currentPage++;
+                fetchAndDisplayPage(currentPage);
+            }
+        });
+    
+        // Hiển thị trang đầu tiên khi trang web được tải
+        fetchAndDisplayPage(currentPage);
+    </script> -->
+    
 </body>
 
 </html>
