@@ -49,7 +49,6 @@ function fetchDataAndPopulateTable() {
 
       // Tính totalPages dựa trên số mục và số mục trên mỗi trang
       totalPages = Math.ceil(data.length / perPage);
-
       // Hiển thị thông tin trang hiện tại và tổng số trang
       updatePageInfo();
 
@@ -59,27 +58,27 @@ function fetchDataAndPopulateTable() {
     .catch((error) => {
       console.error("Lỗi khi gọi API:", error);
     });
-
-  // Thêm nút điều hướng phân trang
-  const prevButton = document.getElementById("prev-button");
-  const nextButton = document.getElementById("next-button");
-
-  prevButton.addEventListener("click", () => {
-    if (currentPage > 1) {
-      currentPage--;
-      renderTable(data, currentPage);
-      updatePageInfo();
-    }
-  });
-
-  nextButton.addEventListener("click", () => {
-    if (currentPage < totalPages) {
-      currentPage++;
-      renderTable(data, currentPage);
-      updatePageInfo();
-    }
-  });
 }
+
+// Thêm nút điều hướng phân trang
+const prevButton = document.getElementById("prev-button");
+const nextButton = document.getElementById("next-button");
+
+prevButton.addEventListener("click", () => {
+  if (currentPage > 1) {
+    currentPage--;
+    renderTable(data, currentPage);
+    updatePageInfo();
+  }
+});
+
+nextButton.addEventListener("click", () => {
+  if (currentPage < totalPages) {
+    currentPage++;
+    renderTable(data, currentPage);
+    updatePageInfo();
+  }
+});
 
 // Thêm hàm để cập nhật thông tin trang
 function updatePageInfo() {
