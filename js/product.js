@@ -40,6 +40,23 @@ function getStyleName(styleId) {
     });
 }
 
+function formatDate(inputDate) {
+  const date = new Date(inputDate);
+
+  // Lấy thông tin ngày, tháng, năm, giờ, phút, giây
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Tháng được đếm từ 0
+  const day = date.getDate().toString().padStart(2, "0");
+  const hours = date.getHours().toString().padStart(2, "0");
+  const minutes = date.getMinutes().toString().padStart(2, "0");
+  const seconds = date.getSeconds().toString().padStart(2, "0");
+
+  // Định dạng thời gian theo dạng "YYYY-MM-DD HH:MM:SS"
+  const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+
+  return formattedDate;
+}
+
 function renderTable(data, page) {
   // Xóa toàn bộ dữ liệu trong tbody
   tbody.innerHTML = "";
@@ -52,13 +69,17 @@ function renderTable(data, page) {
   for (let i = startIndex; i < endIndex && i < data.length; i++) {
     const item = data[i];
     const row = document.createElement("tr");
+
+    // Sử dụng formatDate để định dạng item.create_date
+    const formattedCreateDate = formatDate(item.create_date);
+
     row.innerHTML = `
       <td>${item.id}</td>
       <td>${item.code}</td>
       <td>${item.name}</td>
       <td id="style-name-${item.style_id}"></td>
       <td>${item.description}</td>
-      <td>${item.create_date}</td>
+      <td>${formattedCreateDate}</td> <!-- Sử dụng thời gian đã định dạng -->
       <td>${item.status == 1 ? "Hoạt động" : "Không hoạt động"}</td>
       <td>
         <button class="btn btn-secondary">Cập nhật</button>
