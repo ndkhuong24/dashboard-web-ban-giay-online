@@ -7,11 +7,27 @@ const tbody = table.querySelector("tbody");
 
 const prevButton = document.getElementById("prevPage");
 const nextButton = document.getElementById("nextPage");
+
 const currentPageSpan = document.getElementById("currentPage");
 const itemsPerPage = 5; // Số lượng mục hiển thị trên mỗi trang
 let currentPage = 1; // Trang hiện tại
-let totalItems = 0; // Tổng số mục dữ liệu
-let totalPages = 0; // Tổng số trang
+
+let totalPages; // Khai báo biến totalPages ở phạm vi toàn cục
+
+fetch("http://localhost:8080/api/Color/getAll")
+  .then((response) => response.json())
+  .then((apiData) => {
+    // Tính totalPages dựa trên số mục và số mục trên mỗi trang
+    totalPages = Math.ceil(apiData.length / itemsPerPage);
+
+    // Đã gán giá trị cho totalPages ở đây
+  })
+  .then(() => {
+    console.log(totalPages); // Giá trị của totalPages đã được gán và có thể sử dụng ở ngoài fetch
+  })
+  .catch((error) => {
+    console.error("Lỗi khi gọi API:", error);
+  });
 
 // Hàm để lấy dữ liệu từ API và cập nhật bảng
 function fetchDataAndPopulateTable() {
@@ -35,6 +51,7 @@ function fetchDataAndPopulateTable() {
       console.error("Lỗi khi gọi API:", error);
     });
 }
+
 function fetchData(page) {
   const url = `${apiUrl}?page=${page}&limit=${itemsPerPage}`;
   fetch(url)
@@ -55,11 +72,10 @@ function fetchData(page) {
                     </td>
                 `;
         tbody.appendChild(row);
-        
       });
-      totalItems = data.length// Cập nhật tổng số mục dữ liệu
+      totalItems = data.length; // Cập nhật tổng số mục dữ liệu
       //totalPages = Math.ceil(totalItems / itemsPerPage); // Tính toán tổng số tran
-      
+
       updatePagination();
       updateNextPrev();
     })
@@ -76,31 +92,25 @@ function updatePagination() {
   // totalPagesSpan.textContent = totalPages+1;
 }
 
-function updateNextPrev(){
+function updateNextPrev() {
   currentPageSpan.textContent = currentPage;
   prevButton.disabled = currentPage === 1;
-  nextButton.disabled = tbody.children.length <5;
-  console.log(tbody.children.length);
-
+  nextButton.disabled = tbody.children.length < 5;
 }
 
 // Xử lý sự kiện khi nhấn nút "Previous"
-prevButton.addEventListener('click', () => {
-  
+prevButton.addEventListener("click", () => {
   if (currentPage > 1) {
-  currentPage--;
-  fetchData(currentPage);
-  
+    currentPage--;
+    fetchData(currentPage);
   }
-  });
-  
-  // Xử lý sự kiện khi nhấn nút "Next"
-  nextButton.addEventListener('click', () => {
-    
+});
+
+// Xử lý sự kiện khi nhấn nút "Next"
+nextButton.addEventListener("click", () => {
   if (tbody.children.length === itemsPerPage) {
-  currentPage++;
-  fetchData(currentPage);
- 
+    currentPage++;
+    fetchData(currentPage);
   }
 });
 // Hàm thêm dữ liệu từ form vào table
@@ -179,35 +189,4 @@ table.addEventListener("click", function (event) {
   }
 });
 
-// Gọi hàm fetchData để lấy dữ liệu ban đầu
 fetchData(currentPage);
-// //Hàm Update từ form vào table:
-// document.getElementById('myForm2').addEventListener('submit', function (event) {
-//     event.preventDefault();
-
-//     const formData = {
-//         id : document.getElementById('id').value,
-//         name: document.getElementById('name1').value,
-//         status: document.querySelector('input[name="status1"]:checked').value,
-//     };
-
-//     // Gọi API để thêm dữ liệu vào cơ sở dữ liệu
-//     fetch(apiUrl, {
-
-//         method: 'PUT',
-//         headers: {
-//             'Content-Type': 'application/json'
-//         },
-//         body: JSON.stringify(formData)
-//     })
-//         .then(response => response.json())
-//         .then(data => {
-//             console.log(data);
-//             alert("Update dữ liệu thành công!");
-
-//         })
-//         .catch(error => {
-//             console.error('Error:', error);
-//         });
-
-// });
