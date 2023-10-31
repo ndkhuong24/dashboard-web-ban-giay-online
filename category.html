@@ -355,11 +355,11 @@
                                         data-toggle="modal" data-target="#hahaModal">
                                         Thêm Category <i class="fas fa-plus fa-sm"></i>
                                     </button>&nbsp;&nbsp;
-                                    <input type="text" style="border-radius: 3px;"
+                                    <input id="searchInput" type="text" style="border-radius: 3px;"
                                         class="form-control bg-light border-1 small" placeholder="Tìm Kiếm"
                                         aria-label="Search" aria-describedby="basic-addon2">
                                     <div class="input-group-append">
-                                        <button class="btn btn-primary" type="button">
+                                        <button id="searchButton" class="btn btn-primary" type="button">
                                             <i class="fas fa-search fa-sm"></i>
                                         </button>
                                     </div>
@@ -472,6 +472,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
                             <button style="margin-left: 20px;" id="reloadButton" type="submit" class="btn"> <a
                                     class="btn btn-success" style="width: 100px;">
                                     Create <i class="fas fa-plus"></i>

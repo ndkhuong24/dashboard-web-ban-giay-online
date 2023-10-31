@@ -57,9 +57,11 @@ function fetchData(page) {
         tbody.appendChild(row);
         
       });
-      totalItems = data.length; // Cập nhật tổng số mục dữ liệu
-      totalPages = Math.ceil(totalItems / itemsPerPage); // Tính toán tổng số tran
+      totalItems = data.length// Cập nhật tổng số mục dữ liệu
+      //totalPages = Math.ceil(totalItems / itemsPerPage); // Tính toán tổng số tran
+      
       updatePagination();
+      updateNextPrev();
     })
     .catch((error) => {
       console.error("Error while calling the API:", error);
@@ -70,32 +72,35 @@ function fetchData(page) {
 function updatePagination() {
   currentPageSpan.textContent = currentPage;
 
-  const totalPagesSpan = document.getElementById("totalPages");
-  totalPagesSpan.textContent = totalPages+1;
+  // const totalPagesSpan = document.getElementById("totalPages");
+  // totalPagesSpan.textContent = totalPages+1;
 }
 
 function updateNextPrev(){
   currentPageSpan.textContent = currentPage;
   prevButton.disabled = currentPage === 1;
-  nextButton.disabled = currentPage===totalPages+1;
+  nextButton.disabled = tbody.children.length <5;
+  console.log(tbody.children.length);
 
 }
 
 // Xử lý sự kiện khi nhấn nút "Previous"
 prevButton.addEventListener('click', () => {
+  
   if (currentPage > 1) {
   currentPage--;
   fetchData(currentPage);
-  updateNextPrev();
+  
   }
   });
   
   // Xử lý sự kiện khi nhấn nút "Next"
   nextButton.addEventListener('click', () => {
+    
   if (tbody.children.length === itemsPerPage) {
   currentPage++;
   fetchData(currentPage);
-  updateNextPrev();
+ 
   }
 });
 // Hàm thêm dữ liệu từ form vào table
