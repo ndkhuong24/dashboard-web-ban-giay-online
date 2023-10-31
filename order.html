@@ -16,6 +16,10 @@
             font-family: Arial, sans-serif;
         }
 
+        .hidden {
+            display: none;
+        }
+
         .container {
             /* max-width: 800px; */
             margin: 0 auto;
@@ -72,6 +76,7 @@
         button {
             margin: 5px;
         }
+        
     </style>
 
     <!-- Custom fonts for this template -->
@@ -85,8 +90,8 @@
 
     <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script> -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 
 </head>
 
@@ -412,7 +417,7 @@
 
                         <div class="card-body">
                             <div class="card-header py-3">
-                               
+
                             </div>
                         </div>
                     </div>
@@ -422,9 +427,20 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Quản Lý Đơn Hàng</h1>
+                    <h1 class="h3 mb-2 text-gray-800">Danh Sách Hóa Đơn</h1> <div class="dropdown">
+                        <div class="form-floating">
+                            <select class="form-select" id="floatingSelect" id="tableSelect" aria-label="Floating label select example">
+                              <option selected value="0">Chờ Xác Nhận</option>
+                              <option value="table1">Chờ Giao</option>
+                              <option value="2">Đang Giao</option>
+                              <option value="3">Hoàn Thành</option>
+                              <option value="4">Hủy</option>
+                              <option value="5">Chờ Thanh Toán</option>
+                            </select>
+                            <label for="floatingSelect">Trạng Thái Đơn Hàng</label>
+                          </div>
                     <br>
-
+                    
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
@@ -445,7 +461,7 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table" id="dataTable" width="100%" cellspacing="0"
+                                <table class="table" id="table1"  width="100%" cellspacing="0"
                                     style="font-weight: 400;font-size: small;">
                                     <thead>
                                         <tr>
@@ -462,17 +478,21 @@
                                     </thead>
 
                                     <tbody>
-                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>Bùi Minh Hiếu</td>
+                                            <td></td>
+                                        </tr>
 
 
                                     </tbody>
                                 </table>
                                 <ul class="pagination" style="position:relative;padding-left: 350px;">
                                     <li class="page-item"><a class="page-link" href="">
-                                            << </a>
+                                            Previous </a>
                                     </li>
                                     <li class="page-item"><a class="page-link" href="">1 / 5</a></li>
-                                    <li class="page-item"><a class="page-link" href="">>></a></li>
+                                    <li class="page-item"><a class="page-link" href="">Next</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -483,6 +503,54 @@
 
             </div>
             <!-- End of Main Content -->
+            <h2>Chọn bảng:</h2>
+            <select id="tableSelect">
+                <option value="table1">Bảng 1</option>
+                <option value="table2">Bảng 2</option>
+                <option value="table3">Bảng 3</option>
+            </select>
+
+            <table id="table1" class="hidden">
+                <!-- Nội dung của Bảng 1 -->
+                <thead>
+                    <tr>
+                        <td>Hiếu</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Hiếu</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table id="table2" class="hidden">
+                <!-- Nội dung của Bảng 2 -->
+                <thead>
+                    <tr>
+                        <td>Hiếu2</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Hiếu2</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table id="table3" class="hidden">
+                <!-- Nội dung của Bảng 3 -->
+                <thead>
+                    <tr>
+                        <td>Hiếu3</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Hiếu3</td>
+                    </tr>
+                </tbody>
+            </table>
 
             <!-- Footer -->
             <footer class="sticky-footer bg-white">
@@ -527,110 +595,7 @@
 
 
 
-    <div class="modal fade" id="hahaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true"">
-    <div class=" modal-dialog modal-xl" role="document" style="font-weight: 400;">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" style="font-weight: 600;" id="exampleModalLabel"> Thêm Thông Tin Sản Phẩm</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body" style="font-weight: 600;">
-                <form class="col-md-12 g-10">
-                    <div class="row" style="padding: 5px;">
-                        <label for="inputEmail4" class="form-label">Tên Sản Phẩm</label>
-                        <input type="email" style="font-weight: 700;height: 50px;" class="form-control"
-                            id="inputEmail4">
-                    </div>
-                    <div class="row" style="padding: 5px;padding-top: 15px;">
-                        <label for="inputPassword4" class="form-label"></label>
-                        <input type="text" class="form-control" id="inputPassword4" placeholder="Mô Tả Sản Phẩm"
-                            style="height: 60px;">
-                    </div>
-                    <div class="row" style="margin: 0 auto;padding: 5px;margin-left: -22px;">
-                        <div class="col-md-3">
-                            <label for="inputPassword4" class="form-label">Thương Hiệu</label> <br>
-                            <select class="form-combobox"
-                                style="height: 38px;width: 260px;border-color: rgb(201, 199, 213);border-radius: 5px;">
-                                <option selected>Kinh Doanh</option>
-                                <option value="1">Ngừng Kinh Doanh</option>
 
-                            </select>
-                        </div>
-                        <div class="col-md-3">
-                            <label for="inputPassword4" class="form-label">Size</label> <br>
-                            <select class="form-combobox"
-                                style="height: 38px;width: 260px;border-color: rgb(201, 199, 213);border-radius: 5px;">
-                                <option selected>Kinh Doanh</option>
-                                <option value="1">Ngừng Kinh Doanh</option>
-
-                            </select>
-                        </div>
-                        <div class="col-md-3">
-                            <label for="inputPassword4" class="form-label">Chất Liệu</label> <br>
-                            <select class="form-combobox"
-                                style="height: 38px;width: 260px;border-color: rgb(201, 199, 213);border-radius: 5px;">
-                                <option selected>Kinh Doanh</option>
-                                <option value="1">Ngừng Kinh Doanh</option>
-
-                            </select>
-                        </div>
-                        <div class="col-md-3">
-                            <label for="inputPassword4" class="form-label">Style</label> <br>
-                            <select class="form-combobox"
-                                style="height: 38px;width260px: rgb(201, 199, 213);border-radius: 5px;">
-                                <option selected>Kinh Doanh</option>
-                                <option value="1">Ngừng Kinh Doanh</option>
-
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row" style="padding: 5px;">
-                        <div class="col-md-4" style="margin-top: 10px;margin-left: -9px;">
-                            <label for="inputPassword4" class="form-label">Giá (VNĐ)</label>
-                            <input type="text" style="color: crimson;font-weight: 700;width: 360px;"
-                                class="form-control" id="inputPassword4" placeholder="">
-                        </div><br>
-                        <div class="col-2" style="margin-top: 10px;margin-left: 12px;">
-                            <label for="inputAddress" class="form-label">Số Lượng</label>
-                            <div class="buttons_added">
-                                <input
-                                    style="height: 38px;width:155px;border: 1px solid;border-color: rgb(201, 199, 213);border-radius: 5px;"
-                                    quantity" class="input-qty" max="Số tối đa" min="Số tối thiểu" name="" type="number"
-                                    value="">
-                            </div>
-                        </div>
-                        <div style="padding: 5px;margin-top: 10px;">
-                            <label for="inputPassword4" class="form-label">Trạng Thái</label> <br>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
-                                    value="option1" checked>
-                                <label class="form-check-label" for="inlineRadio1">Kinh Doanh</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
-                                    value="option2">
-                                <label class="form-check-label" for="inlineRadio2">Ngừng Kinh Doanh</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div style="margin: 0 auto;padding: 5px;margin-left: -5px;">
-                        <label for="inputPassword4" class="form-label">Ảnh Sản Phẩm</label> <br>
-                        <input type="file" id="fileInput" accept="image/*" multiple>
-                        <div id="imageList" style="display: flex;flex-wrap: wrap;gap: 10px;margin-top: 20px;"></div>
-                    </div>
-                </form>
-            </div>
-
-            <div class="modal-footer">
-                <button style="margin-left: 20px;" type="button" class="btn">
-                    <a href="#" class="btn btn-success" style="width: 100px;"> Create <i class="fas fa-plus"></i>
-                    </a>
-                </button>
-            </div>
-        </div>
     </div>
     </div>
     <!-- Button trigger modal -->
@@ -691,31 +656,26 @@
     <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
     <!-- Page level custom scripts -->
-    <script src="js/demo/datatables-demo.js"></script>
     <script>
-        document.getElementById("btn1").addEventListener("click", function () {
-            hideAllTables();
-            document.getElementById("table1").style.display = "block";
+        const tableSelect = document.getElementById('tableSelect');
+        const tables = ['table1', 'table2', 'table3'];
+      
+        tableSelect.addEventListener('change', function () {
+          const selectedTable = tableSelect.value;
+      
+          // Ẩn tất cả các bảng
+          tables.forEach(tableId => {
+            const table = document.getElementById(tableId);
+            table.classList.add('hidden');
+          });
+      
+          // Hiển thị bảng được chọn
+          const selectedTableElement = document.getElementById(selectedTable);
+          selectedTableElement.classList.remove('hidden');
         });
+      </script>
+      
 
-        document.getElementById("btn2").addEventListener("click", function () {
-            hideAllTables();
-            document.getElementById("table2").style.display = "block";
-        });
-
-        document.getElementById("btn3").addEventListener("click", function () {
-            hideAllTables();
-            document.getElementById("table3").style.display = "block";
-        });
-
-        function hideAllTables() {
-            const tables = document.querySelectorAll(".table");
-            tables.forEach((table) => {
-                table.style.display = "none";
-            });
-        }
-
-    </script>
 
 
 
