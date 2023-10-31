@@ -77,7 +77,7 @@ function updatePagination() {
 function updateNextPrev(){
   currentPageSpan.textContent = currentPage;
   prevButton.disabled = currentPage === 1;
-  nextButton.disabled = currentPage===totalPages+1;
+  // nextButton.disabled = currentPage===totalPages;
 
 }
 
