@@ -22,9 +22,6 @@ fetch("http://localhost:8080/api/Color/getAll")
 
     // Đã gán giá trị cho totalPages ở đây
   })
-  .then(() => {
-    console.log(totalPages); // Giá trị của totalPages đã được gán và có thể sử dụng ở ngoài fetch
-  })
   .catch((error) => {
     console.error("Lỗi khi gọi API:", error);
   });
@@ -73,9 +70,6 @@ function fetchData(page) {
                 `;
         tbody.appendChild(row);
       });
-      totalItems = data.length; // Cập nhật tổng số mục dữ liệu
-      //totalPages = Math.ceil(totalItems / itemsPerPage); // Tính toán tổng số tran
-
       updatePagination();
       updateNextPrev();
     })
@@ -84,18 +78,19 @@ function fetchData(page) {
     });
 }
 
+fetchData(currentPage);
 // Hàm để cập nhật trạng thái phân trang
 function updatePagination() {
   currentPageSpan.textContent = currentPage;
 
-  // const totalPagesSpan = document.getElementById("totalPages");
-  // totalPagesSpan.textContent = totalPages+1;
+  const totalPagesSpan = document.getElementById("totalPages");
+  totalPagesSpan.textContent = totalPages;
 }
 
 function updateNextPrev() {
   currentPageSpan.textContent = currentPage;
   prevButton.disabled = currentPage === 1;
-  nextButton.disabled = tbody.children.length < 5;
+  nextButton.disabled = currentPage===totalPages;
 }
 
 // Xử lý sự kiện khi nhấn nút "Previous"
@@ -103,6 +98,7 @@ prevButton.addEventListener("click", () => {
   if (currentPage > 1) {
     currentPage--;
     fetchData(currentPage);
+    updateNextPrev();
   }
 });
 
@@ -111,6 +107,7 @@ nextButton.addEventListener("click", () => {
   if (tbody.children.length === itemsPerPage) {
     currentPage++;
     fetchData(currentPage);
+    updateNextPrev();
   }
 });
 // Hàm thêm dữ liệu từ form vào table
@@ -189,4 +186,4 @@ table.addEventListener("click", function (event) {
   }
 });
 
-fetchData(currentPage);
+

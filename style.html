@@ -158,7 +158,6 @@
                         <i class="fa fa-bars"></i>
                     </button>
 
-                    <!-- Topbar Search -->
 
 
                     <!-- Topbar Navbar -->
@@ -237,13 +236,14 @@
                                         Thêm Style <i class="fas fa-plus fa-sm"></i>
                                     </button>&nbsp;&nbsp;
                                     <input type="text" style="border-radius: 3px;"
-                                        class="form-control bg-light border-1 small" placeholder="Tìm Kiếm"
-                                        aria-label="Search" aria-describedby="basic-addon2">
-                                    <div class="input-group-append">
+                                        class="form-control bg-light border-1 small" id="searchInput"
+                                        placeholder="Tìm kiếm theo tên..." oninput="searchByName()" aria-label="Search"
+                                        aria-describedby="basic-addon2">
+                                    <!-- <div class="input-group-append">
                                         <button class="btn btn-primary" type="button">
                                             <i class="fas fa-search fa-sm"></i>
                                         </button>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </form>
                         </div>
