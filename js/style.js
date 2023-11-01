@@ -11,31 +11,6 @@ let currentPage = 1; // Trang hiện tại
 // Định nghĩa biến data và khởi tạo nó là một mảng trống
 let data = [];
 
-function searchByName() {
-  const searchValue = document
-    .getElementById("searchInput")
-    .value.toLowerCase();
-  const table = document.getElementById("data-table");
-  const tbody = table.querySelector("tbody");
-  const rows = tbody.getElementsByTagName("tr");
-
-  for (let i = 0; i < rows.length; i++) {
-    const row = rows[i];
-    const nameCell = row.querySelector("td:nth-child(2)"); // Thay 2 bằng chỉ số cột chứa tên
-
-    if (nameCell) {
-      const name = nameCell.textContent.toLowerCase();
-
-      if (name.includes(searchValue)) {
-        row.style.display = ""; // Hiển thị hàng nếu tên khớp
-        found = true;
-      } else {
-        row.style.display = "none"; // Ẩn hàng nếu tên không khớp
-      }
-    }
-  }
-}
-
 function renderTable(data, page) {
   // Xóa toàn bộ dữ liệu trong tbody
   tbody.innerHTML = "";
@@ -112,8 +87,6 @@ function updatePageInfo() {
 }
 
 // Gọi hàm fetchDataAndPopulateTable để khởi tạo và render dữ liệu
-fetchDataAndPopulateTable();
-
 fetchDataAndPopulateTable();
 
 table.addEventListener("click", function (event) {
@@ -214,3 +187,29 @@ document.getElementById("saveChanges").addEventListener("click", function () {
       console.error("Lỗi: " + error.message);
     });
 });
+
+document.getElementById("searchButton").addEventListener("click", function () {
+  // Lấy giá trị tìm kiếm từ trường input
+  const searchPattern = document.getElementById("searchInput").value;
+  if (searchPattern.trim() === "") {
+    fetchDataAndPopulateTable();
+  } else {
+    searchByName(searchPattern);
+  }
+});
+
+function searchByName(searchPattern) {
+  // Lấy dữ liệu từ API và render trang đầu tiên
+  fetch(`https://192.168.109.128/api/Style/searchName/${searchPattern}`)
+    .then((response) => response.json())
+    .then((searhData) => {
+      currentPage = 1;
+      data = searhData;
+      totalPages = Math.ceil(data.length / perPage);
+      updatePageInfo();
+      renderTable(data, currentPage);
+    })
+    .catch((error) => {
+      console.error("Lỗi khi gọi API:", error);
+    });
+}
