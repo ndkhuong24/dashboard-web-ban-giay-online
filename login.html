@@ -25,7 +25,7 @@
 <body class="bg-gradient-primary">
 
     <div class="container">
-        <form method="post" action="/api/auth/login">
+        <form method="post" action="/api/auth/login" id="loginForm">
             <!-- Outer Row -->
             <div class="row justify-content-center">
                 <div class="col-xl-10 col-lg-12 col-md-9">
@@ -57,7 +57,7 @@
                                                         Me</label>
                                                 </div>
                                             </div>
-                                            <a valiue="Login" class="btn btn-primary btn-user btn-block">
+                                            <a href="#" valiue="Login" class="btn btn-primary btn-user btn-block" id="loginButton" >
                                                 Login
                                             </a>
                                             <hr>
@@ -86,6 +86,44 @@
 
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
+
+    <script>
+        // Lắng nghe sự kiện khi nút "Login" được nhấn
+        document.getElementById("loginButton").addEventListener("click", function(event) {
+            event.preventDefault(); // Ngăn chặn hành động mặc định của nút submit
+
+            // Lấy giá trị tên người dùng và mật khẩu từ trường input
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("Password").value;
+
+            // Tạo đối tượng chứa thông tin đăng nhập để gửi lên máy chủ
+            const loginData = {
+                username: username,
+                password: password
+            };
+
+            // Gửi yêu cầu POST đến API /login
+            fetch('http://localhost:8081/api/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                    // Add any additional headers here if needed
+                },
+                body: JSON.stringify(loginData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.roles.includes("ADMIN"))  window.location.replace('/index.html')
+                else window.location.replace('/meomeo')
+                
+                // Phản hồi cũng có thể chứa thông tin JWT Cookie, bạn có thể xử lý nó tại đây nếu cần.
+            })
+            .catch(error => {
+                // Xử lý lỗi ở đây
+                console.error('Lỗi khi gửi yêu cầu POST:', error);
+            });
+        });
+    </script>
 
 </body>
 
