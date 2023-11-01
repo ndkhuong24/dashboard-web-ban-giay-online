@@ -109,33 +109,50 @@ prevButton.addEventListener('click', () => {
 });
 
 // Hàm thêm dữ liệu từ form vào table
-document.getElementById('myForm').addEventListener('submit', function (event) {   
-  event.preventDefault();
+document.getElementById("saveChanges").addEventListener("click", function () {
+  // Lấy giá trị từ input tên và radio button
+  const name = document.getElementById("name").value;
+  const status = parseInt(
+    document.querySelector('input[name="status"]:checked').value
+  );
 
-  const formData = {
-      name: document.getElementById('name').value,
-      status: document.getElementById('status').value
+  // Kiểm tra xem trường "name" có giá trị không
+  if (name.trim() === "") {
+    alert("Vui lòng nhập tên trước khi thêm.");
+    return; // Dừng việc gửi yêu cầu nếu trường "name" trống
+  }
+
+  // Tạo dữ liệu để gửi lên API
+  const dataToAdd = {
+    name: name,
+    status: status,
+  };
+  console.log(dataToAdd);
+
+  // Tùy chọn yêu cầu POST
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json", // Định dạng dữ liệu là JSON
+    },
+    body: JSON.stringify(dataToAdd), // Chuyển đổi dữ liệu thành chuỗi JSON
   };
 
-  // Gọi API để thêm dữ liệu vào cơ sở dữ liệu
-  fetch(apiUrl, {
-      
-      method: 'POST',
-      headers: {
-          'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(formData)
-  })
-      .then(response => response.json())
-      .then(data => {
-          console.log(data);
-          alert("Thêm dữ liệu thành công!");
-
-      })
-      .catch(error => {
-          console.error('Error:', error);
-      });
-
+  // Thực hiện yêu cầu POST bằng fetch
+  fetch(apiUrl, requestOptions)
+    .then((response) => {
+      if (response.ok) {
+        // Nếu thành công, có thể thêm logic hiển thị thông báo hoặc làm mới trang
+        alert("Thêm dữ liệu thành công.");
+        // Sau đó có thể làm mới trang hoặc tải lại dữ liệu
+        location.reload();
+      } else {
+        alert("Có lỗi xảy ra khi thêm dữ liệu.");
+      }
+    })
+    .catch((error) => {
+      console.error("Lỗi: " + error.message);
+    });
 });
 table.addEventListener("click", function (event) {
   if (event.target.classList.contains("btn-secondary")) {
