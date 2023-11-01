@@ -10,8 +10,19 @@ const nextButton = document.getElementById("nextPage");
 const currentPageSpan = document.getElementById("currentPage");
 const itemsPerPage = 5; // Số lượng mục hiển thị trên mỗi trang
 let currentPage = 1; // Trang hiện tại
-let totalItems = 0; // Tổng số mục dữ liệu
 let totalPages = 0; // Tổng số trang
+
+fetch("http://localhost:8080/api/Brand/getAll")
+  .then((response) => response.json())
+  .then((apiData) => {
+    // Tính totalPages dựa trên số mục và số mục trên mỗi trang
+    totalPages = Math.ceil(apiData.length / itemsPerPage);
+
+    // Đã gán giá trị cho totalPages ở đây
+  })
+  .catch((error) => {
+    console.error("Lỗi khi gọi API:", error);
+  });
 
 // Hàm để lấy dữ liệu từ API và cập nhật bảng
 function fetchDataAndPopulateTable() {
@@ -57,8 +68,7 @@ function fetchData(page) {
         tbody.appendChild(row);
         
       });
-      totalItems = data.length; // Cập nhật tổng số mục dữ liệu
-      totalPages = Math.ceil(totalItems / itemsPerPage); // Tính toán tổng số tran
+      updateNextPrev();
       updatePagination();
     })
     .catch((error) => {
@@ -71,13 +81,13 @@ function updatePagination() {
   currentPageSpan.textContent = currentPage;
 
   const totalPagesSpan = document.getElementById("totalPages");
-  totalPagesSpan.textContent = totalPages+1;
+  totalPagesSpan.textContent = totalPages;
 }
 
 function updateNextPrev(){
   currentPageSpan.textContent = currentPage;
   prevButton.disabled = currentPage === 1;
-  nextButton.disabled = currentPage===totalPages+1;
+  nextButton.disabled = currentPage===totalPages;
 
 }
 
