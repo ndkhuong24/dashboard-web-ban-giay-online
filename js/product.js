@@ -13,6 +13,24 @@ let totalPages = 1;
 const prevButton = document.getElementById("prev-button");
 const nextButton = document.getElementById("next-button");
 
+document.addEventListener("DOMContentLoaded", function () {
+  var selectElement = document.getElementById("style_id");
+
+  fetch("https://192.168.109.128/api/Style/active")
+    .then((response) => response.json())
+    .then((data) => {
+      data.forEach((item) => {
+        var option = document.createElement("option");
+        option.value = item.id;
+        option.text = item.name;
+        selectElement.appendChild(option);
+      });
+    })
+    .catch((error) => {
+      console.error("Lỗi khi tải dữ liệu từ API: " + error);
+    });
+});
+
 function GetStyleNameById(styleId) {
   // Thực hiện yêu cầu GET để lấy thông tin Style từ API Style dựa trên style_id
   fetch(`https://192.168.109.128/api/Style/id/${styleId}`)
@@ -161,3 +179,83 @@ table.addEventListener("click", function (event) {
       });
   }
 });
+
+document.getElementById("saveChanges").addEventListener("click", function () {
+  const code = document.getElementById("code").value;
+  const name = document.getElementById("name").value;
+  const description = document.getElementById("description").value;
+  const status = parseInt(
+    document.querySelector('input[name="status"]:checked').value
+  );
+  const selectElement = document.getElementById("style_id");
+  const selectedValue = parseInt(selectElement.value);
+
+  if (code.trim() === "") {
+    alert("Vui lòng nhập code của sản phẩm trước khi thêm.");
+    return; // Dừng việc gửi yêu cầu nếu trường "name" trống
+  }
+  if (name.trim() === "") {
+    alert("Vui lòng nhập tên trước khi thêm.");
+    return; // Dừng việc gửi yêu cầu nếu trường "name" trống
+  }
+  if (description.trim() === "") {
+    alert("Vui lòng nhập miêu tả trước khi thêm.");
+    return; // Dừng việc gửi yêu cầu nếu trường "name" trống
+  }
+
+  const dataToAdd = {
+    id: 0,
+    code: code,
+    name: name,
+    style_id: selectedValue,
+    description: description,
+    create_date: "2023-10-30T09:42:15.652Z",
+    status: status,
+  };
+
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(dataToAdd),
+  };
+  fetch(apiUrl, requestOptions)
+    .then((response) => {
+      if (response.ok) {
+        alert("Thêm dữ liệu thành công.");
+        location.reload();
+      } else {
+        alert("Có lỗi xảy ra khi thêm dữ liệu.");
+      }
+    })
+    .catch((error) => {
+      console.error("Lỗi: " + error.message);
+    });
+});
+
+document.getElementById("searchButton").addEventListener("click", function () {
+  // Lấy giá trị tìm kiếm từ trường input
+  const searchPattern = document.getElementById("searchInput").value;
+  if (searchPattern.trim() === "") {
+    fetchDataAndPopulateTable();
+  } else {
+    searchByName(searchPattern);
+  }
+});
+
+function searchByName(searchPattern) {
+  // Lấy dữ liệu từ API và render trang đầu tiên
+  fetch(`https://192.168.109.128/api/Product/searchName/${searchPattern}`)
+    .then((response) => response.json())
+    .then((searhData) => {
+      currentPage = 1;
+      data = searhData;
+      totalPages = Math.ceil(data.length / perPage);
+      updatePageInfo();
+      renderTable(data, currentPage);
+    })
+    .catch((error) => {
+      console.error("Lỗi khi gọi API:", error);
+    });
+}
