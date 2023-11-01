@@ -89,29 +89,51 @@ function updatePageInfo() {
 // Gọi hàm fetchDataAndPopulateTable để khởi tạo và render dữ liệu
 fetchDataAndPopulateTable();
 
-// Hàm thêm dữ liệu từ form vào table
-document.getElementById("myForm").addEventListener("submit", function (event) {
-  event.preventDefault();
-  const formData = {
-    name: document.getElementById("name").value,
-    status: document.querySelector('input[name="status"]:checked').value,
-  };
 
-  // Gọi API để thêm dữ liệu vào cơ sở dữ liệu
-  fetch(apiUrl, {
+// Hàm thêm dữ liệu từ form vào table
+document.getElementById("saveChanges").addEventListener("click", function () {
+  // Lấy giá trị từ input tên và radio button
+  const name = document.getElementById("name").value;
+  const status = parseInt(
+    document.querySelector('input[name="status"]:checked').value
+  );
+
+  // Kiểm tra xem trường "name" có giá trị không
+  if (name.trim() === "") {
+    alert("Vui lòng nhập tên trước khi thêm.");
+    return; // Dừng việc gửi yêu cầu nếu trường "name" trống
+  }
+
+  // Tạo dữ liệu để gửi lên API
+  const dataToAdd = {
+    name: name,
+    status: status,
+  };
+  console.log(dataToAdd);
+
+  // Tùy chọn yêu cầu POST
+  const requestOptions = {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
+      "Content-Type": "application/json", // Định dạng dữ liệu là JSON
     },
-    body: JSON.stringify(formData),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
-      alert("Thêm dữ liệu thành công!");
+    body: JSON.stringify(dataToAdd), // Chuyển đổi dữ liệu thành chuỗi JSON
+  };
+
+  // Thực hiện yêu cầu POST bằng fetch
+  fetch(apiUrl, requestOptions)
+    .then((response) => {
+      if (response.ok) {
+        // Nếu thành công, có thể thêm logic hiển thị thông báo hoặc làm mới trang
+        alert("Thêm dữ liệu thành công.");
+        // Sau đó có thể làm mới trang hoặc tải lại dữ liệu
+        location.reload();
+      } else {
+        alert("Có lỗi xảy ra khi thêm dữ liệu.");
+      }
     })
     .catch((error) => {
-      console.error("Error:", error);
+      console.error("Lỗi: " + error.message);
     });
 });
 table.addEventListener("click", function (event) {
@@ -167,6 +189,7 @@ table.addEventListener("click", function (event) {
 //search
 var searchInput = document.getElementById('searchInput');
 var searchButton = document.getElementById('searchButton');
+
 searchButton.addEventListener('click', function() {
   // Get the value from the input field
   var inputValue = searchInput.value;
@@ -183,4 +206,6 @@ searchButton.addEventListener('click', function() {
         alert("không có dữ liệu")
       });
 });
+
+
 
