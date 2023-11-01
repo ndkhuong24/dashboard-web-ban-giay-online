@@ -89,7 +89,7 @@ function updatePageInfo() {
 fetchDataAndPopulateTable();
 
 
-// Hàm thêm dữ liệu từ form vào table
+
 // Hàm thêm dữ liệu từ form vào table
 document.getElementById("saveChanges").addEventListener("click", function () {
   // Lấy giá trị từ input tên và radio button

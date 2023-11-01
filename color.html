@@ -271,12 +271,16 @@
                                     </tbody>
                                 </table>
 
-                                <ul class="pagination" id="pagination" style="position:relative;padding-left: 350px;">
-                                    <li class="page-item"><button class="page-link" id="prevPage">Previous</button></li>
-                                    <li class="page-item"> <a class="page-link"><span id="currentPage"></span> / <span
-                                                id="totalPages"></span></a>
+                                <ul class="pagination d-flex justify-content-center" style="position:relative">
+                                    <li class="page-item">
+                                        <button id="prev-button" class="btn page-link">Previous</button>
                                     </li>
-                                    <li class="page-item"> <button class="page-link" id="nextPage">Next</button></li>
+                                    <li class="page-item">
+                                        <a class="page-link" id="currentPage"> 1/5 </a>
+                                    </li>
+                                    <li class="page-item">
+                                        <button id="next-button" class="btn page-link">Next</button>
+                                    </li>
                                 </ul>
 
                             </div>

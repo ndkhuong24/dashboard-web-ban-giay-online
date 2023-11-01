@@ -352,14 +352,14 @@
                             <form class="form-inline mr-auto w-100 navbar-search" style="margin-left: 460px;">
                                 <div class="input-group">
                                     <button class="btn btn-primary" style="border-radius: 6px;" type="button"
-                                        data-toggle="modal" data-target="#hahaModal">
+                                        data-toggle="modal" data-target="#AddModal">
                                         Thêm Sole <i class="fas fa-plus fa-sm"></i>
                                     </button>&nbsp;&nbsp;
-                                    <input type="text" style="border-radius: 3px;"
+                                    <input id="searchInput" type="text" style="border-radius: 3px;"
                                         class="form-control bg-light border-1 small" placeholder="Tìm Kiếm"
                                         aria-label="Search" aria-describedby="basic-addon2">
                                     <div class="input-group-append">
-                                        <button class="btn btn-primary" type="button">
+                                        <button id="searchButton" class="btn btn-primary" type="button">
                                             <i class="fas fa-search fa-sm"></i>
                                         </button>
                                     </div>
@@ -386,11 +386,16 @@
                                     </tbody>
                                 </table>
 
-                                <ul class="pagination" id="pagination" style="position:relative;padding-left: 350px;">
-                                    <li class="page-item"><button class="page-link" id="prevPage">Previous</button></li>
-                                    <li class="page-item"> <a class="page-link"><span id="currentPage"></span> / <span id="totalPages"></span></a>
+                                <ul class="pagination d-flex justify-content-center" style="position:relative">
+                                    <li class="page-item">
+                                        <button id="prev-button" class="btn page-link">Previous</button>
                                     </li>
-                                   <li class="page-item"> <button class="page-link" id="nextPage">Next</button></li>
+                                    <li class="page-item">
+                                        <a class="page-link" id="currentPage"> 1/5 </a>
+                                    </li>
+                                    <li class="page-item">
+                                        <button id="next-button" class="btn page-link">Next</button>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -445,85 +450,45 @@
 
 
 
-    <div class="modal fade" id="hahaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true" style="width: 1400px;">
-        <div class="modal-dialog modal-fullscreen-sm-down" role="document" style="font-weight: 400;">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" style="font-weight: 600;" id="exampleModalLabel"> Thêm Sole
-                    </h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
+   <!-- Add Modal-->
+<div class="modal fade" id="AddModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+aria-hidden="true">
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Thêm Category</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form>
+                <div class="form-group">
+                    <label for="name">Tên:</label>
+                    <input type="text" class="form-control" id="name">
                 </div>
-                <div class="modal-body">
-                    <form class="row g-10" id="myForm">
-                        <div class="col-md-6">
-                            <label for="inputPassword4" class="form-label">Tên Sole</label>
-                            <input type="text" class="form-control" id="name" name="name" placeholder="">
-                        </div><br>
-                        <div style="margin-top: 20px;margin-left: 15px;">
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="status" id="status" value="1" checked="true">
-                                <label class="form-check-label" for="inlineRadio1">Hoạt Động</label>
-                            
-                                <input class="form-check-input" type="radio" name="status" id="status" value="0">
-                                <label class="form-check-label" for="inlineRadio2">Không Hoạt Động</label>
-                            </div>
-                        </div>
-                        <div class="modal-footer"> 
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                            <button style="margin-left: 20px;" id="reloadButton" type="submit" class="btn"> <a
-                                    class="btn btn-success" style="width: 100px;">
-                                    Create <i class="fas fa-plus"></i>
-                                </a></button>
-                        </div>
-                    </form>
-                </div>
-
+                <fieldset>
+                    <legend>Trạng thái</legend>
+                    <label>
+                        <input type="radio" id="active" name="status" value="1" checked>
+                        Hoạt động
+                    </label>
+                    <label>
+                        <input type="radio" id="inactive" name="status" value="0">
+                        Không hoạt động
+                    </label>
+                </fieldset>
+            </form>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary" id="saveChanges">Thêm</button>
             </div>
         </div>
-    </div>
-    <div class="modal fade" id="hihiModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true" style="width: 1400px;">
-        <div class="modal-dialog modal-fullscreen-sm-down" role="document" style="font-weight: 400;">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" style="font-weight: 600;" id="exampleModalLabel"> Sửa Sole
-                    </h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form class="row g-10" id="myForm2">
-                       
-                        <div class="col-md-6">
-                            <label for="inputPassword4" class="form-label">Tên Sole</label>
-                            <input type="text" class="form-control" id="name1" name="name" placeholder="">
-                        </div><br>
-                        <div style="margin-top: 20px;margin-left: 15px;">
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="status1" id="status1" value="1" checked="true">
-                                <label class="form-check-label" for="inlineRadio1">Hoạt Động</label>
-                            
-                                <input class="form-check-input" type="radio" name="status1" id="status1" value="0">
-                                <label class="form-check-label" for="inlineRadio2">Không Hoạt Động</label>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                            <button style="margin-left: 20px;" id="reloadButton" type="submit" class="btn"> <a
-                                    class="btn btn-success" style="width: 100px;">
-                                    Create <i class="fas fa-plus"></i>
-                                </a></button>
-                        </div>
-                    </form>
-                </div>
 
-            </div>
-        </div>
     </div>
+</div>
+</div>
+   
 </div>
 
 
