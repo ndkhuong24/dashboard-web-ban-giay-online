@@ -11,6 +11,23 @@ let data = [];
 const prevButton = document.getElementById("prev-button");
 const nextButton = document.getElementById("next-button");
 
+document.addEventListener("DOMContentLoaded", function () {
+  var selectElement = document.getElementById("style_id");
+  fetch("https://192.168.109.128/api/Style/active")
+    .then((response) => response.json())
+    .then((data) => {
+      data.forEach((item) => {
+        var option = document.createElement("option");
+        option.value = item.id;
+        option.text = item.name;
+        selectElement.appendChild(option);
+      });
+    })
+    .catch((error) => {
+      console.error("Lỗi khi tải dữ liệu từ API: " + error);
+    });
+});
+
 function renderTable(data, page) {
   tbody.innerHTML = "";
 
@@ -208,6 +225,7 @@ document.getElementById("confirmUpdate").addEventListener("click", function () {
       create_date: productData.create_date,
       status: productData.status === 1 ? 0 : 1,
     };
+    console.log(dataToUpdate)
     fetch(apiUrl, {
       method: "PUT",
       headers: {
