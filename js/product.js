@@ -153,6 +153,7 @@ table.addEventListener("click", function (event) {
           create_date: create_date,
           status: newStatus,
         };
+
         const requestOptions = {
           method: "PUT",
           headers: {
@@ -192,15 +193,15 @@ document.getElementById("saveChanges").addEventListener("click", function () {
 
   if (code.trim() === "") {
     alert("Vui lòng nhập code của sản phẩm trước khi thêm.");
-    return; // Dừng việc gửi yêu cầu nếu trường "name" trống
+    return;
   }
   if (name.trim() === "") {
     alert("Vui lòng nhập tên trước khi thêm.");
-    return; // Dừng việc gửi yêu cầu nếu trường "name" trống
+    return;
   }
   if (description.trim() === "") {
     alert("Vui lòng nhập miêu tả trước khi thêm.");
-    return; // Dừng việc gửi yêu cầu nếu trường "name" trống
+    return;
   }
 
   const dataToAdd = {
@@ -235,7 +236,6 @@ document.getElementById("saveChanges").addEventListener("click", function () {
 });
 
 document.getElementById("searchButton").addEventListener("click", function () {
-  // Lấy giá trị tìm kiếm từ trường input
   const searchPattern = document.getElementById("searchInput").value;
   if (searchPattern.trim() === "") {
     fetchDataAndPopulateTable();
@@ -245,7 +245,6 @@ document.getElementById("searchButton").addEventListener("click", function () {
 });
 
 function searchByName(searchPattern) {
-  // Lấy dữ liệu từ API và render trang đầu tiên
   fetch(`https://192.168.109.128/api/Product/searchName/${searchPattern}`)
     .then((response) => response.json())
     .then((searhData) => {
