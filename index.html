@@ -64,6 +64,11 @@
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Sản Phẩm</span></a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="product-detail.html">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Sản Phẩm Chi Tiết</span></a>
+            </li>
 
             <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
@@ -524,7 +529,7 @@
                 <div class="modal-body">Bạn có muốn Đăng Xuất ?</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy</button>
-                    <a class="btn btn-danger" href="login.html">Đăng Xuất</a>
+                    <a class="btn btn-danger" id="logoutButton">Đăng Xuất</a>
                 </div>
             </div>
         </div>
@@ -546,6 +551,30 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
+    
+    <script>
+document.getElementById("logoutButton").addEventListener("click", function () {
+    // Gửi yêu cầu POST đến API đăng xuất
+    fetch('http://localhost:8081/api/auth/logout', {
+        method: 'POST',
+        credentials: 'include', // Bao gồm thông tin cookie trong yêu cầu (nếu có)
+    })
+    .then(response => {
+        if (response.status === 200) {
+            // Đăng xuất thành công, chuyển hướng đến trang đăng nhập (ví dụ: login.html)
+            window.location.href = "/login.html";
+        } else {
+            // Xử lý trường hợp lỗi hoặc đăng xuất không thành công (nếu cần)
+            console.error('Lỗi khi đăng xuất:', response.statusText);
+        }
+    })
+    .catch(error => {
+        // Xử lý lỗi mạng (nếu cần)
+        console.error('Lỗi mạng:', error);
+    });
+});
+
+    </script>
 
 </body>
 
