@@ -28,7 +28,7 @@ function renderTable(data, page) {
       <td>${item.name}</td>
       <td>${item.status == 1 ? "Hoạt động" : "Không hoạt động"}</td>
       <td>
-        <button class="btn btn-secondary">Cập nhật</button>
+        <button id="capNhat" class="btn btn-secondary">Cập nhật</button>
       </td>
     `;
     tbody.appendChild(row);
@@ -88,59 +88,6 @@ function updatePageInfo() {
 
 // Gọi hàm fetchDataAndPopulateTable để khởi tạo và render dữ liệu
 fetchDataAndPopulateTable();
-
-table.addEventListener("click", function (event) {
-  if (event.target.classList.contains("btn-secondary")) {
-    // Hiển thị modal
-    $("#confirmationModal").modal("show");
-
-    // Xác nhận cập nhật khi người dùng nhấn nút "Xác nhận" trong modal
-    document
-      .getElementById("confirmUpdate")
-      .addEventListener("click", function () {
-        const clickedRow = event.target.closest("tr");
-        const cells = clickedRow.querySelectorAll("td");
-        const id = parseInt(cells[0].textContent, 10);
-        const name = cells[1].textContent;
-        const status = cells[2].textContent;
-
-        const newStatus = status === "Hoạt động" ? 0 : 1;
-
-        var dataToUpdate = {
-          id: id,
-          name: name,
-          status: newStatus,
-        };
-
-        // Tùy chọn yêu cầu PUT
-        const requestOptions = {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(dataToUpdate),
-        };
-
-        fetch(apiUrl, requestOptions)
-          .then((response) => {
-            if (response.ok) {
-              // Xóa dữ liệu cũ và cập nhật bảng
-              tbody.innerHTML = "";
-              fetchDataAndPopulateTable();
-            } else {
-              response.text().then((data) => {
-                console.log("Lỗi: " + data);
-              });
-            }
-          })
-          .catch((error) => {
-            console.log("Lỗi: " + error.message);
-          });
-
-        $("#confirmationModal").modal("hide");
-      });
-  }
-});
 
 document.getElementById("saveChanges").addEventListener("click", function () {
   // Lấy giá trị từ input tên và radio button
@@ -213,3 +160,81 @@ function searchByName(searchPattern) {
       console.error("Lỗi khi gọi API:", error);
     });
 }
+
+// Thêm sự kiện "click" cho toàn bộ bảng
+table.addEventListener("click", function (event) {
+  if (event.target.classList.contains("btn-secondary")) {
+    // Xác định phần tử gần nhất có thẻ tr (dòng)
+    const clickedRow = event.target.closest("tr");
+    if (clickedRow) {
+      // Lấy giá trị id từ dòng
+      const Styleid = clickedRow.querySelector("td:first-child").textContent;
+
+      // Gán giá trị id vào thẻ ẩn trong modal
+      document.getElementById("modalProductId").value = Styleid;
+
+      // Hiển thị modal
+      $("#confirmationModal").modal("show");
+    }
+  }
+});
+
+// Function để lấy dữ liệu Style bằng ID
+function fetchStyleById(styleId, callback) {
+  // Đường dẫn API với ID
+  const apiUrl = `https://192.168.109.128/api/Style/id/${styleId}`;
+
+  // Thực hiện yêu cầu GET đến API
+  fetch(apiUrl)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Lỗi khi gọi API");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      // Gọi hàm callback với dữ liệu Style
+      callback(data);
+    })
+    .catch((error) => {
+      console.error("Lỗi: " + error);
+    });
+}
+
+var dataToUpdate;
+
+// Sự kiện "click" cho nút "Xác nhận" trong modal
+document.getElementById("confirmUpdate").addEventListener("click", function () {
+  // Lấy giá trị id từ thẻ ẩn trong modal
+  const styleIdFromModal = document.getElementById("modalProductId").value;
+
+  // Gọi hàm để lấy dữ liệu Style bằng ID
+  fetchStyleById(styleIdFromModal, function (styleData) {
+    dataToUpdate = {
+      id: styleData.id,
+      name: styleData.name,
+      status: styleData.status === 1 ? 0 : 1,
+    };
+    fetch(apiUrl, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(dataToUpdate),
+    })
+      .then((response) => {
+        if (response.ok) {
+          tbody.innerHTML = "";
+          fetchDataAndPopulateTable();
+        } else {
+          response.text().then((data) => {
+            console.log("Lỗi: " + data);
+          });
+        }
+      })
+      .catch((error) => {
+        console.log("Lỗi: " + error.message);
+      });
+    $("#confirmationModal").modal("hide");
+  });
+});
