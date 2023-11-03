@@ -187,15 +187,15 @@ table.addEventListener("click", function (event) {
   if (event.target.classList.contains("btn-secondary")) {
     const clickedRow = event.target.closest("tr");
     if (clickedRow) {
-      const Styleid = clickedRow.querySelector("td:first-child").textContent;
-      document.getElementById("modalProductId").value = Styleid;
+      const ProductId = clickedRow.querySelector("td:first-child").textContent;
+      document.getElementById("modalProductId").value = ProductId;
       $("#confirmationModal").modal("show");
     }
   }
 });
 
-function fetchProductById(styleId, callback) {
-  const apiUrl = `https://192.168.109.128/api/Product/${styleId}`;
+function fetchProductById(ProductId, callback) {
+  const apiUrl = `https://192.168.109.128/api/Product/${ProductId}`;
   fetch(apiUrl)
     .then((response) => {
       if (!response.ok) {
@@ -225,7 +225,7 @@ document.getElementById("confirmUpdate").addEventListener("click", function () {
       create_date: productData.create_date,
       status: productData.status === 1 ? 0 : 1,
     };
-    console.log(dataToUpdate)
+    console.log(dataToUpdate);
     fetch(apiUrl, {
       method: "PUT",
       headers: {
