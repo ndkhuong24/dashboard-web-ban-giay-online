@@ -37,13 +37,31 @@ function renderTable(data, page) {
   for (let i = startIndex; i < endIndex && i < data.length; i++) {
     const item = data[i];
     const row = document.createElement("tr");
+
+    // Parse the create_date string to a Date object
+    const createDate = new Date(item.create_date);
+
+    // Hàm để thêm số 0 đứng đầu nếu số đó nhỏ hơn 10
+    const addLeadingZero = (number) => (number < 10 ? `0${number}` : number);
+
+    // Format the date with full date and time
+    const formattedCreateDate = `${addLeadingZero(
+      createDate.getDate()
+    )}/${addLeadingZero(
+      createDate.getMonth() + 1
+    )}/${createDate.getFullYear()} ${addLeadingZero(
+      createDate.getHours()
+    )}:${addLeadingZero(createDate.getMinutes())}:${addLeadingZero(
+      createDate.getSeconds()
+    )}`;
+
     row.innerHTML = `
       <td>${item.id}</td>
       <td>${item.code}</td>
       <td>${item.name}</td>
       <td id="style-name-${item.style_id}"></td>
       <td>${item.description}</td>
-      <td>${item.create_date}</td>
+      <td>${formattedCreateDate}</td>
       <td>${item.status == 1 ? "Hoạt động" : "Không hoạt động"}</td>
       <td>
         <button class="btn btn-secondary">Cập nhật</button>
