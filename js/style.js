@@ -28,7 +28,7 @@ function renderTable(data, page) {
       <td>${item.name}</td>
       <td>${item.status == 1 ? "Hoạt động" : "Không hoạt động"}</td>
       <td>
-        <button id="capNhat" class="btn btn-secondary">Cập nhật</button>
+        <button class="btn btn-secondary">Cập nhật</button>
       </td>
     `;
     tbody.appendChild(row);
