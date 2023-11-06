@@ -171,7 +171,7 @@ table.addEventListener("click", function (event) {
       const Styleid = clickedRow.querySelector("td:first-child").textContent;
 
       // Gán giá trị id vào thẻ ẩn trong modal
-      document.getElementById("modalProductId").value = Styleid;
+      document.getElementById("modalStyleId").value = Styleid;
 
       // Hiển thị modal
       $("#confirmationModal").modal("show");
@@ -206,7 +206,7 @@ var dataToUpdate;
 // Sự kiện "click" cho nút "Xác nhận" trong modal
 document.getElementById("confirmUpdate").addEventListener("click", function () {
   // Lấy giá trị id từ thẻ ẩn trong modal
-  const styleIdFromModal = document.getElementById("modalProductId").value;
+  const styleIdFromModal = document.getElementById("modalStyleId").value;
 
   // Gọi hàm để lấy dữ liệu Style bằng ID
   fetchStyleById(styleIdFromModal, function (styleData) {

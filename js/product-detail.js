@@ -268,3 +268,14 @@ function searchByName(searchPattern) {
       console.error("Lỗi khi gọi API:", error);
     });
 }
+
+table.addEventListener("click", function (event) {
+  if (event.target.classList.contains("btn-secondary")) {
+    const clickedRow = event.target.closest("tr");
+    if (clickedRow) {
+      const ProductId = clickedRow.querySelector("td:first-child").textContent;
+      document.getElementById("modalProductId").value = ProductId;
+      $("#confirmationModal").modal("show");
+    }
+  }
+});
