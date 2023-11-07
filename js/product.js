@@ -11,6 +11,18 @@ let data = [];
 const prevButton = document.getElementById("prev-button");
 const nextButton = document.getElementById("next-button");
 
+var notification = document.getElementById("notification");
+var notificationText = document.getElementById("notification-text");
+
+function showNotification(message) {
+  notificationText.textContent = message;
+  notification.style.display = "block";
+
+  setTimeout(function () {
+    notification.style.display = "none";
+  }, 3000);
+}
+
 document.addEventListener("DOMContentLoaded", function () {
   var selectElement = document.getElementById("style_id");
   fetch("https://192.168.109.128/api/Style/active")
@@ -24,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     })
     .catch((error) => {
-      console.error("Lỗi khi tải dữ liệu từ API: " + error);
+      showNotification("Đã xảy ra lỗi");
     });
 });
 
@@ -82,7 +94,7 @@ function GetStyleNameById(styleId) {
       styleNameCell.textContent = styleData.name;
     })
     .catch((error) => {
-      console.error("Lỗi khi gọi API Style:", error);
+      showNotification("Đã xảy ra lỗi");
     });
 }
 
@@ -96,7 +108,7 @@ function fetchDataAndPopulateTable() {
       renderTable(data, currentPage);
     })
     .catch((error) => {
-      console.error("Lỗi khi gọi API:", error);
+      showNotification("Đã xảy ra lỗi");
     });
 }
 
@@ -134,15 +146,15 @@ document.getElementById("saveChanges").addEventListener("click", function () {
   const selectedValue = parseInt(selectElement.value);
 
   if (code.trim() === "") {
-    alert("Vui lòng nhập code của sản phẩm trước khi thêm.");
+    showNotification("Vui lòng nhập code của sản phẩm trước khi thêm.");
     return;
   }
   if (name.trim() === "") {
-    alert("Vui lòng nhập tên trước khi thêm.");
+    showNotification("Vui lòng nhập tên trước khi thêm.");
     return;
   }
   if (description.trim() === "") {
-    alert("Vui lòng nhập miêu tả trước khi thêm.");
+    showNotification("Vui lòng nhập miêu tả trước khi thêm.");
     return;
   }
 
@@ -166,14 +178,19 @@ document.getElementById("saveChanges").addEventListener("click", function () {
   fetch(apiUrl, requestOptions)
     .then((response) => {
       if (response.ok) {
-        alert("Thêm dữ liệu thành công.");
-        location.reload();
+        tbody.innerHTML = "";
+        $("#AddModal").modal("hide");
+        fetchDataAndPopulateTable();
+        showNotification("Thêm dữ liệu thành công");
+        document.getElementById("code").value = "";
+        document.getElementById("name").value = "";
+        document.getElementById("description").value = "";
       } else {
-        alert("Có lỗi xảy ra khi thêm dữ liệu.");
+        showNotification("Có lỗi xảy ra khi thêm dữ liệu.");
       }
     })
     .catch((error) => {
-      console.error("Lỗi: " + error.message);
+      showNotification("Đã xảy ra lỗi");
     });
 });
 
@@ -197,7 +214,7 @@ function searchByName(searchPattern) {
       renderTable(data, currentPage);
     })
     .catch((error) => {
-      console.error("Lỗi khi gọi API:", error);
+      showNotification("Đã xảy ra lỗi");
     });
 }
 
@@ -225,7 +242,7 @@ function fetchProductById(ProductId, callback) {
       callback(data);
     })
     .catch((error) => {
-      console.error("Lỗi: " + error);
+      showNotification("Đã xảy ra lỗi");
     });
 }
 
@@ -255,14 +272,15 @@ document.getElementById("confirmUpdate").addEventListener("click", function () {
         if (response.ok) {
           tbody.innerHTML = "";
           fetchDataAndPopulateTable();
+          showNotification("Thành công");
         } else {
           response.text().then((data) => {
-            console.log("Lỗi: " + data);
+            showNotification("Đã xảy ra lỗi");
           });
         }
       })
       .catch((error) => {
-        console.log("Lỗi: " + error.message);
+        showNotification("Đã xảy ra lỗi");
       });
     $("#confirmationModal").modal("hide");
   });

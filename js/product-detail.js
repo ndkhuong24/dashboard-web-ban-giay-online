@@ -83,7 +83,6 @@ function uploadanhPhu() {
       .then((response) => response.json())
       .then((data) => {
         anhPhuData = data;
-        console.log(anhPhuData);
         insertProductDetail();
       })
       .catch((error) => {
@@ -119,13 +118,21 @@ function insertProductDetail() {
     quantity &&
     price
   ) {
-    if (!/^\d+$/.test(quantity) || parseInt(quantity) <= 0) {
-      showNotification("Số lượng phải là số nguyên lớn hơn 0.");
+    if (
+      !/^\d+$/.test(quantity) ||
+      parseInt(quantity) <= 0 ||
+      parseInt(quantity) >= 2000000000
+    ) {
+      showNotification("Số lượng phải là số nguyên lớn hơn 0 và nhỏ hơn 2 tỷ.");
       return;
     }
 
-    if (!/^\d+$/.test(quantity) || parseInt(price) <= 0) {
-      showNotification("Đơn giá phải là số nguyên lớn hơn 0.");
+    if (
+      !/^\d+$/.test(price) ||
+      parseInt(price) <= 0 ||
+      parseInt(price) >= 2000000000
+    ) {
+      showNotification("Đơn giá phải là số nguyên lớn hơn 0 và nhỏ hơn 2 tỷ.");
       return;
     }
 
@@ -155,16 +162,29 @@ function insertProductDetail() {
     fetch("https://192.168.109.128/api/ProductDetail/insert", requestOptions)
       .then((response) => {
         if (response.ok) {
-          showNotification("Dữ liệu đã được thêm thành công.");
-          location.reload();
+          tbody.innerHTML = "";
+          $("#AddModal").modal("hide");
+          fetchDataAndPopulateTable();
+          showNotification("Thêm dữ liệu thành công");
+          document.getElementById("categoryID").selectedIndex = 0;
+          document.getElementById("brandID").selectedIndex = 0;
+          document.getElementById("productID").selectedIndex = 0;
+          document.getElementById("sizeID").selectedIndex = 0;
+          document.getElementById("colorID").selectedIndex = 0;
+          document.getElementById("soleID").selectedIndex = 0;
+          document.getElementById("materialID").selectedIndex = 0;
+          document.getElementById("quantity").value = "";
+          document.getElementById("price").value = "";
         } else {
           response.text().then((data) => {
             console.log("Lỗi: " + data);
+            showNotification("Đã xảy ra lỗi");
           });
         }
       })
       .catch((error) => {
         console.log("Lỗi: " + error.message);
+        showNotification("Đã xảy ra lỗi");
       });
   } else {
     showNotification("Vui lòng điền đầy đủ thông tin và chọn hình ảnh.");
@@ -220,6 +240,7 @@ function fetchDataAndPopulateTable() {
     })
     .catch((error) => {
       console.error("Lỗi khi gọi API:", error);
+      showNotification("Đã xảy ra lỗi");
     });
 }
 
@@ -267,6 +288,7 @@ function searchByName(searchPattern) {
     })
     .catch((error) => {
       console.error("Lỗi khi gọi API:", error);
+      showNotification("Đã xảy ra lỗi");
     });
 }
 
@@ -372,6 +394,7 @@ table.addEventListener("click", function (event) {
         })
         .catch((error) => {
           console.error("Lỗi khi tải dữ liệu từ API: ", error);
+          showNotification("Đã xảy ra lỗi");
         });
     }
   }
@@ -394,6 +417,7 @@ function fetchProductById(styleId, callback) {
     })
     .catch((error) => {
       console.error("Lỗi: " + error);
+      showNotification("Đã xảy ra lỗi");
     });
 }
 
@@ -406,8 +430,16 @@ document.getElementById("confirmUpdate").addEventListener("click", function () {
     const newId = productData.id;
 
     const newQuantity = document.getElementById("newQuantity").value;
+    if (newQuantity.trim() === "") {
+      showNotification("Vui lòng điền số lượng");
+      return;
+    }
 
     const newPrice = document.getElementById("newPrice").value;
+    if (newPrice.trim() === "") {
+      showNotification("Vui lòng điền đơn giá");
+      return;
+    }
 
     const newStatus = document.querySelector(
       'input[name="status"]:checked'
@@ -423,14 +455,17 @@ document.getElementById("confirmUpdate").addEventListener("click", function () {
         if (response.ok) {
           tbody.innerHTML = "";
           fetchDataAndPopulateTable();
+          showNotification("Thành công");
         } else {
           response.text().then((data) => {
             console.log("Lỗi: " + data);
+            showNotification("Đã xảy ra lỗi");
           });
         }
       })
       .catch((error) => {
         console.log("Lỗi: " + error.message);
+        showNotification("Đã xảy ra lỗi");
       });
 
     $("#confirmationModal").modal("hide");

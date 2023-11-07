@@ -134,9 +134,8 @@ document.getElementById("saveChanges").addEventListener("click", function () {
   fetch(apiUrl, requestOptions)
     .then((response) => {
       if (response.ok) {
-        // Sau đó có thể làm mới trang hoặc tải lại dữ liệu
+        tbody.innerHTML = "";
         $("#AddModal").modal("hide");
-        // Nếu thành công, có thể thêm logic hiển thị thông báo hoặc làm mới trang
         showNotification("Thêm dữ liệu thành công");
         fetchDataAndPopulateTable();
         document.getElementById("name").value = "";
