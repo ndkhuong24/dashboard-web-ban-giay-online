@@ -158,6 +158,16 @@ document.getElementById("saveChanges").addEventListener("click", function () {
     return;
   }
 
+  if (isNameExists(name)) {
+    showNotification("Tên đã tồn tại. Vui lòng chọn tên khác.");
+    return;
+  }
+
+  if (isCodeExists(code)) {
+    showNotification("Mã sản phẩm đã tồn tại. Vui lòng chọn mã khác");
+    return;
+  }
+
   const dataToAdd = {
     id: 0,
     code: code,
@@ -193,6 +203,14 @@ document.getElementById("saveChanges").addEventListener("click", function () {
       showNotification("Đã xảy ra lỗi");
     });
 });
+
+function isNameExists(name) {
+  return data.some((item) => item.name === name);
+}
+
+function isCodeExists(code) {
+  return data.some((item) => item.code === code);
+}
 
 document.getElementById("searchButton").addEventListener("click", function () {
   const searchPattern = document.getElementById("searchInput").value;

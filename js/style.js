@@ -112,7 +112,12 @@ document.getElementById("saveChanges").addEventListener("click", function () {
   // Kiểm tra xem trường "name" có giá trị không
   if (name.trim() === "") {
     showNotification("Vui lòng nhập tên trước khi thêm.");
-    return; // Dừng việc gửi yêu cầu nếu trường "name" trống
+    return;
+  }
+
+  if (isNameExists(name)) {
+    showNotification("Tên đã tồn tại. Vui lòng chọn tên khác.");
+    return; // Dừng việc gửi yêu cầu nếu tên đã tồn tại
   }
 
   // Tạo dữ liệu để gửi lên API
@@ -147,6 +152,11 @@ document.getElementById("saveChanges").addEventListener("click", function () {
       showNotification("Đã xảy ra lỗi");
     });
 });
+
+// Hàm kiểm tra xem tên đã tồn tại trong danh sách data
+function isNameExists(name) {
+  return data.some((item) => item.name === name);
+}
 
 document.getElementById("searchButton").addEventListener("click", function () {
   // Lấy giá trị tìm kiếm từ trường input
