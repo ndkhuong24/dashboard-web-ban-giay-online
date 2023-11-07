@@ -372,70 +372,39 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table" id="dataTable" width="100%" cellspacing="0"
+                                <table class="table" id="data-table" width="100%" cellspacing="0"
                                     style="font-weight: 400;font-size: small;" >
                                     <thead>
                                         <tr>
-                                            <th>STT</th>
-                                            <th>Tên</th>
+                                       
                                             <th>Mã Voucher</th>
+                                            <th>Tên Voucher</th>
+                                            <th>Hình thức giảm</th>
                                             <th>Giá Trị</th>
                                             <th>Giá trị tối đa</th>
                                             <th>Cho đơn tối thiểu</th>
                                             <th>Số lượng</th>
-                                            <th>Thời gian</th>
+                                            <th>Ngày bắt đầu</th>
+                                            <th>Ngày kết thúc</th>
                                             <th>Trạng thái</th>
                                             
                                         </tr>
                                     </thead>
-
-                                    <tbody>
                                     <tbody>
 
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Voucher1</td>
-                                            <td>HGDHS342</td>
-                                            <td  style="color: rgb(211, 24, 24);">25000 vnđ</td>
-                                            <td></td>
-                                            <td style="color: rgb(211, 24, 24);">150000 vnđ</td>
-                                            <td>10</td>
-                                            <td>20/9/2023 - 25/9/2023</td>
-                                            <td style="color: rgb(59, 115, 219);font-weight: 800;">Còn hạn</td>
-                                           
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Voucher2</td>
-                                            <td>FUKK1232</td>
-                                            <td style="color: rgb(211, 24, 24);">5%</td>
-                                            <td style="color: rgb(211, 24, 24);">100000 vnđ</td>
-                                            <td style="color: rgb(211, 24, 24);">1000000 vnđ</td>
-                                            <td>4</td>
-                                            <td>20/9/2023 - 23/9/2023</td>
-                                            <td style="color: rgb(211, 24, 24);font-weight: 800;">Hết hạn</td>
-                                            
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>Voucher3</td>
-                                            <td>HGDSUY9</td>
-                                            <td style="color: rgb(211, 24, 24);">50000 vnđ</td>
-                                            <td></td>
-                                            <td style="color: rgb(211, 24, 24);">5000000 vnđ</td>
-                                            <td>2</td>
-                                            <td>20/9/2023 - 30/9/2023</td>
-                                            <td style="color: rgb(59, 115, 219);font-weight: 800;">Còn Hạn</td>
-                                           
-                                        </tr>
+                                       
                                     </tbody>
                                 </table>
-                                <ul class="pagination" style="position:relative;padding-left: 350px;">
-                                    <li class="page-item"><a class="page-link" href="">
-                                            << </a>
+                                <ul class="pagination d-flex justify-content-center" style="position:relative">
+                                    <li class="page-item">
+                                        <button id="prev-button" class="btn page-link">Previous</button>
                                     </li>
-                                    <li class="page-item"><a class="page-link" href="">1 / 5</a></li>
-                                    <li class="page-item"><a class="page-link" href="">>></a></li>
+                                    <li class="page-item">
+                                        <a class="page-link" id="currentPage"> 1/5 </a>
+                                    </li>
+                                    <li class="page-item" style="font-weight: 400;">
+                                        <button id="next-button" class="btn page-link">Next</button>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -589,9 +558,10 @@
     <!-- Page level plugins -->
     <script src="vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="js/voucher.js"></script>
 
     <!-- Page level custom scripts -->
-    <script src="js/demo/datatables-demo.js"></script>
+    <!-- <script src="js/demo/datatables-demo.js"></script> -->
 
 </body>
 
