@@ -28,9 +28,9 @@ function renderTable(data, page) {
       <td>${item.code}</td>
       <td>${item.name}</td>
       <td>${item.type == 0 ? "VNĐ" : "%"}</td>
-      <td style="color: red;font-weight: 600;">${item.value}vnđ</td>
+      <td style="color: red;font-weight: 600;">${item.value}</td>
       <td style="color: red;font-weight: 600;">${item.maximum_value}</td>
-      <td style="color: red;font-weight: 600;">${item.condition}vnđ</td>
+      <td style="color: red;font-weight: 600;">${item.condition} VNĐ</td>
       <td>${item.quantity}</td>
       <td>${item.start_date}</td>
       <td>${item.end_date}</td>
@@ -95,119 +95,91 @@ function updatePageInfo() {
 // Gọi hàm fetchDataAndPopulateTable để khởi tạo và render dữ liệu
 fetchDataAndPopulateTable();
 
-// Hàm thêm dữ liệu từ form vào table
-// document.getElementById("saveChanges").addEventListener("click", function () {
-//   // Lấy giá trị từ input tên và radio button
-//   const name = document.getElementById("name").value;
-//   const status = parseInt(
-//     document.querySelector('input[name="status"]:checked').value
-//   );
+document.getElementById("saveChanges").addEventListener("click", function () {
+  // Lấy giá trị từ input tên và radio button
+  const name = document.getElementById("name").value;
+  const code = document.getElementById("code").value;
+  const quantity = document.getElementById("quantity").value;
+  const value = document.getElementById("value").value;
+  const maximum_value = document.getElementById("maximum_value").value;
+  const condition = document.getElementById("condition").value;
+  const start_date = document.getElementById("start_date").value;
+  const end_date = document.getElementById("end_date").value;
+  const type = parseInt(
+    document.querySelector('input[name="type"]:checked').value
+  );
+ 
 
-//   // Kiểm tra xem trường "name" có giá trị không
-//   if (name.trim() === "") {
-//     alert("Vui lòng nhập tên trước khi thêm.");
-//     return; // Dừng việc gửi yêu cầu nếu trường "name" trống
-//   }
+  // Kiểm tra xem trường "name" có giá trị không
+  if (name.trim() === "") {
+    alert("Vui lòng nhập tên trước khi thêm.");
+    return; // Dừng việc gửi yêu cầu nếu trường "name" trống
+  }
+  if (code.trim() === "") {
+    alert("Vui lòng nhập mã Voucher trước khi thêm.");
+    return; // Dừng việc gửi yêu cầu nếu trường "name" trống
+  }
+  if (value.trim() === "") {
+    alert("Vui lòng nhập giá trị voucher trước khi thêm.");
+    return; // Dừng việc gửi yêu cầu nếu trường "name" trống
+  }
+  // if (maximum_value.trim() === "") {
+  //   alert("Vui lòng nhập  trước khi thêm.");
+  //   return; // Dừng việc gửi yêu cầu nếu trường "name" trống
+  // }
+  if (quantity.trim() === "") {
+    alert("Vui lòng nhập tên trước khi thêm.");
+    return; // Dừng việc gửi yêu cầu nếu trường "name" trống
+  }
+  if (condition.trim() === "") {
+    alert("Vui lòng nhập tên trước khi thêm.");
+    return; // Dừng việc gửi yêu cầu nếu trường "name" trống
+  }if (start_date.trim() === "") {
+    alert("Vui lòng nhập ngày bắt đầu trước khi thêm.");
+    return; // Dừng việc gửi yêu cầu nếu trường "name" trống
+  }
+  if (end_date.trim() === "") {
+    alert("Vui lòng nhập ngày kết thúc trước khi thêm.");
+    return; // Dừng việc gửi yêu cầu nếu trường "name" trống
+  }
 
-//   // Tạo dữ liệu để gửi lên API
-//   const dataToAdd = {
-//     name: name,
-//     status: status,
-//   };
-//   console.log(dataToAdd);
+  // Tạo dữ liệu để gửi lên API
+  const dataToAdd = {
+    name: name,
+    code:code,
+    quantity:quantity,
+    type:type,
+    value:value,
+    maximum_value:maximum_value,
+    condition:condition,
+    start_date:start_date,
+    end_date:end_date,
+    
+  };
+  console.log(dataToAdd);
 
-//   // Tùy chọn yêu cầu POST
-//   const requestOptions = {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json", // Định dạng dữ liệu là JSON
-//     },
-//     body: JSON.stringify(dataToAdd), // Chuyển đổi dữ liệu thành chuỗi JSON
-//   };
+  // Tùy chọn yêu cầu POST
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json", // Định dạng dữ liệu là JSON
+    },
+    body: JSON.stringify(dataToAdd), // Chuyển đổi dữ liệu thành chuỗi JSON
+  };
 
-//   // Thực hiện yêu cầu POST bằng fetch
-//   fetch(apiUrl, requestOptions)
-//     .then((response) => {
-//       if (response.ok) {
-//         // Nếu thành công, có thể thêm logic hiển thị thông báo hoặc làm mới trang
-//         alert("Thêm dữ liệu thành công.");
-//         // Sau đó có thể làm mới trang hoặc tải lại dữ liệu
-//         location.reload();
-//       } else {
-//         alert("Có lỗi xảy ra khi thêm dữ liệu.");
-//       }
-//     })
-//     .catch((error) => {
-//       console.error("Lỗi: " + error.message);
-//     });
-// });
-// table.addEventListener("click", function (event) {
-//   if (event.target.classList.contains("btn-secondary")) {
-//     // Hỏi người dùng xác nhận
-//     const confirmation = confirm("Bạn có chắc chắn muốn cập nhật dữ liệu?");
-
-//     if (confirmation) {
-//       // Người dùng đã xác nhận
-//       // Thực hiện cập nhật dữ liệu
-//       const clickedRow = event.target.closest("tr");
-//       const cells = clickedRow.querySelectorAll("td");
-//       const id = parseInt(cells[0].textContent, 10);
-//       const name = cells[1].textContent;
-//       const status = cells[2].textContent;
-
-//       const newStatus = status === "Hoạt động" ? 0 : 1;
-
-//       var dataToUpdate = {
-//         id: id,
-//         name: name,
-//         status: newStatus,
-//       };
-
-//       // Tùy chọn yêu cầu PUT
-//       const requestOptions = {
-//         method: "PUT",
-//         headers: {
-//           "Content-Type": "application/json",
-//         },
-//         body: JSON.stringify(dataToUpdate),
-//       };
-
-//       fetch(apiUrl, requestOptions)
-//         .then((response) => {
-//           if (response.ok) {
-//             alert("Dữ liệu đã được cập nhật thành công.");
-//             // Xóa dữ liệu cũ và cập nhật bảng
-//             tbody.innerHTML = "";
-//             fetchDataAndPopulateTable();
-//           } else {
-//             response.text().then((data) => {
-//               console.log("Lỗi: " + data);
-//             });
-//           }
-//         })
-//         .catch((error) => {
-//           console.log("Lỗi: " + error.message);
-//         });
-//     }
-//   }
-// });
-
-// //search
-// var searchInput = document.getElementById('searchInput');
-// var searchButton = document.getElementById('searchButton');
-// searchButton.addEventListener('click', function() {
-//   // Get the value from the input field
-//   var inputValue = searchInput.value;
-//   var searchapi = 'http://localhost:8080/api/Material/' + inputValue;
-//   fetch(searchapi)
-//   .then((response) => response.json())
-//       .then((data)=> {
-//         currentPage = 1;
-//         totalPages = Math.ceil(data.length / perPage);
-//         updatePageInfo();
-//         renderTable(data, currentPage);
-//       })
-//       .catch(function(error) {
-//         alert("không có dữ liệu")
-//       });
-// });
+  // Thực hiện yêu cầu POST bằng fetch
+  fetch(apiUrl, requestOptions)
+    .then((response) => {
+      if (response.ok) {
+        // Nếu thành công, có thể thêm logic hiển thị thông báo hoặc làm mới trang
+        alert("Thêm dữ liệu thành công.");
+        // Sau đó có thể làm mới trang hoặc tải lại dữ liệu
+        location.reload();
+      } else {
+        alert("Có lỗi xảy ra khi thêm dữ liệu.");
+      }
+    })
+    .catch((error) => {
+      console.error("Lỗi: " + error.message);
+    });
+});
