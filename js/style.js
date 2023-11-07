@@ -11,6 +11,19 @@ let currentPage = 1; // Trang hiện tại
 // Định nghĩa biến data và khởi tạo nó là một mảng trống
 let data = [];
 
+var notification = document.getElementById("notification");
+var notificationText = document.getElementById("notification-text");
+
+//show mess thông báo
+function showNotification(message) {
+  notificationText.textContent = message;
+  notification.style.display = "block";
+
+  setTimeout(function () {
+    notification.style.display = "none";
+  }, 3000);
+}
+
 function renderTable(data, page) {
   // Xóa toàn bộ dữ liệu trong tbody
   tbody.innerHTML = "";
@@ -56,7 +69,7 @@ function fetchDataAndPopulateTable() {
       renderTable(data, currentPage);
     })
     .catch((error) => {
-      console.error("Lỗi khi gọi API:", error);
+      showNotification("Đã xảy ra lỗi");
     });
 }
 
@@ -98,7 +111,7 @@ document.getElementById("saveChanges").addEventListener("click", function () {
 
   // Kiểm tra xem trường "name" có giá trị không
   if (name.trim() === "") {
-    alert("Vui lòng nhập tên trước khi thêm.");
+    showNotification("Vui lòng nhập tên trước khi thêm.");
     return; // Dừng việc gửi yêu cầu nếu trường "name" trống
   }
 
@@ -107,7 +120,6 @@ document.getElementById("saveChanges").addEventListener("click", function () {
     name: name,
     status: status,
   };
-  console.log(dataToAdd);
 
   // Tùy chọn yêu cầu POST
   const requestOptions = {
@@ -122,16 +134,18 @@ document.getElementById("saveChanges").addEventListener("click", function () {
   fetch(apiUrl, requestOptions)
     .then((response) => {
       if (response.ok) {
-        // Nếu thành công, có thể thêm logic hiển thị thông báo hoặc làm mới trang
-        alert("Thêm dữ liệu thành công.");
         // Sau đó có thể làm mới trang hoặc tải lại dữ liệu
-        location.reload();
+        $("#AddModal").modal("hide");
+        // Nếu thành công, có thể thêm logic hiển thị thông báo hoặc làm mới trang
+        showNotification("Thêm dữ liệu thành công");
+        fetchDataAndPopulateTable();
+        document.getElementById("name").value = "";
       } else {
-        alert("Có lỗi xảy ra khi thêm dữ liệu.");
+        showNotification("Có lỗi xảy ra khi thêm dữ liệu");
       }
     })
     .catch((error) => {
-      console.error("Lỗi: " + error.message);
+      showNotification("Đã xảy ra lỗi");
     });
 });
 
@@ -157,7 +171,7 @@ function searchByName(searchPattern) {
       renderTable(data, currentPage);
     })
     .catch((error) => {
-      console.error("Lỗi khi gọi API:", error);
+      showNotification("Đã xảy ra lỗi");
     });
 }
 
@@ -197,7 +211,7 @@ function fetchStyleById(styleId, callback) {
       callback(data);
     })
     .catch((error) => {
-      console.error("Lỗi: " + error);
+      showNotification("Đã xảy ra lỗi");
     });
 }
 
@@ -226,14 +240,15 @@ document.getElementById("confirmUpdate").addEventListener("click", function () {
         if (response.ok) {
           tbody.innerHTML = "";
           fetchDataAndPopulateTable();
+          showNotification("Thành công");
         } else {
           response.text().then((data) => {
-            console.log("Lỗi: " + data);
+            showNotification("Đã xảy ra lỗi");
           });
         }
       })
       .catch((error) => {
-        console.log("Lỗi: " + error.message);
+        showNotification("Đã xảy ra lỗi");
       });
     $("#confirmationModal").modal("hide");
   });
