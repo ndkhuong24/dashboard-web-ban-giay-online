@@ -41,9 +41,8 @@
                                         </div>
                                         <form class="user">
                                             <div class="form-group">
-                                                <input type="email" class="form-control form-control-user"
-                                                    id="username" aria-describedby="emailHelp"
-                                                    placeholder="Username">
+                                                <input type="email" class="form-control form-control-user" id="username"
+                                                    aria-describedby="emailHelp" placeholder="Username">
                                             </div>
                                             <div class="form-group">
                                                 <input type="password" class="form-control form-control-user"
@@ -57,7 +56,8 @@
                                                         Me</label>
                                                 </div>
                                             </div>
-                                            <a href="#" valiue="Login" class="btn btn-primary btn-user btn-block" id="loginButton" >
+                                            <a href="#" valiue="Login" class="btn btn-primary btn-user btn-block"
+                                                id="loginButton">
                                                 Login
                                             </a>
                                             <hr>
@@ -89,7 +89,7 @@
 
     <script>
         // Lắng nghe sự kiện khi nút "Login" được nhấn
-        document.getElementById("loginButton").addEventListener("click", function(event) {
+        document.getElementById("loginButton").addEventListener("click", function (event) {
             event.preventDefault(); // Ngăn chặn hành động mặc định của nút submit
 
             // Lấy giá trị tên người dùng và mật khẩu từ trường input
@@ -103,7 +103,7 @@
             };
 
             // Gửi yêu cầu POST đến API /login
-            fetch('http://localhost:8081/api/auth/login', {
+            fetch('http://localhost:8080/api/auth/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -111,17 +111,17 @@
                 },
                 body: JSON.stringify(loginData)
             })
-            .then(response => response.json())
-            .then(data => {
-                if(data.roles.includes("ADMIN"))  window.location.replace('/index.html')
-                else window.location.replace('/meomeo')
-                
-                // Phản hồi cũng có thể chứa thông tin JWT Cookie, bạn có thể xử lý nó tại đây nếu cần.
-            })
-            .catch(error => {
-                // Xử lý lỗi ở đây
-                console.error('Lỗi khi gửi yêu cầu POST:', error);
-            });
+                .then(response => response.json())
+                .then(data => {
+                    if (data.roles.includes("ADMIN")) window.location.replace('/index.html')
+                    else window.location.replace('/meomeo')
+
+                    // Phản hồi cũng có thể chứa thông tin JWT Cookie, bạn có thể xử lý nó tại đây nếu cần.
+                })
+                .catch(error => {
+                    // Xử lý lỗi ở đây
+                    console.error('Lỗi khi gửi yêu cầu POST:', error);
+                });
         });
     </script>
 
