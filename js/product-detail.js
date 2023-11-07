@@ -201,7 +201,8 @@ function renderTable(data, page) {
       <td>${item.price}</td>
       <td>${item.status == 1 ? "Hoạt động" : "Không hoạt động"}</td>
       <td>
-        <button class="btn btn-secondary">Cập nhật</button>
+        <button id="capNhat" class="btn btn-secondary">Cập nhật</button>
+        <button id="chiTiet" class="btn btn-secondary">Chi tiết</button>
       </td>
     `;
     tbody.appendChild(row);
@@ -270,12 +271,168 @@ function searchByName(searchPattern) {
 }
 
 table.addEventListener("click", function (event) {
-  if (event.target.classList.contains("btn-secondary")) {
+  if (event.target.id === "capNhat") {
     const clickedRow = event.target.closest("tr");
     if (clickedRow) {
       const ProductId = clickedRow.querySelector("td:first-child").textContent;
       document.getElementById("modalProductId").value = ProductId;
+
+      fetch(`https://192.168.109.128/api/ProductDetail/getById/${ProductId}`)
+        .then((response) => response.json())
+        .then((ProductDetailData) => {
+          const productDetailDiv = document.getElementById(
+            "updateProductDetail"
+          );
+
+          let isActiveChecked = "";
+          let isInactiveChecked = "";
+
+          if (ProductDetailData.status === 1) {
+            isActiveChecked = "checked";
+          } else if (ProductDetailData.status === 0) {
+            isInactiveChecked = "checked";
+          }
+
+          let productDetailHTML = `
+          <div class="mb-3 col-6">
+              <label class="form-label">Quantity</label>
+              <input id="newQuantity" type="text" class="form-control" value="${ProductDetailData.quantity}">
+          </div>
+          <div class="mb-3 col-6">
+              <label class="form-label">Price</label>
+              <input  id="newPrice" type="text" class="form-control" value="${ProductDetailData.price}">
+          </div>
+          <div class="mb-3">
+              <fieldset>
+                  <legend>Trạng thái</legend>
+                  <label>
+                      <input type="radio" id="active" name="status" value="1" ${isActiveChecked}>
+                      Hoạt động
+                  </label>
+                  <label>
+                      <input type="radio" id="inactive" name="status" value="0" ${isInactiveChecked}>
+                      Không hoạt động
+                  </label>
+              </fieldset>
+          </div>
+          `;
+
+          productDetailDiv.innerHTML = productDetailHTML;
+        });
+
       $("#confirmationModal").modal("show");
     }
   }
+});
+
+table.addEventListener("click", function (event) {
+  if (event.target.id === "chiTiet") {
+    const clickedRow = event.target.closest("tr");
+    if (clickedRow) {
+      const ProductId = clickedRow.querySelector("td:first-child").textContent;
+
+      fetch(`https://192.168.109.128/api/ProductDetail/getPDByID/${ProductId}`)
+        .then((response) => response.json())
+        .then((productInfo) => {
+          fetch(
+            `https://192.168.109.128/api/ProductDetail/getImageChinhById/${ProductId}`
+          )
+            .then((response) => response.json())
+            .then((imageChinhInfo) => {
+              fetch(
+                `https://192.168.109.128/api/ProductDetail/getImagePhuById/${ProductId}`
+              )
+                .then((response) => response.json())
+                .then((imagePhuInfo) => {
+                  let productDetailHTML = `
+                    <h4 style="color: black;">Thông tin chi tiết sản phẩm</h4>
+                    <p style="color: black;">Tên danh mục: ${productInfo.categoryName}</p>
+                    <p style="color: black;">Tên thương hiệu: ${productInfo.brandName}</p>
+                    <p style="color: black;">Tên sản phẩm: ${productInfo.productName}</p>
+                    <p style="color: black;">Size: ${productInfo.sizeName}</p>
+                    <p style="color: black;">Color: ${productInfo.colorName}</p>
+                    <p style="color: black;">Sole: ${productInfo.soleName}</p>
+                    <p style="color: black;">Ảnh sản phẩm</p>
+                    <img src="https://192.168.109.128${imageChinhInfo.path}" alt="Hình ảnh sản phẩm" style="max-width: 100px; max-height: 100px;">
+                  `;
+
+                  for (const image of imagePhuInfo) {
+                    productDetailHTML += `
+                      <img src="https://192.168.109.128${image.path}" alt="Hình ảnh sản phẩm" style="max-width: 100px; max-height: 100px;">
+                    `;
+                  }
+
+                  const productDetailDiv =
+                    document.getElementById("productDetail");
+                  productDetailDiv.innerHTML = productDetailHTML;
+
+                  $("#detailModal").modal("show");
+                });
+            });
+        })
+        .catch((error) => {
+          console.error("Lỗi khi tải dữ liệu từ API: ", error);
+        });
+    }
+  }
+});
+
+function fetchProductById(styleId, callback) {
+  // Đường dẫn API với ID
+  const apiUrl = `https://192.168.109.128/api/ProductDetail/getById/${styleId}`;
+
+  // Thực hiện yêu cầu GET đến API
+  fetch(apiUrl)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Lỗi khi gọi API");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      callback(data);
+    })
+    .catch((error) => {
+      console.error("Lỗi: " + error);
+    });
+}
+
+var dataToUpdate;
+
+document.getElementById("confirmUpdate").addEventListener("click", function () {
+  const productIdFromModal = document.getElementById("modalProductId").value;
+
+  fetchProductById(productIdFromModal, function (productData) {
+    const newId = productData.id;
+
+    const newQuantity = document.getElementById("newQuantity").value;
+
+    const newPrice = document.getElementById("newPrice").value;
+
+    const newStatus = document.querySelector(
+      'input[name="status"]:checked'
+    ).value;
+
+    fetch(
+      `https://192.168.109.128/api/ProductDetail/update?id=${newId}&quantity=${newQuantity}&price=${newPrice}&status=${newStatus}`,
+      {
+        method: "PUT",
+      }
+    )
+      .then((response) => {
+        if (response.ok) {
+          tbody.innerHTML = "";
+          fetchDataAndPopulateTable();
+        } else {
+          response.text().then((data) => {
+            console.log("Lỗi: " + data);
+          });
+        }
+      })
+      .catch((error) => {
+        console.log("Lỗi: " + error.message);
+      });
+
+    $("#confirmationModal").modal("hide");
+  });
 });
