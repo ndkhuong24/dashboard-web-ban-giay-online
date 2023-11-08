@@ -9,6 +9,18 @@ let currentPage = 1; // Trang hiện tại
 
 // Định nghĩa biến data và khởi tạo nó là một mảng trống
 let data = [];
+var notification = document.getElementById("notification");
+var notificationText = document.getElementById("notification-text");
+
+//show mess thông báo
+function showNotification(message) {
+  notificationText.textContent = message;
+  notification.style.display = "block";
+
+  setTimeout(function () {
+    notification.style.display = "none";
+  }, 3000);
+}
 
 function renderTable(data, page) {
   // Xóa toàn bộ dữ liệu trong tbody
@@ -56,7 +68,7 @@ function fetchDataAndPopulateTable() {
       renderTable(data, currentPage);
     })
     .catch((error) => {
-      console.error("Lỗi khi gọi API:", error);
+      showNotification("Đã xảy ra lỗi");
     });
 }
 
@@ -99,8 +111,12 @@ document.getElementById("saveChanges").addEventListener("click", function () {
 
   // Kiểm tra xem trường "name" có giá trị không
   if (name.trim() === "") {
-    alert("Vui lòng nhập tên trước khi thêm.");
+    showNotification("Vui lòng nhập tên trước khi thêm.");
     return; // Dừng việc gửi yêu cầu nếu trường "name" trống
+  }
+  if (isNameExists(name)) {
+    showNotification("Tên đã tồn tại. Vui lòng chọn tên khác.");
+    return; // Dừng việc gửi yêu cầu nếu tên đã tồn tại
   }
 
   // Tạo dữ liệu để gửi lên API
@@ -123,88 +139,128 @@ document.getElementById("saveChanges").addEventListener("click", function () {
   fetch(apiUrl, requestOptions)
     .then((response) => {
       if (response.ok) {
-        // Nếu thành công, có thể thêm logic hiển thị thông báo hoặc làm mới trang
-        alert("Thêm dữ liệu thành công.");
-        // Sau đó có thể làm mới trang hoặc tải lại dữ liệu
-        location.reload();
+        tbody.innerHTML = "";
+        $("#AddModal").modal("hide");
+        showNotification("Thêm dữ liệu thành công");
+        fetchDataAndPopulateTable();
+        document.getElementById("name").value = "";
       } else {
-        alert("Có lỗi xảy ra khi thêm dữ liệu.");
+        showNotification("Có lỗi xảy ra khi thêm dữ liệu");
       }
     })
     .catch((error) => {
-      console.error("Lỗi: " + error.message);
+      showNotification("Đã xảy ra lỗi");
     });
 });
+// Hàm kiểm tra xem tên đã tồn tại trong danh sách data
+function isNameExists(name) {
+  return data.some((item) => item.name === name);
+}
+
+// Thêm sự kiện "click" cho toàn bộ bảng
 table.addEventListener("click", function (event) {
   if (event.target.classList.contains("btn-secondary")) {
-    // Hỏi người dùng xác nhận
-    const confirmation = confirm("Bạn có chắc chắn muốn cập nhật dữ liệu?");
+    // Xác định phần tử gần nhất có thẻ tr (dòng)
+    const clickedRow = event.target.closest("tr");
+    if (clickedRow) {
+      // Lấy giá trị id từ dòng
+      const Soleid = clickedRow.querySelector("td:first-child").textContent;
 
-    if (confirmation) {
-      // Người dùng đã xác nhận
-      // Thực hiện cập nhật dữ liệu
-      const clickedRow = event.target.closest("tr");
-      const cells = clickedRow.querySelectorAll("td");
-      const id = parseInt(cells[0].textContent, 10);
-      const name = cells[1].textContent;
-      const status = cells[2].textContent;
+      // Gán giá trị id vào thẻ ẩn trong modal
+      document.getElementById("modalSoleId").value = Soleid;
 
-      const newStatus = status === "Hoạt động" ? 0 : 1;
-
-      var dataToUpdate = {
-        id: id,
-        name: name,
-        status: newStatus,
-      };
-
-      // Tùy chọn yêu cầu PUT
-      const requestOptions = {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(dataToUpdate),
-      };
-
-      fetch(apiUrl, requestOptions)
-        .then((response) => {
-          if (response.ok) {
-            alert("Dữ liệu đã được cập nhật thành công.");
-            // Xóa dữ liệu cũ và cập nhật bảng
-            tbody.innerHTML = "";
-            fetchDataAndPopulateTable();
-          } else {
-            response.text().then((data) => {
-              console.log("Lỗi: " + data);
-            });
-          }
-        })
-        .catch((error) => {
-          console.log("Lỗi: " + error.message);
-        });
+      // Hiển thị modal
+      $("#confirmationModal").modal("show");
     }
   }
 });
 
-//search
-var searchInput = document.getElementById('searchInput');
-var searchButton = document.getElementById('searchButton');
-searchButton.addEventListener('click', function() {
-  // Get the value from the input field
-  var inputValue = searchInput.value;
-  var searchapi = 'http://localhost:8080/api/Material/' + inputValue;
-  fetch(searchapi)
-  .then((response) => response.json())
-      .then((data)=> {
-        currentPage = 1;
-        totalPages = Math.ceil(data.length / perPage);
-        updatePageInfo();
-        renderTable(data, currentPage);
+// Function để lấy dữ liệu Brand bằng ID
+function fetchSoleById(Soleid, callback) {
+  // Đường dẫn API với ID
+  const apiUrl = `http://localhost:8080/api/Sole/id/${Soleid}`;
+
+  // Thực hiện yêu cầu GET đến API
+  fetch(apiUrl)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Lỗi khi gọi API");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      // Gọi hàm callback với dữ liệu Brand
+      callback(data);
+    })
+    .catch((error) => {
+      showNotification("Đã xảy ra lỗi");
+    });
+}
+
+var dataToUpdate;
+
+// Sự kiện "click" cho nút "Xác nhận" trong modal
+document.getElementById("confirmUpdate").addEventListener("click", function () {
+  // Lấy giá trị id từ thẻ ẩn trong modal
+  const SoleIdFromModal = document.getElementById("modalSoleId").value;
+
+  // Gọi hàm để lấy dữ liệu Style bằng ID
+  fetchSoleById(SoleIdFromModal, function (SoleData) {
+    dataToUpdate = {
+      id: SoleData.id,
+      name: SoleData.name,
+      status: SoleData.status === 1 ? 0 : 1,
+    };
+    fetch(apiUrl, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(dataToUpdate),
+    })
+      .then((response) => {
+        if (response.ok) {
+          tbody.innerHTML = "";
+          fetchDataAndPopulateTable();
+          showNotification("Thành công");
+        } else {
+          response.text().then((data) => {
+            showNotification("Đã xảy ra lỗi");
+          });
+        }
       })
-      .catch(function(error) {
-        alert("không có dữ liệu")
+      .catch((error) => {
+        showNotification("Đã xảy ra lỗi");
       });
+    $("#confirmationModal").modal("hide");
+  });
 });
+
+//search
+document.getElementById("searchButton").addEventListener("click", function () {
+  // Lấy giá trị tìm kiếm từ trường input
+  const searchPattern = document.getElementById("searchInput").value;
+  if (searchPattern.trim() === "") {
+    fetchDataAndPopulateTable();
+  } else {
+    searchByName(searchPattern);
+  }
+});
+function searchByName(searchPattern) {
+  // Lấy dữ liệu từ API và render trang đầu tiên
+  fetch(`http://localhost:8080/api/Sole/${searchPattern}`)
+    .then((response) => response.json())
+    .then((searhData) => {
+      currentPage = 1;
+      data = searhData;
+      totalPages = Math.ceil(data.length / perPage);
+      updatePageInfo();
+      renderTable(data, currentPage);
+    })
+    .catch((error) => {
+      showNotification("Đã xảy ra lỗi");
+    });
+}
 
 
 

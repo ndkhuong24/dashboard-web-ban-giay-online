@@ -9,6 +9,18 @@ let currentPage = 1; // Trang hiện tại
 
 // Định nghĩa biến data và khởi tạo nó là một mảng trống
 let data = [];
+var notification = document.getElementById("notification");
+var notificationText = document.getElementById("notification-text");
+
+//show mess thông báo
+function showNotification(message) {
+  notificationText.textContent = message;
+  notification.style.display = "block";
+
+  setTimeout(function () {
+    notification.style.display = "none";
+  }, 3000);
+}
 
 function renderTable(data, page) {
   // Xóa toàn bộ dữ liệu trong tbody
@@ -56,7 +68,7 @@ function fetchDataAndPopulateTable() {
       renderTable(data, currentPage);
     })
     .catch((error) => {
-      console.error("Lỗi khi gọi API:", error);
+      showNotification("Đã xảy ra lỗi");
     });
 }
 
@@ -100,8 +112,12 @@ document.getElementById("saveChanges").addEventListener("click", function () {
 
   // Kiểm tra xem trường "name" có giá trị không
   if (name.trim() === "") {
-    alert("Vui lòng nhập tên trước khi thêm.");
+    showNotification("Vui lòng nhập tên trước khi thêm.");
     return; // Dừng việc gửi yêu cầu nếu trường "name" trống
+  }
+  if (isNameExists(name)) {
+    showNotification("Tên đã tồn tại. Vui lòng chọn tên khác.");
+    return; // Dừng việc gửi yêu cầu nếu tên đã tồn tại
   }
 
   // Tạo dữ liệu để gửi lên API
@@ -124,18 +140,24 @@ document.getElementById("saveChanges").addEventListener("click", function () {
   fetch(apiUrl, requestOptions)
     .then((response) => {
       if (response.ok) {
-        // Nếu thành công, có thể thêm logic hiển thị thông báo hoặc làm mới trang
-        alert("Thêm dữ liệu thành công.");
-        // Sau đó có thể làm mới trang hoặc tải lại dữ liệu
-        location.reload();
+        tbody.innerHTML = "";
+        $("#AddModal").modal("hide");
+        showNotification("Thêm dữ liệu thành công");
+        fetchDataAndPopulateTable();
+        document.getElementById("name").value = "";
       } else {
         alert("Có lỗi xảy ra khi thêm dữ liệu.");
       }
     })
     .catch((error) => {
-      console.error("Lỗi: " + error.message);
+      showNotification("Đã xảy ra lỗi");
     });
 });
+// Hàm kiểm tra xem tên đã tồn tại trong danh sách data
+function isNameExists(name) {
+  return data.some((item) => item.name === name);
+}
+
 table.addEventListener("click", function (event) {
   if (event.target.classList.contains("btn-secondary")) {
     // Hỏi người dùng xác nhận
@@ -187,34 +209,29 @@ table.addEventListener("click", function (event) {
   }
 });
 
+//search
+document.getElementById("searchButton").addEventListener("click", function () {
+  // Lấy giá trị tìm kiếm từ trường input
+  const searchPattern = document.getElementById("searchInput").value;
+  if (searchPattern.trim() === "") {
+    fetchDataAndPopulateTable();
+  } else {
+    searchByName(searchPattern);
+  }
+});
+function searchByName(searchPattern) {
+  // Lấy dữ liệu từ API và render trang đầu tiên
+  fetch(`http://localhost:8080/api/Size/${searchPattern}`)
+    .then((response) => response.json())
+    .then((searhData) => {
+      currentPage = 1;
+      data = searhData;
+      totalPages = Math.ceil(data.length / perPage);
+      updatePageInfo();
+      renderTable(data, currentPage);
+    })
+    .catch((error) => {
+      showNotification("Đã xảy ra lỗi");
+    });
+}
 
-// //Hàm Update từ form vào table:
-// document.getElementById('myForm2').addEventListener('submit', function (event) {
-//     event.preventDefault();
-
-//     const formData = {
-//         id : document.getElementById('id').value,
-//         name: document.getElementById('name1').value,
-//         status: document.querySelector('input[name="status1"]:checked').value,
-//     };
-
-//     // Gọi API để thêm dữ liệu vào cơ sở dữ liệu
-//     fetch(apiUrl, {
-
-//         method: 'PUT',
-//         headers: {
-//             'Content-Type': 'application/json'
-//         },
-//         body: JSON.stringify(formData)
-//     })
-//         .then(response => response.json())
-//         .then(data => {
-//             console.log(data);
-//             alert("Update dữ liệu thành công!");
-
-//         })
-//         .catch(error => {
-//             console.error('Error:', error);
-//         });
-
-// });
