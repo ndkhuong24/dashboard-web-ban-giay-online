@@ -246,8 +246,6 @@ table.addEventListener("click", function (event) {
       fetch(`https://192.168.109.128/api/Product/${ProductID}`)
         .then((response) => response.json())
         .then((ProductDetailData) => {
-          console.log(ProductDetailData);
-
           const UpdateDiv = document.getElementById("updateProduct");
 
           let isActiveChecked = "";
@@ -309,7 +307,7 @@ table.addEventListener("click", function (event) {
                 styleSelect.appendChild(option);
               });
               const selectedValue = ProductDetailData.style_id;
-              styleSelect.value=selectedValue;
+              styleSelect.value = selectedValue;
             });
 
           UpdateDiv.innerHTML = ProductHTML;
@@ -340,17 +338,42 @@ var dataToUpdate;
 
 document.getElementById("confirmUpdate").addEventListener("click", function () {
   const productIdModal = document.getElementById("modalProductId").value;
+
   fetchProductById(productIdModal, function (productData) {
+    const newId = productData.id;
+
+    const newCode = document.getElementById("newCode").value;
+    if (newCode.trim() === "") {
+      showNotification("Vui lòng viết mã của sản phẩm");
+      return;
+    }
+
+    const newName = document.getElementById("newName").value;
+    if (newName.trim() === "") {
+      showNotification("Vui lòng viết tên của sản phẩm");
+      return;
+    }
+
+    const newDescription = document.getElementById("newDescription").value;
+    if (newDescription.trim() === "") {
+      showNotification("Vui lòng viết mô tả của sản phầm");
+      return;
+    }
+
+    const newStatus = document.querySelector(
+      'input[name="newStatus"]:checked'
+    ).value;
+
     dataToUpdate = {
-      id: productData.id,
-      code: productData.code,
-      name: productData.name,
-      style_id: productData.style_id,
-      description: productData.description,
+      id: newId,
+      code: newCode,
+      name: newName,
       create_date: productData.create_date,
-      status: productData.status === 1 ? 0 : 1,
+      description: newDescription,
+      style_id: document.getElementById("newStyleId").value,
+      status: newStatus,
     };
-    console.log(dataToUpdate);
+
     fetch(apiUrl, {
       method: "PUT",
       headers: {

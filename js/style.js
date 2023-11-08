@@ -300,34 +300,4 @@ document.getElementById("confirmUpdate").addEventListener("click", function () {
       });
     $("#confirmationModal").modal("hide");
   });
-
-  // fetchStyleById(styleIdFromModal, function (styleData) {
-  //   dataToUpdate = {
-  //     id: styleData.id,
-  //     name: styleData.name,
-  //     status: styleData.status === 1 ? 0 : 1,
-  //   };
-  //   fetch(apiUrl, {
-  //     method: "PUT",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify(dataToUpdate),
-  //   })
-  //     .then((response) => {
-  //       if (response.ok) {
-  //         tbody.innerHTML = "";
-  //         fetchDataAndPopulateTable();
-  //         showNotification("Thành công");
-  //       } else {
-  //         response.text().then((data) => {
-  //           showNotification("Đã xảy ra lỗi");
-  //         });
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       showNotification("Đã xảy ra lỗi");
-  //     });
-  //   $("#confirmationModal").modal("hide");
-  // });
 });
