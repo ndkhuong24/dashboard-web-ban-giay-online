@@ -38,7 +38,7 @@ function renderTable(data, page) {
       <td>${item.name}</td>
       <td>${item.status == 1 ? "Hoạt động" : "Không hoạt động"}</td>
       <td>
-        <button class="btn btn-secondary">Cập nhật</button>
+        <button id="capNhat" class="btn btn-secondary">Cập nhật</button>
       </td>
     `;
     tbody.appendChild(row);
@@ -158,15 +158,48 @@ function isNameExists(name) {
 }
 // Thêm sự kiện "click" cho toàn bộ bảng
 table.addEventListener("click", function (event) {
-  if (event.target.classList.contains("btn-secondary")) {
+  if (event.target.id === "capNhat") {
     // Xác định phần tử gần nhất có thẻ tr (dòng)
     const clickedRow = event.target.closest("tr");
     if (clickedRow) {
       // Lấy giá trị id từ dòng
       const Categoryid = clickedRow.querySelector("td:first-child").textContent;
+// Gán giá trị id vào thẻ ẩn trong modal
+document.getElementById("modalCategoryId").value = Categoryid;
+fetch(`http://localhost:8080/api/Category/id/${Categoryid}`)
+.then((response)=>response.json())
+.then((CategoryData)=>{
+  const UpdateDiv = document.getElementById("updateCategory")
 
-      // Gán giá trị id vào thẻ ẩn trong modal
-      document.getElementById("modalCategoryId").value = Categoryid;
+  let isActiveChecked = "";
+    let isInactiveChecked = "";
+
+    if (CategoryData.status === 1) {
+      isActiveChecked = "checked";
+    } else if (CategoryData.status === 0) {
+      isInactiveChecked = "checked";
+    }
+    let CategoryHTML=`
+    <form>
+             <div class="form-group">
+                 <label for="name">Tên:</label>
+                 <input type="text" class="form-control" id="newName" value="${CategoryData.name}">
+             </div>
+             <fieldset>
+                 <legend>Trạng thái</legend>
+                 <label>
+                     <input type="radio" id="active" name="newStatus" value="1" ${isActiveChecked}>
+                     Hoạt động
+                 </label>
+                 <label>
+                     <input type="radio" id="inactive" name="newStatus" value="0" ${isInactiveChecked}>
+                     Không hoạt động
+                 </label>
+             </fieldset>
+         </form>
+    `;
+    UpdateDiv.innerHTML=CategoryHTML;
+});
 
       // Hiển thị modal
       $("#confirmationModal").modal("show");
@@ -205,10 +238,19 @@ document.getElementById("confirmUpdate").addEventListener("click", function () {
 
   // Gọi hàm để lấy dữ liệu Style bằng ID
   fetchCategoryById(CategoryIdFromModal, function (categoryData) {
+    const newId = categoryData.id;
+    const newName = document.getElementById("newName").value;
+    if (newName.trim() === "") {
+      showNotification("Vui lòng viết tên của sản phẩm");
+      return;
+    }
+    const newStatus = document.querySelector(
+      'input[name="newStatus"]:checked'
+    ).value;
     dataToUpdate = {
-      id: categoryData.id,
-      name: categoryData.name,
-      status: categoryData.status === 1 ? 0 : 1,
+      id: newId,
+      name: newName,
+      status: newStatus,
     };
     fetch(apiUrl, {
       method: "PUT",
