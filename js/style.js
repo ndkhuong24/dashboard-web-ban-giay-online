@@ -41,7 +41,7 @@ function renderTable(data, page) {
       <td>${item.name}</td>
       <td>${item.status == 1 ? "Hoạt động" : "Không hoạt động"}</td>
       <td>
-        <button class="btn btn-secondary">Cập nhật</button>
+        <button id="capNhat" class="btn btn-secondary">Cập nhật</button>
       </td>
     `;
     tbody.appendChild(row);
@@ -184,19 +184,49 @@ function searchByName(searchPattern) {
     });
 }
 
-// Thêm sự kiện "click" cho toàn bộ bảng
 table.addEventListener("click", function (event) {
-  if (event.target.classList.contains("btn-secondary")) {
-    // Xác định phần tử gần nhất có thẻ tr (dòng)
+  if (event.target.id === "capNhat") {
     const clickedRow = event.target.closest("tr");
     if (clickedRow) {
-      // Lấy giá trị id từ dòng
-      const Styleid = clickedRow.querySelector("td:first-child").textContent;
+      const StyleID = clickedRow.querySelector("td:first-child").textContent;
+      document.getElementById("modalStyleId").value = StyleID;
 
-      // Gán giá trị id vào thẻ ẩn trong modal
-      document.getElementById("modalStyleId").value = Styleid;
+      fetch(`https://192.168.109.128/api/Style/id/${StyleID}`)
+        .then((response) => response.json())
+        .then((StyleDetailData) => {
+          const StyleDetailDiv = document.getElementById("updateStyle");
 
-      // Hiển thị modal
+          let isActiveChecked = "";
+          let isInactiveChecked = "";
+
+          if (StyleDetailData.status === 1) {
+            isActiveChecked = "checked";
+          } else if (StyleDetailData.status === 0) {
+            isInactiveChecked = "checked";
+          }
+
+          let styleDetailHTML = `
+          <form>
+            <div class="form-group">
+              <label>Tên:</label>
+              <input id="newName" type="text" class="form-control" value="${StyleDetailData.name}">
+            </div>
+            <fieldset>
+              <legend>Trạng thái</legend>
+              <label>
+                  <input type="radio" id="active" name="newStatus" value="1" ${isActiveChecked}>
+                  Hoạt động
+              </label>
+              <label>
+                  <input type="radio" id="inactive" name="newStatus" value="0" ${isInactiveChecked}>
+                  Không hoạt động
+              </label>
+            </fieldset>
+          </form>
+          `;
+
+          StyleDetailDiv.innerHTML = styleDetailHTML;
+        });
       $("#confirmationModal").modal("show");
     }
   }
@@ -216,7 +246,6 @@ function fetchStyleById(styleId, callback) {
       return response.json();
     })
     .then((data) => {
-      // Gọi hàm callback với dữ liệu Style
       callback(data);
     })
     .catch((error) => {
@@ -226,18 +255,28 @@ function fetchStyleById(styleId, callback) {
 
 var dataToUpdate;
 
-// Sự kiện "click" cho nút "Xác nhận" trong modal
 document.getElementById("confirmUpdate").addEventListener("click", function () {
-  // Lấy giá trị id từ thẻ ẩn trong modal
   const styleIdFromModal = document.getElementById("modalStyleId").value;
 
-  // Gọi hàm để lấy dữ liệu Style bằng ID
   fetchStyleById(styleIdFromModal, function (styleData) {
+    const newId = styleData.id;
+
+    const newName = document.getElementById("newName").value;
+    if (newName.trim() === "") {
+      showNotification("Vui lòng điền số lượng");
+      return;
+    }
+
+    const newStatus = document.querySelector(
+      'input[name="newStatus"]:checked'
+    ).value;
+
     dataToUpdate = {
-      id: styleData.id,
-      name: styleData.name,
-      status: styleData.status === 1 ? 0 : 1,
+      id: newId,
+      name: newName,
+      status: newStatus,
     };
+
     fetch(apiUrl, {
       method: "PUT",
       headers: {
@@ -261,4 +300,34 @@ document.getElementById("confirmUpdate").addEventListener("click", function () {
       });
     $("#confirmationModal").modal("hide");
   });
+
+  // fetchStyleById(styleIdFromModal, function (styleData) {
+  //   dataToUpdate = {
+  //     id: styleData.id,
+  //     name: styleData.name,
+  //     status: styleData.status === 1 ? 0 : 1,
+  //   };
+  //   fetch(apiUrl, {
+  //     method: "PUT",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify(dataToUpdate),
+  //   })
+  //     .then((response) => {
+  //       if (response.ok) {
+  //         tbody.innerHTML = "";
+  //         fetchDataAndPopulateTable();
+  //         showNotification("Thành công");
+  //       } else {
+  //         response.text().then((data) => {
+  //           showNotification("Đã xảy ra lỗi");
+  //         });
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       showNotification("Đã xảy ra lỗi");
+  //     });
+  //   $("#confirmationModal").modal("hide");
+  // });
 });

@@ -328,11 +328,11 @@ table.addEventListener("click", function (event) {
               <fieldset>
                   <legend>Trạng thái</legend>
                   <label>
-                      <input type="radio" id="active" name="status" value="1" ${isActiveChecked}>
+                      <input type="radio" id="active" name="newStatus" value="1" ${isActiveChecked}>
                       Hoạt động
                   </label>
                   <label>
-                      <input type="radio" id="inactive" name="status" value="0" ${isInactiveChecked}>
+                      <input type="radio" id="inactive" name="newStatus" value="0" ${isInactiveChecked}>
                       Không hoạt động
                   </label>
               </fieldset>
@@ -442,7 +442,7 @@ document.getElementById("confirmUpdate").addEventListener("click", function () {
     }
 
     const newStatus = document.querySelector(
-      'input[name="status"]:checked'
+      'input[name="newStatus"]:checked'
     ).value;
 
     fetch(

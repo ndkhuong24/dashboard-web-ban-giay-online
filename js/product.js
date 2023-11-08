@@ -76,7 +76,7 @@ function renderTable(data, page) {
       <td>${formattedCreateDate}</td>
       <td>${item.status == 1 ? "Hoạt động" : "Không hoạt động"}</td>
       <td>
-        <button class="btn btn-secondary">Cập nhật</button>
+        <button id="capNhat" class="btn btn-secondary">Cập nhật</button>
       </td>
     `;
 
@@ -237,11 +237,83 @@ function searchByName(searchPattern) {
 }
 
 table.addEventListener("click", function (event) {
-  if (event.target.classList.contains("btn-secondary")) {
+  if (event.target.id === "capNhat") {
     const clickedRow = event.target.closest("tr");
     if (clickedRow) {
-      const ProductId = clickedRow.querySelector("td:first-child").textContent;
-      document.getElementById("modalProductId").value = ProductId;
+      const ProductID = clickedRow.querySelector("td:first-child").textContent;
+      document.getElementById("modalProductId").value = ProductID;
+
+      fetch(`https://192.168.109.128/api/Product/${ProductID}`)
+        .then((response) => response.json())
+        .then((ProductDetailData) => {
+          console.log(ProductDetailData);
+
+          const UpdateDiv = document.getElementById("updateProduct");
+
+          let isActiveChecked = "";
+          let isInactiveChecked = "";
+
+          if (ProductDetailData.status === 1) {
+            isActiveChecked = "checked";
+          } else if (ProductDetailData.status === 0) {
+            isInactiveChecked = "checked";
+          }
+
+          let ProductHTML = `
+          <form>
+            <div class="row">
+              <div class="form-group col">
+                  <label>Code:</label>
+                  <input type="text" class="form-control" id="newCode" value="${ProductDetailData.code}">
+              </div>
+              <div class="form-group col">
+                  <label>Tên:</label>
+                  <input type="text" class="form-control" id="newName" value="${ProductDetailData.name}">
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col">
+                  <label>Mô tả:</label>
+                  <input type="text" class="form-control" id="newDescription" value="${ProductDetailData.description}">
+              </div>
+              <div class="form-group col">
+                  <label>Style:</label>
+                  <select class="form-control" id="newStyleId">
+  
+                  </select>
+              </div>
+            </div>
+            <fieldset>
+              <legend>Trạng thái</legend>
+              <label>
+                  <input type="radio" id="active" name="newStatus" value="1" ${isActiveChecked}>
+                  Hoạt động
+              </label>
+              <label>
+                  <input type="radio" id="inactive" name="newStatus" value="0" ${isInactiveChecked}>
+                  Không hoạt động
+              </label>
+            </fieldset>
+          </form>
+          `;
+
+          fetch(`https://192.168.109.128/api/Style/active`)
+            .then((response) => response.json())
+            .then((StyleActiveData) => {
+              const styleSelect = document.getElementById("newStyleId");
+              // styleSelect.innerHTML = "";
+              StyleActiveData.forEach((style) => {
+                const option = document.createElement("option");
+                option.value = style.id;
+                option.textContent = style.name;
+                styleSelect.appendChild(option);
+              });
+              const selectedValue = ProductDetailData.style_id;
+              styleSelect.value=selectedValue;
+            });
+
+          UpdateDiv.innerHTML = ProductHTML;
+        });
       $("#confirmationModal").modal("show");
     }
   }
