@@ -39,7 +39,7 @@ function renderTable(data, page) {
       <td>${item.name}</td>
       <td>${item.status == 1 ? "Hoạt động" : "Không hoạt động"}</td>
       <td>
-        <button class="btn btn-secondary">Cập nhật</button>
+        <button class="btn btn-secondary" id="capNhat">Cập nhật</button>
       </td>
     `;
     tbody.appendChild(row);
@@ -158,55 +158,125 @@ function isNameExists(name) {
   return data.some((item) => item.name === name);
 }
 
+// Thêm sự kiện "click" cho toàn bộ bảng
 table.addEventListener("click", function (event) {
-  if (event.target.classList.contains("btn-secondary")) {
-    // Hỏi người dùng xác nhận
-    const confirmation = confirm("Bạn có chắc chắn muốn cập nhật dữ liệu?");
+  if (event.target.id === "capNhat") {
+    // Xác định phần tử gần nhất có thẻ tr (dòng)
+    const clickedRow = event.target.closest("tr");
+    if (clickedRow) {
+      // Lấy giá trị id từ dòng
+      const Sizeid = clickedRow.querySelector("td:first-child").textContent;
+      // Gán giá trị id vào thẻ ẩn trong modal
+      document.getElementById("modalSizeId").value = Sizeid;
+      fetch(`http://localhost:8080/api/Size/id/${Sizeid}`)
+      .then((response)=>response.json())
+      .then((SizeData)=>{
+        const UpdateDiv = document.getElementById("updateSize")
 
-    if (confirmation) {
-      // Người dùng đã xác nhận
-      // Thực hiện cập nhật dữ liệu
-      const clickedRow = event.target.closest("tr");
-      const cells = clickedRow.querySelectorAll("td");
-      const id = parseInt(cells[0].textContent, 10);
-      const name = cells[1].textContent;
-      const status = cells[2].textContent;
+        let isActiveChecked = "";
+          let isInactiveChecked = "";
 
-      const newStatus = status === "Hoạt động" ? 0 : 1;
-
-      var dataToUpdate = {
-        id: id,
-        name: name,
-        status: newStatus,
-      };
-
-      // Tùy chọn yêu cầu PUT
-      const requestOptions = {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(dataToUpdate),
-      };
-
-      fetch(apiUrl, requestOptions)
-        .then((response) => {
-          if (response.ok) {
-            alert("Dữ liệu đã được cập nhật thành công.");
-            // Xóa dữ liệu cũ và cập nhật bảng
-            tbody.innerHTML = "";
-            fetchDataAndPopulateTable();
-          } else {
-            response.text().then((data) => {
-              console.log("Lỗi: " + data);
-            });
+          if (SizeData.status === 1) {
+            isActiveChecked = "checked";
+          } else if (SizeData.status === 0) {
+            isInactiveChecked = "checked";
           }
-        })
-        .catch((error) => {
-          console.log("Lỗi: " + error.message);
-        });
+          let SizeHTML=`
+          <form>
+                   <div class="form-group">
+                       <label for="name">Tên:</label>
+                       <input type="text" class="form-control" id="newName" value="${SizeData.name}">
+                   </div>
+                   <fieldset>
+                       <legend>Trạng thái</legend>
+                       <label>
+                           <input type="radio" id="active" name="newStatus" value="1" ${isActiveChecked}>
+                           Hoạt động
+                       </label>
+                       <label>
+                           <input type="radio" id="inactive" name="newStatus" value="0" ${isInactiveChecked}>
+                           Không hoạt động
+                       </label>
+                   </fieldset>
+               </form>
+          `;
+          UpdateDiv.innerHTML=SizeHTML;
+      });
+      // Hiển thị modal
+      $("#confirmationModal").modal("show");
     }
   }
+});
+
+// Function để lấy dữ liệu Size bằng ID
+function fetchBrandById(SizeId, callback) {
+  // Đường dẫn API với ID
+  const apiUrl = `http://localhost:8080/api/Size/id/${SizeId}`;
+
+  // Thực hiện yêu cầu GET đến API
+  fetch(apiUrl)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Lỗi khi gọi API");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      // Gọi hàm callback với dữ liệu Size
+      callback(data);
+    })
+    .catch((error) => {
+      showNotification("Đã xảy ra lỗi");
+    });
+}
+
+var dataToUpdate;
+
+// Sự kiện "click" cho nút "Xác nhận" trong modal
+document.getElementById("confirmUpdate").addEventListener("click", function () {
+  // Lấy giá trị id từ thẻ ẩn trong modal
+  const SizeIdFromModal = document.getElementById("modalSizeId").value;
+ 
+  // Gọi hàm để lấy dữ liệu Style bằng ID
+  fetchBrandById(SizeIdFromModal, function (SizeData) {
+    const newId = SizeData.id;
+    const newName = document.getElementById("newName").value;
+    if (newName.trim() === "") {
+      showNotification("Vui lòng viết tên của sản phẩm");
+      return;
+    }
+    const newStatus = document.querySelector(
+      'input[name="newStatus"]:checked'
+    ).value;
+    dataToUpdate = {
+      id: newId,
+      name: newName,
+      status: newStatus,
+    };
+    fetch(apiUrl, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(dataToUpdate),
+    })
+      .then((response) => {
+        if (response.ok) {
+          tbody.innerHTML = "";
+          fetchDataAndPopulateTable();
+          showNotification("Thành công");
+        } else {
+          response.text().then((data) => {
+            showNotification("Đã xảy ra lỗi");
+          });
+        }
+      })
+      .catch((error) => {
+        showNotification("Đã xảy ra lỗi");
+        console.error(error);
+      });
+    $("#confirmationModal").modal("hide");
+  });
 });
 
 //search

@@ -39,7 +39,7 @@ function renderTable(data, page) {
       <td>${item.name}</td>
       <td>${item.status == 1 ? "Hoạt động" : "Không hoạt động"}</td>
       <td>
-        <button class="btn btn-secondary">Cập nhật</button>
+        <button id="capNhat" class="btn btn-secondary">Cập nhật</button>
       </td>
     `;
     tbody.appendChild(row);
@@ -159,15 +159,49 @@ function isNameExists(name) {
 
 // Thêm sự kiện "click" cho toàn bộ bảng
 table.addEventListener("click", function (event) {
-  if (event.target.classList.contains("btn-secondary")) {
+  if (event.target.id === "capNhat") {
     // Xác định phần tử gần nhất có thẻ tr (dòng)
     const clickedRow = event.target.closest("tr");
     if (clickedRow) {
       // Lấy giá trị id từ dòng
       const Soleid = clickedRow.querySelector("td:first-child").textContent;
 
-      // Gán giá trị id vào thẻ ẩn trong modal
-      document.getElementById("modalSoleId").value = Soleid;
+    // Gán giá trị id vào thẻ ẩn trong modal
+    document.getElementById("modalSoleId").value = Soleid;
+    fetch(`http://localhost:8080/api/Sole/id/${Soleid}`)
+    .then((response)=>response.json())
+    .then((SoleData)=>{
+      const UpdateDiv = document.getElementById("updateSole")
+
+      let isActiveChecked = "";
+        let isInactiveChecked = "";
+
+        if (SoleData.status === 1) {
+          isActiveChecked = "checked";
+        } else if (SoleData.status === 0) {
+          isInactiveChecked = "checked";
+        }
+        let SoleHTML=`
+        <form>
+                 <div class="form-group">
+                     <label for="name">Tên:</label>
+                     <input type="text" class="form-control" id="newName" value="${SoleData.name}">
+                 </div>
+                 <fieldset>
+                     <legend>Trạng thái</legend>
+                     <label>
+                         <input type="radio" id="active" name="newStatus" value="1" ${isActiveChecked}>
+                         Hoạt động
+                     </label>
+                     <label>
+                         <input type="radio" id="inactive" name="newStatus" value="0" ${isInactiveChecked}>
+                         Không hoạt động
+                     </label>
+                 </fieldset>
+             </form>
+        `;
+        UpdateDiv.innerHTML=SoleHTML;
+    });
 
       // Hiển thị modal
       $("#confirmationModal").modal("show");
@@ -206,10 +240,19 @@ document.getElementById("confirmUpdate").addEventListener("click", function () {
 
   // Gọi hàm để lấy dữ liệu Style bằng ID
   fetchSoleById(SoleIdFromModal, function (SoleData) {
+    const newId = SoleData.id;
+    const newName = document.getElementById("newName").value;
+    if (newName.trim() === "") {
+      showNotification("Vui lòng viết tên của sản phẩm");
+      return;
+    }
+    const newStatus = document.querySelector(
+      'input[name="newStatus"]:checked'
+    ).value;
     dataToUpdate = {
-      id: SoleData.id,
-      name: SoleData.name,
-      status: SoleData.status === 1 ? 0 : 1,
+      id: newId,
+      name: newName,
+      status: newStatus,
     };
     fetch(apiUrl, {
       method: "PUT",

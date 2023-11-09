@@ -407,8 +407,8 @@
                  <span aria-hidden="true">&times;</span>
              </button>
          </div>
-         <div class="modal-body">
-             Bạn có chắc chắn muốn cập nhật dữ liệu?
+         <div class="modal-body" id="updateColor">
+             
          </div>
          <div class="modal-footer">
              <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
@@ -440,60 +440,6 @@
 
     <!-- Page level custom scripts -->
     <script src="js/color.js"></script>
-    <!-- <script>
-        const pagination = document.querySelector(".pagination");
-        const prevPageLink = document.getElementById("prevPage");
-        const currentPageLink = document.getElementById("currentPage");
-        const nextPageLink = document.getElementById("nextPage");
-    
-        const pageSize = 3; // Số lượng mục trên mỗi trang
-        let currentPage = 1; // Trang hiện tại
-    
-        // Hàm để cập nhật nội dung phân trang
-        function updatePaginationContent(page, totalPages) {
-            currentPageLink.textContent = `${page} / ${totalPages}`;
-            prevPageLink.disabled = page === 1;
-            nextPageLink.disabled = page === totalPages;
-        }
-    
-        // Hàm để gọi API và cập nhật phân trang
-        function fetchAndDisplayPage(page) {
-            fetch(`http://localhost:8080/rest/brand?page=${page}`)
-                .then(response => response.json())
-                .then(data => {
-                    // Cập nhật nội dung bảng dữ liệu ở đây
-    
-                    // Cập nhật nội dung phân trang
-                    const totalPages = Math.ceil(data.totalItems / pageSize);
-                    updatePaginationContent(page, totalPages);
-                })
-                .catch(error => {
-                    console.error("Error fetching data:", error);
-                });
-        }
-    
-        // Bắt sự kiện khi người dùng bấm vào nút chuyển trang trước
-        prevPageLink.addEventListener("click", () => {
-            if (currentPage > 1) {
-                currentPage--;
-                fetchAndDisplayPage(currentPage);
-            }
-        });
-    
-        // Bắt sự kiện khi người dùng bấm vào nút chuyển trang tiếp theo
-        nextPageLink.addEventListener("click", () => {
-            // Thực hiện kiểm tra nếu currentPage < totalPages
-            // Trong trường hợp này, chúng ta giả định totalPages = 5
-            if (currentPage < totalPages) {
-                currentPage++;
-                fetchAndDisplayPage(currentPage);
-            }
-        });
-    
-        // Hiển thị trang đầu tiên khi trang web được tải
-        fetchAndDisplayPage(currentPage);
-    </script> -->
-
 </body>
 
 </html>
