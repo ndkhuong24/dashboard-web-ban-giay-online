@@ -36,9 +36,21 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     })
     .catch((error) => {
+      console.log(error);
       showNotification("Đã xảy ra lỗi");
     });
 });
+
+let styles = [];
+
+fetch("https://192.168.109.128/api/Style")
+  .then((response) => response.json())
+  .then((StylesData) => {
+    styles = StylesData;
+  })
+  .catch((error) => {
+    console.error("Lỗi khi tải danh sách style từ API:", error);
+  });
 
 function renderTable(data, page) {
   tbody.innerHTML = "";
@@ -50,13 +62,14 @@ function renderTable(data, page) {
     const item = data[i];
     const row = document.createElement("tr");
 
-    // Parse the create_date string to a Date object
     const createDate = new Date(item.create_date);
 
-    // Hàm để thêm số 0 đứng đầu nếu số đó nhỏ hơn 10
+    // Tìm tên của style tương ứng với style_id
+    const style = styles.find((style) => style.id === item.style_id);
+    const styleName = style ? style.name : "Không tìm thấy";
+
     const addLeadingZero = (number) => (number < 10 ? `0${number}` : number);
 
-    // Format the date with full date and time
     const formattedCreateDate = `${addLeadingZero(
       createDate.getDate()
     )}/${addLeadingZero(
@@ -68,35 +81,62 @@ function renderTable(data, page) {
     )}`;
 
     row.innerHTML = `
-      <td>${item.id}</td>
-      <td>${item.code}</td>
-      <td>${item.name}</td>
-      <td id="style-name-${item.style_id}"></td>
-      <td>${item.description}</td>
-      <td>${formattedCreateDate}</td>
-      <td>${item.status == 1 ? "Hoạt động" : "Không hoạt động"}</td>
-      <td>
-        <button id="capNhat" class="btn btn-secondary">Cập nhật</button>
-      </td>
-    `;
+        <td>${item.id}</td>
+        <td>${item.code}</td>
+        <td>${item.name}</td>
+        <td>${styleName}</td>
+        <td>${item.description}</td>
+        <td>${formattedCreateDate}</td>
+        <td>${item.status == 1 ? "Hoạt động" : "Không hoạt động"}</td>
+        <td>
+          <button id="capNhat" class="btn btn-secondary">Cập nhật</button>
+        </td>
+      `;
 
-    var styleIDNow = parseInt(item.style_id);
-    GetStyleNameById(styleIDNow);
     tbody.appendChild(row);
   }
 }
 
-function GetStyleNameById(styleId) {
-  fetch(`https://192.168.109.128/api/Style/id/${styleId}`)
-    .then((response) => response.json())
-    .then((styleData) => {
-      const styleNameCell = document.getElementById(`style-name-${styleId}`);
-      styleNameCell.textContent = styleData.name;
-    })
-    .catch((error) => {
-      showNotification("Đã xảy ra lỗi");
-    });
-}
+// function renderTable(data, page) {
+//   tbody.innerHTML = "";
+
+//   const startIndex = (page - 1) * perPage;
+//   const endIndex = page * perPage;
+
+//   for (let i = startIndex; i < endIndex && i < data.length; i++) {
+//     const item = data[i];
+//     const row = document.createElement("tr");
+
+//     const createDate = new Date(item.create_date);
+
+//     const addLeadingZero = (number) => (number < 10 ? `0${number}` : number);
+
+//     const formattedCreateDate = `${addLeadingZero(
+//       createDate.getDate()
+//     )}/${addLeadingZero(
+//       createDate.getMonth() + 1
+//     )}/${createDate.getFullYear()} ${addLeadingZero(
+//       createDate.getHours()
+//     )}:${addLeadingZero(createDate.getMinutes())}:${addLeadingZero(
+//       createDate.getSeconds()
+//     )}`;
+
+//     row.innerHTML = `
+//       <td>${item.id}</td>
+//       <td>${item.code}</td>
+//       <td>${item.name}</td>
+//       <td>${item.style_id}</td>
+//       <td>${item.description}</td>
+//       <td>${formattedCreateDate}</td>
+//       <td>${item.status == 1 ? "Hoạt động" : "Không hoạt động"}</td>
+//       <td>
+//         <button id="capNhat" class="btn btn-secondary">Cập nhật</button>
+//       </td>
+//     `;
+
+//     tbody.appendChild(row);
+//   }
+// }
 
 function fetchDataAndPopulateTable() {
   fetch(apiUrl)
@@ -108,6 +148,7 @@ function fetchDataAndPopulateTable() {
       renderTable(data, currentPage);
     })
     .catch((error) => {
+      console.log(error);
       showNotification("Đã xảy ra lỗi");
     });
 }
@@ -200,6 +241,7 @@ document.getElementById("saveChanges").addEventListener("click", function () {
       }
     })
     .catch((error) => {
+      console.log(error);
       showNotification("Đã xảy ra lỗi");
     });
 });
@@ -232,6 +274,7 @@ function searchByName(searchPattern) {
       renderTable(data, currentPage);
     })
     .catch((error) => {
+      console.log(error);
       showNotification("Đã xảy ra lỗi");
     });
 }
@@ -277,7 +320,7 @@ table.addEventListener("click", function (event) {
               <div class="form-group col">
                   <label>Style:</label>
                   <select class="form-control" id="newStyleId">
-  
+
                   </select>
               </div>
             </div>
@@ -330,6 +373,7 @@ function fetchProductById(ProductId, callback) {
       callback(data);
     })
     .catch((error) => {
+      console.log(error);
       showNotification("Đã xảy ra lỗi");
     });
 }
@@ -393,6 +437,7 @@ document.getElementById("confirmUpdate").addEventListener("click", function () {
         }
       })
       .catch((error) => {
+        console.log(error);
         showNotification("Đã xảy ra lỗi");
       });
     $("#confirmationModal").modal("hide");
