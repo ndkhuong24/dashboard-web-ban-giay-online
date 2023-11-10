@@ -248,9 +248,9 @@ table.addEventListener("click", function (event) {
           }
 
           if(VoucherData.type===1){
-            isActiveChecked2 = "checked";
+            isActiveChecked2="checked";
           }else if(VoucherData.type===0){
-            isInactiveChecked2 = "checked";
+            isInactiveChecked2="checked";
           }
           let VoucherHTML=`
           <form class="row g-10" style="font-size: small;">
@@ -364,7 +364,7 @@ document.getElementById("confirmUpdate").addEventListener("click", function () {
     const newCode = document.getElementById("newCode").value;
     const newValue =document.getElementById("newValue").value;
     const newMaximum_value = document.getElementById("newMaximum_value").value;
-    const newCondition=  document.getElementById("newCondition").value  ;
+    const newCondition= document.getElementById("newCondition").value;
     const newQuantity = document.getElementById("newQuantity").value;
     const newStart_date=document.getElementById("newStart_date").value;
     const newEnd_date=document.getElementById("newEnd_date").value;
@@ -397,6 +397,7 @@ document.getElementById("confirmUpdate").addEventListener("click", function () {
           showNotification("Thành công");
         } else {
           response.text().then((data) => {
+           
             showNotification("Đã xảy ra lỗi");
           });
         }
