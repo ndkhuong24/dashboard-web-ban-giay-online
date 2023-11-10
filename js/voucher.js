@@ -33,8 +33,32 @@ function renderTable(data, page) {
   // Lặp qua các mục dựa trên chỉ mục bắt đầu và kết thúc
   for (let i = startIndex; i < endIndex && i < data.length; i++) {
     const item = data[i];
-    // console.log(item)
     const row = document.createElement("tr");
+
+    const startDate = new Date(item.start_date);
+    const addLeadingZero = (number) => (number < 10 ? `0${number}` : number);
+    const formattedStartDate = `${addLeadingZero(
+      startDate.getDate()
+    )}/${addLeadingZero(
+      startDate.getMonth() + 1
+    )}/${startDate.getFullYear()} ${addLeadingZero(
+      startDate.getHours()
+    )}:${addLeadingZero(startDate.getMinutes())}:${addLeadingZero(
+      startDate.getSeconds()
+    )}`;
+
+    const endDate = new Date(item.end_date);
+    const addLeadingZero1 = (number) => (number < 10 ? `0${number}` : number);
+    const formattedEndDate = `${addLeadingZero1(
+      endDate.getDate()
+    )}/${addLeadingZero1(
+      endDate.getMonth() + 1
+    )}/${endDate.getFullYear()} ${addLeadingZero1(
+      endDate.getHours()
+    )}:${addLeadingZero1(endDate.getMinutes())}:${addLeadingZero1(
+      endDate.getSeconds()
+    )}`;
+
     row.innerHTML = `
       
       <td>${item.id}</td>
@@ -45,15 +69,14 @@ function renderTable(data, page) {
       <td style="color: red;font-weight: 600;">${item.maximum_value}</td>
       <td style="color: red;font-weight: 600;">${item.condition} VNĐ</td>
       <td>${item.quantity}</td>
-      <td>${item.start_date}</td>
-      <td>${item.end_date}</td>
+      <td>${formattedStartDate}</td>
+      <td>${formattedEndDate}</td>
       <td>${item.status == 1 ? "Còn Hạn" : "Hết Hạn"}</td>
       <td>
         <button id="capNhat" class="btn btn-primary">Cập nhật</button>
       </td>
     `;
     tbody.appendChild(row);
-
   }
 }
 
@@ -124,17 +147,13 @@ document.getElementById("saveChanges").addEventListener("click", function () {
   const type = parseInt(
     document.querySelector('input[name="type"]:checked').value
   );
-  const status = parseInt(
-    document.querySelector('input[name="status"]:checked').value
-  );
- 
 
   // Kiểm tra xem trường "name" có giá trị không
   if (name.trim() === "") {
     showNotification("Vui lòng nhập tên Voucher trước khi thêm.");
     return; // Dừng việc gửi yêu cầu nếu trường "name" trống
   }
-  if(isNameExists(name)){
+  if (isNameExists(name)) {
     showNotification("Tên đã tồn tại. Vui lòng nhập tên khác.");
     return; // Dừng việc gửi yêu cầu nếu tên đã tồn tại
   }
@@ -142,7 +161,7 @@ document.getElementById("saveChanges").addEventListener("click", function () {
     showNotification("Vui lòng nhập mã Voucher trước khi thêm.");
     return; // Dừng việc gửi yêu cầu nếu trường "name" trống
   }
-  if(isCodeExists(code)){
+  if (isCodeExists(code)) {
     showNotification("Code đã tồn tại. Vui lòng nhập Code khác.");
     return; // Dừng việc gửi yêu cầu nếu tên đã tồn tại
   }
@@ -161,7 +180,8 @@ document.getElementById("saveChanges").addEventListener("click", function () {
   if (condition.trim() === "") {
     showNotification("Vui lòng nhập Điều kiện sử dụng trước khi thêm.");
     return; // Dừng việc gửi yêu cầu nếu trường "name" trống
-  }if (start_date.trim() === "") {
+  }
+  if (start_date.trim() === "") {
     showNotification("Vui lòng nhập ngày bắt đầu trước khi thêm.");
     return; // Dừng việc gửi yêu cầu nếu trường "name" trống
   }
@@ -173,15 +193,14 @@ document.getElementById("saveChanges").addEventListener("click", function () {
   // Tạo dữ liệu để gửi lên API
   const dataToAdd = {
     name: name,
-    code:code,
-    quantity:quantity,
-    type:type,
-    value:value,
-    maximum_value:maximum_value,
-    condition:condition,
-    start_date:start_date,
-    end_date:end_date,
-    status:status,
+    code: code,
+    quantity: quantity,
+    type: type,
+    value: value,
+    maximum_value: maximum_value,
+    condition: condition,
+    start_date: start_date,
+    end_date: end_date,
   };
   console.log(dataToAdd);
 
@@ -231,15 +250,15 @@ table.addEventListener("click", function (event) {
       // Gán giá trị id vào thẻ ẩn trong modal
       document.getElementById("modalVoucherId").value = Voucherid;
       fetch(`http://localhost:8080/api/Voucher/id/${Voucherid}`)
-      .then((response)=>response.json())
-      .then((VoucherData)=>{
-        const UpdateDiv = document.getElementById("updateVoucher")
+        .then((response) => response.json())
+        .then((VoucherData) => {
+          const UpdateDiv = document.getElementById("updateVoucher");
 
-        let isActiveChecked = "";
-        let isInactiveChecked = "";
+          let isActiveChecked = "";
+          let isInactiveChecked = "";
 
-        let isActiveChecked2 = "";
-        let isInactiveChecked2 = "";
+          let isActiveChecked2 = "";
+          let isInactiveChecked2 = "";
 
           if (VoucherData.status === 1) {
             isActiveChecked = "checked";
@@ -247,12 +266,12 @@ table.addEventListener("click", function (event) {
             isInactiveChecked = "checked";
           }
 
-          if(VoucherData.type===1){
-            isActiveChecked2="checked";
-          }else if(VoucherData.type===0){
-            isInactiveChecked2="checked";
+          if (VoucherData.type === 1) {
+            isActiveChecked2 = "checked";
+          } else if (VoucherData.type === 0) {
+            isInactiveChecked2 = "checked";
           }
-          let VoucherHTML=`
+          let VoucherHTML = `
           <form class="row g-10" style="font-size: small;">
                         <div class="col-md-6">
                           <label for="inputEmail4" class="form-label">Tên Voucher</label>
@@ -317,8 +336,8 @@ table.addEventListener("click", function (event) {
                         </div>
                       </form>
           `;
-          UpdateDiv.innerHTML=VoucherHTML;
-      });
+          UpdateDiv.innerHTML = VoucherHTML;
+        });
       // Hiển thị modal
       $("#confirmationModal").modal("show");
     }
@@ -351,36 +370,37 @@ var dataToUpdate;
 document.getElementById("confirmUpdate").addEventListener("click", function () {
   // Lấy giá trị id từ thẻ ẩn trong modal
   const VoucherIdFromModal = document.getElementById("modalVoucherId").value;
- 
+
   // Gọi hàm để lấy dữ liệu Style bằng ID
   fetchVoucherById(VoucherIdFromModal, function (VoucherData) {
-    
     const newId = VoucherData.id;
     const newName = document.getElementById("newName").value;
     const newStatus = document.querySelector(
-      'input[name="newStatus"]:checked').value;
+      'input[name="newStatus"]:checked'
+    ).value;
     const newType = document.querySelector(
-      'input[name="newType"]:checked').value;
+      'input[name="newType"]:checked'
+    ).value;
     const newCode = document.getElementById("newCode").value;
-    const newValue =document.getElementById("newValue").value;
+    const newValue = document.getElementById("newValue").value;
     const newMaximum_value = document.getElementById("newMaximum_value").value;
-    const newCondition= document.getElementById("newCondition").value;
+    const newCondition = document.getElementById("newCondition").value;
     const newQuantity = document.getElementById("newQuantity").value;
-    const newStart_date=document.getElementById("newStart_date").value;
-    const newEnd_date=document.getElementById("newEnd_date").value;
-    
+    const newStart_date = document.getElementById("newStart_date").value;
+    const newEnd_date = document.getElementById("newEnd_date").value;
+
     dataToUpdate = {
-      id:newId,
+      id: newId,
       name: newName,
-      code:newCode,
-      quantity:newQuantity,
-      type:newType,
-      value:newValue,
-      maximum_value:newMaximum_value,
-      condition:newCondition,
-      start_date:newStart_date,
-      end_date:newEnd_date,
-      status:newStatus,
+      code: newCode,
+      quantity: newQuantity,
+      type: newType,
+      value: newValue,
+      maximum_value: newMaximum_value,
+      condition: newCondition,
+      start_date: newStart_date,
+      end_date: newEnd_date,
+      status: newStatus,
     };
     console.log(dataToUpdate);
     fetch(apiUrl, {
@@ -397,7 +417,6 @@ document.getElementById("confirmUpdate").addEventListener("click", function () {
           showNotification("Thành công");
         } else {
           response.text().then((data) => {
-           
             showNotification("Đã xảy ra lỗi");
           });
         }
@@ -410,11 +429,11 @@ document.getElementById("confirmUpdate").addEventListener("click", function () {
   });
 });
 
-// Tìm kiếm 
-document.getElementById("searchButton").addEventListener("click", function (){
+// Tìm kiếm
+document.getElementById("searchButton").addEventListener("click", function () {
   //Lấy giá trị trong ô input
   const searchPattern = document.getElementById("searchInput").value;
-  if(searchPattern.trim() === "") {
+  if (searchPattern.trim() === "") {
     fetchDataAndPopulateTable();
   } else {
     searchByName(searchPattern);

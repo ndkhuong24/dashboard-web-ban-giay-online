@@ -54,7 +54,8 @@
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
 
-                <div class="sidebar-brand-text mx-3"><img src="img/logo.jfif"  style="width: 200px;border-radius: 10px;" alt="" srcset=""><sup></sup></div>
+                <div class="sidebar-brand-text mx-3"><img src="img/logo.jfif" style="width: 200px;border-radius: 10px;"
+                        alt="" srcset=""><sup></sup></div>
             </a>
 
             <!-- Divider -->
@@ -371,12 +372,12 @@
                             <h6 class="m-0 font-weight-bold text-primary">Records</h6>
                             <form class="form-inline mr-auto w-100 navbar-search" style="margin-left: 510px;">
                                 <div class="input-group">
-                                    <button class="btn btn-primary" style="border-radius: 6px;" type="button"  data-toggle="modal"
-                                    data-target="#AddModal">
-                                        Tạo Voucher  <i class="fas fa-plus fa-sm"></i>
+                                    <button class="btn btn-primary" style="border-radius: 6px;" type="button"
+                                        data-toggle="modal" data-target="#AddModal">
+                                        Tạo Voucher <i class="fas fa-plus fa-sm"></i>
                                     </button>&nbsp;&nbsp;
-                                    <input id="searchInput" type="text" style="border-radius: 3px;" 
-                                        class="form-control bg-light border-1 small" placeholder="Tìm Kiếm" 
+                                    <input id="searchInput" type="text" style="border-radius: 3px;"
+                                        class="form-control bg-light border-1 small" placeholder="Tìm Kiếm"
                                         aria-label="Search" aria-describedby="basic-addon2">
                                     <div class="input-group-append">
                                         <button id="searchButton" class="btn btn-primary" type="button">
@@ -389,10 +390,10 @@
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table" id="data-table" width="100%" cellspacing="0"
-                                    style="font-weight: 400;font-size: small;" >
+                                    style="font-weight: 400;font-size: small;">
                                     <thead>
                                         <tr>
-                                       
+
                                             <th>Mã Voucher</th>
                                             <th>Tên Voucher</th>
                                             <th>Mã Code</th>
@@ -404,12 +405,12 @@
                                             <th>Ngày bắt đầu</th>
                                             <th>Ngày kết thúc</th>
                                             <th>Trạng thái</th>
-                                            
+
                                         </tr>
                                     </thead>
                                     <tbody>
 
-                                       
+
                                     </tbody>
                                 </table>
                                 <ul class="pagination d-flex justify-content-center" style="position:relative">
@@ -476,73 +477,79 @@
 
 
 
-   
+
     <!-- Button trigger modal -->
 
     <!-- Modal -->
     <div class="modal fade" id="AddModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true" style="width: 1400px;">
-    <div class="modal-dialog modal-lg" role="document" style="font-weight: 600;">
-        <div class="modal-content">
-           
+        aria-hidden="true" style="width: 1400px;">
+        <div class="modal-dialog modal-lg" role="document" style="font-weight: 600;">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" style="font-weight: 600;color: cornflowerblue;" id="exampleModalLabel"> Tạo Voucher</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form class="row g-10" style="font-size: small;">
-                        <div class="col-md-6">
-                          <label for="inputEmail4" class="form-label">Tên Voucher</label>
-                          <input class="form-control" id="name" placeholder="">
-                        </div><br>
-                        <div class="col-md-6">
-                          <label for="inputPassword4" class="form-label">Mã Voucher</label>
-                          <input type="text" class="form-control" id="code" placeholder="">
-                        </div><br>
-                        <div class="col-2">
-                          <label for="inputAddress" class="form-label">Số Lượng</label>
-                          <div class="buttons_added">
-                            <input style="height: 38px;width:120px;border: 1px solid;border-color: rgb(201, 199, 213);border-radius: 5px;"quantity" class="input-qty" max="Số tối đa" min="Số tối thiểu" type="number" id="quantity">
-                          </div>
-                        </div>
-                        <div class="col-4">
-                          <label for="inputAddress2" class="form-label">Giá trị</label>
-                          <input type="text" style="color: crimson;" class="form-control" id="value" placeholder="% hoặc VNĐ">
-                        </div>
-                        <div style="margin-top: 10px;margin-left: 15px;">
-                            <fieldset>
-                                <legend style="font-size: small;">Hình thức giảm</legend>
-                                <label>
-                                    <input type="radio" id="active" name="type" value="0" checked>
-                                    VNĐ
-                                </label>
-                                <label>
-                                    <input type="radio" id="inactive" name="type" value="1">
-                                    %
-                                </label>
-                            </fieldset>
-                        </div>
-                        
-                        <div class="col-md-6" style="margin-top: 10px;">
-                            <label for="inputEmail4" class="form-label">Giá trị tối đa (Áp dụng cho voucher %)</label>
-                            <input type="email" class="form-control" id="maximum_value" placeholder="">
-                          </div><br>
-                          <div class="col-md-6" style="margin-top: 10px;">
-                            <label for="inputPassword4" class="form-label">Điều kiện sử dụng</label>
-                            <input type="text" class="form-control" id="condition" placeholder="Cho đơn hàng từ :">
-                          </div><br>
-                          <div class="col-6"  style="margin-top: 10px;">
-                            <label for="inputCity" class="form-label">Ngày bắt đầu</label>
-                            <input type="datetime-local" class="form-control" id="start_date">
-                          </div>
-                          <div class="col-6"  style="margin-top: 10px;">
-                            <label for="inputCity" class="form-label">Ngày kết thúc</label>
-                            <input type="datetime-local" class="form-control" id="end_date" >
-                          </div>
-                          <!-- <div style="margin-top: 10px;margin-left: 15px;">
+
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" style="font-weight: 600;color: cornflowerblue;" id="exampleModalLabel">
+                            Tạo Voucher</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="row g-10" style="font-size: small;">
+                            <div class="col-md-6">
+                                <label for="inputEmail4" class="form-label">Tên Voucher</label>
+                                <input class="form-control" id="name" placeholder="">
+                            </div><br>
+                            <div class="col-md-6">
+                                <label for="inputPassword4" class="form-label">Mã Voucher</label>
+                                <input type="text" class="form-control" id="code" placeholder="">
+                            </div><br>
+                            <div class="col-2">
+                                <label for="inputAddress" class="form-label">Số Lượng</label>
+                                <div class="buttons_added">
+                                    <input
+                                        style="height: 38px;width:120px;border: 1px solid;border-color: rgb(201, 199, 213);border-radius: 5px;"
+                                        quantity" class="input-qty" max="Số tối đa" min="Số tối thiểu" type="number"
+                                        id="quantity">
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <label for="inputAddress2" class="form-label">Giá trị</label>
+                                <input type="text" style="color: crimson;" class="form-control" id="value"
+                                    placeholder="% hoặc VNĐ">
+                            </div>
+                            <div style="margin-top: 10px;margin-left: 15px;">
+                                <fieldset>
+                                    <legend style="font-size: small;">Hình thức giảm</legend>
+                                    <label>
+                                        <input type="radio" id="active" name="type" value="0" checked>
+                                        VNĐ
+                                    </label>
+                                    <label>
+                                        <input type="radio" id="inactive" name="type" value="1">
+                                        %
+                                    </label>
+                                </fieldset>
+                            </div>
+
+                            <div class="col-md-6" style="margin-top: 10px;">
+                                <label for="inputEmail4" class="form-label">Giá trị tối đa (Áp dụng cho voucher
+                                    %)</label>
+                                <input type="email" class="form-control" id="maximum_value" placeholder="">
+                            </div><br>
+                            <div class="col-md-6" style="margin-top: 10px;">
+                                <label for="inputPassword4" class="form-label">Điều kiện sử dụng</label>
+                                <input type="text" class="form-control" id="condition" placeholder="Cho đơn hàng từ :">
+                            </div><br>
+                            <div class="col-6" style="margin-top: 10px;">
+                                <label for="inputCity" class="form-label">Ngày bắt đầu</label>
+                                <input type="datetime-local" class="form-control" id="start_date">
+                            </div>
+                            <div class="col-6" style="margin-top: 10px;">
+                                <label for="inputCity" class="form-label">Ngày kết thúc</label>
+                                <input type="datetime-local" class="form-control" id="end_date">
+                            </div>
+                            <!-- <div style="margin-top: 10px;margin-left: 15px;">
                             <fieldset>
                                 <legend style="font-size: small;">Trạng Thái</legend>
                                 <label>
@@ -555,50 +562,51 @@
                                 </label>
                             </fieldset>
                         </div> -->
-                      </form>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                        <button type="button" class="btn btn-primary" id="saveChanges">Tạo Voucher</button>
+                    </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                    <button type="button" class="btn btn-primary" id="saveChanges">Tạo Voucher</button>
-                </div>
-            </div>
 
+            </div>
         </div>
-    </div>
     </div>
     <!-- Button trigger modal -->
 
     <!-- Update Modal -->
-    
+
     <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true"  style="width: 1400px;">
-    <div class="modal-dialog modal-lg" role="document" style="font-weight: 600;">
-       
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" style="font-weight: 600;color: cornflowerblue;"  id="exampleModalLabel">Xác nhận cập nhật</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
+        aria-hidden="true" style="width: 1400px;">
+        <div class="modal-dialog modal-lg" role="document" style="font-weight: 600;">
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" style="font-weight: 600;color: cornflowerblue;" id="exampleModalLabel">Xác
+                        nhận cập nhật</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="updateVoucher">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <button id="confirmUpdate" type="button" class="btn btn-primary">Xác nhận</button>
+                    <!-- Thêm thẻ ẩn để lưu trữ giá trị id -->
+                    <input type="hidden" id="modalVoucherId">
+                </div>
             </div>
-         <div class="modal-body" id="updateVoucher">
-             
         </div>
-         <div class="modal-footer">
-             <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-             <button id="confirmUpdate" type="button" class="btn btn-primary">Xác nhận</button>
-             <!-- Thêm thẻ ẩn để lưu trữ giá trị id -->
-             <input type="hidden" id="modalVoucherId">
-         </div>
-        </div>
+    </div>
+
     </div>
     </div>
 
-</div>
-</div>
-  
 
-   
+
 
 
     <!-- Bootstrap core JavaScript-->
@@ -612,13 +620,7 @@
     <script src="js/sb-admin-2.min.js"></script>
 
     <!-- Page level plugins -->
-    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
     <script src="js/voucher.js"></script>
-
-    <!-- Page level custom scripts -->
-    <!-- <script src="js/demo/datatables-demo.js"></script> -->
-
 </body>
 
 </html>
