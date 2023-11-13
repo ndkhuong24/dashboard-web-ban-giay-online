@@ -97,47 +97,6 @@ function renderTable(data, page) {
   }
 }
 
-// function renderTable(data, page) {
-//   tbody.innerHTML = "";
-
-//   const startIndex = (page - 1) * perPage;
-//   const endIndex = page * perPage;
-
-//   for (let i = startIndex; i < endIndex && i < data.length; i++) {
-//     const item = data[i];
-//     const row = document.createElement("tr");
-
-//     const createDate = new Date(item.create_date);
-
-//     const addLeadingZero = (number) => (number < 10 ? `0${number}` : number);
-
-//     const formattedCreateDate = `${addLeadingZero(
-//       createDate.getDate()
-//     )}/${addLeadingZero(
-//       createDate.getMonth() + 1
-//     )}/${createDate.getFullYear()} ${addLeadingZero(
-//       createDate.getHours()
-//     )}:${addLeadingZero(createDate.getMinutes())}:${addLeadingZero(
-//       createDate.getSeconds()
-//     )}`;
-
-//     row.innerHTML = `
-//       <td>${item.id}</td>
-//       <td>${item.code}</td>
-//       <td>${item.name}</td>
-//       <td>${item.style_id}</td>
-//       <td>${item.description}</td>
-//       <td>${formattedCreateDate}</td>
-//       <td>${item.status == 1 ? "Hoạt động" : "Không hoạt động"}</td>
-//       <td>
-//         <button id="capNhat" class="btn btn-secondary">Cập nhật</button>
-//       </td>
-//     `;
-
-//     tbody.appendChild(row);
-//   }
-// }
-
 function fetchDataAndPopulateTable() {
   fetch(apiUrl)
     .then((response) => response.json())
