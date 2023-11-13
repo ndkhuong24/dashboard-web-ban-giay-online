@@ -60,7 +60,6 @@ function renderTable(data, page) {
     )}`;
 
     row.innerHTML = `
-      
       <td>${item.id}</td>
       <td>${item.name}</td>
       <td>${item.code}</td>
@@ -101,6 +100,7 @@ function fetchDataAndPopulateTable() {
       renderTable(data, currentPage);
     })
     .catch((error) => {
+      console.log(error);
       showNotification("Đã xảy ra lỗi");
     });
 }
