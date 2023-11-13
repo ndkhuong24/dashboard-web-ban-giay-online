@@ -553,27 +553,47 @@
     <script src="js/demo/chart-pie-demo.js"></script>
     
     <script>
-document.getElementById("logoutButton").addEventListener("click", function () {
-    // Gửi yêu cầu POST đến API đăng xuất
-    fetch('http://localhost:8081/api/auth/logout', {
-        method: 'POST',
-        credentials: 'include', // Bao gồm thông tin cookie trong yêu cầu (nếu có)
-    })
-    .then(response => {
-        if (response.status === 200) {
-            // Đăng xuất thành công, chuyển hướng đến trang đăng nhập (ví dụ: login.html)
-            window.location.href = "/login.html";
-        } else {
-            // Xử lý trường hợp lỗi hoặc đăng xuất không thành công (nếu cần)
-            console.error('Lỗi khi đăng xuất:', response.statusText);
-        }
-    })
-    .catch(error => {
-        // Xử lý lỗi mạng (nếu cần)
-        console.error('Lỗi mạng:', error);
-    });
-});
+        document.getElementById("logoutButton").addEventListener("click", function () {
+            // Lấy token từ cookie
+            const token = getCookie('bezkoder'); // Thay 'your_cookie_name' bằng tên cookie bạn đã sử dụng
 
+            // Kiểm tra xem token có tồn tại hay không
+            if (token) {
+                // Gửi yêu cầu POST đến API đăng xuất với token và bao gồm thông tin cookie
+                fetch('http://localhost:8081/api/auth/logout', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                    },
+                    credentials: 'include', // Bao gồm thông tin cookie trong yêu cầu (nếu có)
+                })
+                    .then(response => {
+                        if (response.status === 200) {
+                            // Đăng xuất thành công, chuyển hướng đến trang đăng nhập (ví dụ: login.html)
+                            window.location.href = "/login.html";
+                        } else {
+                            // Xử lý trường hợp lỗi hoặc đăng xuất không thành công (nếu cần)
+                            console.error('Lỗi khi đăng xuất:', response.statusText);
+                        }
+                    })
+                    .catch(error => {
+                        // Xử lý lỗi mạng (nếu cần)
+                        console.error('Lỗi mạng:', error);
+                    });
+            } else {
+                // Xử lý trường hợp không có token (nếu cần)
+                console.error('Không tìm thấy token.');
+                // Ví dụ: Chuyển hướng đến trang đăng nhập
+                window.location.href = "/login.html";
+            }
+        });
+
+        // Hàm để lấy giá trị của cookie theo tên
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+        }
     </script>
 
 </body>
