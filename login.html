@@ -113,9 +113,9 @@
             })
                 .then(response => response.json())
                 .then(data => {
-                    if (data.roles.includes("ADMIN")) window.location.replace('/index.html')
-                    else window.location.replace('/meomeo')
-
+                    if (data.roles.includes("ADMIN")|| data.roles.includes("MANAGER")) //window.location.replace('/index.html')
+                    //else window.location.replace('/meomeo')
+                    console.log("oke baby")
                     // Phản hồi cũng có thể chứa thông tin JWT Cookie, bạn có thể xử lý nó tại đây nếu cần.
                 })
                 .catch(error => {
