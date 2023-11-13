@@ -72,7 +72,7 @@ function renderTable(data, page) {
       <td>${formattedEndDate}</td>
       <td>${item.status == 1 ? "Còn Hạn" : "Hết Hạn"}</td>
       <td>
-        <button id="capNhat" class="btn btn-primary">Cập nhật</button>
+        <button id="capNhat" class="btn btn-primary" ${item.status == 1 ? "disabled" : ""}>Cập nhật</button>
       </td>
     `;
     tbody.appendChild(row);
@@ -222,6 +222,13 @@ document.getElementById("saveChanges").addEventListener("click", function () {
         showNotification("Thêm dữ liệu thành công");
         fetchDataAndPopulateTable();
         document.getElementById("name").value = "";
+        document.getElementById("code").value = "";
+        document.getElementById("quantity").value = "";
+        document.getElementById("value").value = "";
+        document.getElementById("maximum_value").value = "";
+        document.getElementById("start_date").value = "";
+        document.getElementById("end_date").value = "";
+        document.getElementById("condition").value="";
       } else {
         showNotification("Có lỗi xảy ra khi thêm dữ liệu");
       }
@@ -455,3 +462,19 @@ function searchByName(searchPattern) {
       showNotification("Xảy ra lỗi");
     });
 }
+
+// Lấy tham chiếu đến radio buttons và ô nhập văn bản
+var enableInput = document.getElementById('enableInput');
+var disableInput = document.getElementById('disableInput');
+var textInput = document.getElementById('maximum_value');
+
+// Gán sự kiện thay đổi cho radio buttons
+enableInput.addEventListener('change', function () {
+  // Nếu radio "Cho phép nhập" được chọn, bật ô nhập văn bản
+  textInput.disabled = false;
+});
+
+disableInput.addEventListener('change', function () {
+  // Nếu radio "Vô hiệu hóa nhập" được chọn, vô hiệu hóa ô nhập văn bản
+  textInput.disabled = true;
+});
