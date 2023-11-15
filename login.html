@@ -88,50 +88,50 @@
     <script src="js/sb-admin-2.min.js"></script>
 
     <script>
-    document.getElementById("loginButton").addEventListener("click", function (event) {
-        event.preventDefault();
+        document.getElementById("loginButton").addEventListener("click", function (event) {
+            event.preventDefault();
 
-        const username = document.getElementById("username").value;
-        const password = document.getElementById("Password").value;
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("Password").value;
 
-        const loginData = {
-            username: username,
-            password: password
-        };
+            const loginData = {
+                username: username,
+                password: password
+            };
 
-        fetch('http://localhost:8081/api/auth/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(loginData)
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.token) {
-                // Set cookie với tên là "accessToken" và giá trị là accessToken từ phản hồi
-                setCookie("token", data.token, 7);
-                
-                // Kiểm tra role và chuyển hướng nếu cần
-                if (data.roles.includes("ADMIN") || data.roles.includes("MANAGER")) {
-                    window.location.replace('/index.html');
-                } else {
-                    window.location.replace('/meomeo');
-                }
-            }
-        })
-        .catch(error => {
-            console.error('Lỗi khi gửi yêu cầu POST:', error);
+            fetch('http://localhost:8080/api/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(loginData)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.token) {
+                        // Set cookie với tên là "accessToken" và giá trị là accessToken từ phản hồi
+                        setCookie("token", data.token, 7);
+
+                        // Kiểm tra role và chuyển hướng nếu cần
+                        if (data.roles.includes("ADMIN") || data.roles.includes("MANAGER")) {
+                            window.location.replace('/index.html');
+                        } else {
+                            window.location.replace('/meomeo');
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error('Lỗi khi gửi yêu cầu POST:', error);
+                });
         });
-    });
 
-    function setCookie(cookieName, cookieValue, expirationDays) {
-        const d = new Date();
-        d.setTime(d.getTime() + (expirationDays * 24 * 60 * 60 * 1000));
-        const expires = "expires=" + d.toUTCString();
-        document.cookie = cookieName + "=" + cookieValue + ";" + expires + ";path=/";
-    }
-</script>
+        function setCookie(cookieName, cookieValue, expirationDays) {
+            const d = new Date();
+            d.setTime(d.getTime() + (expirationDays * 24 * 60 * 60 * 1000));
+            const expires = "expires=" + d.toUTCString();
+            document.cookie = cookieName + "=" + cookieValue + ";" + expires + ";path=/";
+        }
+    </script>
 
 
 </body>
