@@ -58,7 +58,9 @@ function renderTable(data, page) {
       <td>${item.code}</td>
       <td>${item.type == 0 ? "VNĐ" : "%"}</td>
       <td style="color: red;font-weight: 600;">${item.value}</td>
-      <td style="color: red;font-weight: 600;">${item.maximum_value !== null ? item.maximum_value : ''}</td>
+      <td style="color: red;font-weight: 600;">${
+        item.maximum_value !== null ? item.maximum_value : ""
+      }</td>
       <td style="color: red;font-weight: 600;">${item.condition_value}</td>
       <td>${item.quantity}</td>
       <td>${formattedStartDate}</td>
@@ -122,7 +124,7 @@ document.getElementById("saveChanges").addEventListener("click", function () {
   const name = document.getElementById("name").value;
   const code = document.getElementById("code").value;
   const quantity = document.getElementById("quantity").value;
-  const value = document.getElementById("value").value;
+  const value = parseInt(document.getElementById("value").value);
   const maximum_value = document.getElementById("maximum_value").value;
   const condition = document.getElementById("condition").value;
   const start_date = document.getElementById("start_date").value;
@@ -147,8 +149,8 @@ document.getElementById("saveChanges").addEventListener("click", function () {
     showNotification("Code đã tồn tại. Vui lòng nhập Code khác.");
     return;
   }
-  if (value.trim() === "") {
-    showNotification("Vui lòng nhập giá trị Voucher trước khi thêm.");
+  if (isNaN(value)) {
+    showNotification("Ô giá trị trống hoặc giá trị truyền vào không phải là số.");
     return;
   }
 
@@ -174,6 +176,17 @@ document.getElementById("saveChanges").addEventListener("click", function () {
   if (end_date.trim() === "") {
     showNotification("Vui lòng nhập ngày kết thúc trước khi thêm.");
     return;
+  }
+
+  if (type === 1) {
+    if (!isNaN(value) && value >= 1 && value <= 100) {
+      // console.log("Giá trị hợp lệ trong khoảng từ 1 đến 100");
+    } else {
+      showNotification(
+        "Giá trị không hợp lệ, phải nằm trong khoảng từ 1 đến 100"
+      );
+      return;
+    }
   }
 
   const dataToAdd = {
@@ -255,11 +268,15 @@ table.addEventListener("click", function (event) {
           let VoucherHTML = `<form class="row g-10" style="font-size: small;">
           <div class="col-md-6">
               <label class="form-label">Tên Voucher</label>
-              <input class="form-control" id="newName" value="${VoucherData.name}" placeholder="">
+              <input class="form-control" id="newName" value="${
+                VoucherData.name
+              }">
           </div><br>
           <div class="col-md-6">
               <label class="form-label">Mã Voucher</label>
-              <input type="text" class="form-control" id="newCode" value="${VoucherData.code}" placeholder="">
+              <input type="text" class="form-control" id="newCode" value="${
+                VoucherData.code
+              }">
           </div><br>
           <div class="col-2">
               <label class="form-label">Số Lượng</label>
@@ -272,7 +289,9 @@ table.addEventListener("click", function (event) {
           </div>
           <div class="col-4">
               <label class="form-label">Giá trị</label>
-              <input type="text" style="color: crimson;" class="form-control" value="${VoucherData.value}" id="newValue"
+              <input type="text" style="color: crimson;" class="form-control" value="${
+                VoucherData.value
+              }" id="newValue"
                   placeholder="% hoặc VNĐ">
           </div>
           <div style="margin-top: 10px;margin-left: 15px;">
@@ -291,20 +310,30 @@ table.addEventListener("click", function (event) {
       
           <div class="col-md-6" style="margin-top: 10px;">
               <label class="form-label">Giá trị tối đa (Áp dụng cho voucher %)</label>
-              <input type="email" class="form-control" id="newMaximum_value" value="${VoucherData.maximum_value}" ${trangThai}>
+              <input type="email" class="form-control" id="newMaximum_value" value="${
+                VoucherData.maximum_value !== null
+                  ? VoucherData.maximum_value
+                  : ""
+              }" ${trangThai}>
           </div><br>
           <div class="col-md-6" style="margin-top: 10px;">
               <label class="form-label">Điều kiện sử dụng</label>
-              <input type="text" class="form-control" id="newCondition" value="${VoucherData.condition_value}"
+              <input type="text" class="form-control" id="newCondition" value="${
+                VoucherData.condition_value
+              }"
                   placeholder="Cho đơn hàng từ :">
           </div><br>
           <div class="col-6" style="margin-top: 10px;">
               <label class="form-label">Ngày bắt đầu</label>
-              <input type="datetime-local" class="form-control" id="newStart_date" value="${VoucherData.start_date}">
+              <input type="datetime-local" class="form-control" id="newStart_date" value="${
+                VoucherData.start_date
+              }">
           </div>
           <div class="col-6" style="margin-top: 10px;">
               <label class="form-label">Ngày kết thúc</label>
-              <input type="datetime-local" class="form-control" id="newEnd_date" value="${VoucherData.end_date}">
+              <input type="datetime-local" class="form-control" id="newEnd_date" value="${
+                VoucherData.end_date
+              }">
           </div>
         </form>`;
           UpdateDiv.innerHTML = VoucherHTML;
