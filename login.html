@@ -9,15 +9,13 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Login</title>
+    <title>Login</title>
 
-    <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
-    <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
     <style>
@@ -117,47 +115,68 @@
             }, 3000);
         }
 
-        document.getElementById("loginButton").addEventListener("click", async function (event) {
-            event.preventDefault();
+        function checkCookie() {
+            var cookieName = getCookie("token");
 
-            const username = document.getElementById("username").value;
-            const password = document.getElementById("Password").value;
+            if (cookieName != null && cookieName != "") {
+                window.location.replace('/index.html');
+            } else {
+                document.getElementById("loginButton").addEventListener("click", async function (event) {
+                    event.preventDefault();
 
-            const loginData = {
-                username: username,
-                password: password
-            };
+                    var cookieName = getCookie("token");
 
-            await fetch('http://localhost:8080/api/auth/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(loginData)
-            })
-                .then(async (response) => {
-                    const data = await response.json();
-                    if (data.token) {
-                        localStorage.setItem('userData', data.fullname);
-                        setCookie("token", data.token, 7);
-                        if (data.roles.includes("ADMIN") || data.roles.includes("MANAGER")) {
-                            window.location.replace('/index.html');
-                        } else {
-                            window.location.replace('/meomeo');
-                            // showNotification("Bạn không có quyền truy cập vào trang này");
-                        }
+                    if (cookieName != null && cookieName != "") {
+                        console.log("Đã có cookie")
+                    } else {
+                        const username = document.getElementById("username").value;
+                        const password = document.getElementById("Password").value;
+
+                        const loginData = {
+                            username: username,
+                            password: password
+                        };
+
+                        await fetch('http://localhost:8080/api/auth/login', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(loginData)
+                        })
+                            .then(async (response) => {
+                                const data = await response.json();
+                                if (data.token) {
+                                    localStorage.setItem('userData', data.fullname);
+                                    setCookie("token", data.token, 7);
+                                    if (data.roles.includes("ADMIN") || data.roles.includes("MANAGER")) {
+                                        window.location.replace('/index.html');
+                                    } else {
+                                        window.location.replace('/meomeo');
+                                    }
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Lỗi khi gửi yêu cầu POST:', error);
+                            });
                     }
-                })
-                .catch(error => {
-                    console.error('Lỗi khi gửi yêu cầu POST:', error);
                 });
-        });
+            }
+        }
+
+        checkCookie();
 
         function setCookie(cookieName, cookieValue, expirationDays) {
             const d = new Date();
             d.setTime(d.getTime() + (expirationDays * 24 * 60 * 60 * 1000));
             const expires = "expires=" + d.toUTCString();
             document.cookie = cookieName + "=" + cookieValue + ";" + expires + ";path=/";
+        }
+
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(";").shift();
         }
     </script>
 

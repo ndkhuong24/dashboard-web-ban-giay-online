@@ -55,6 +55,5 @@ window.addEventListener("load", checkCookie);
 
 const userData = localStorage.getItem("userData");
 if (userData) {
-  //   console.log(userData);
   document.getElementById("fullname").innerText = userData;
 }
