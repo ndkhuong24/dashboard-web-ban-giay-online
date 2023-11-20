@@ -1,32 +1,46 @@
-//categoryID
 document.addEventListener("DOMContentLoaded", function () {
   var selectElement = document.getElementById("categoryID");
-  const token = getCookie("token");
-  console.log(token);
-  if (token) {
-    fetch("http://localhost:8080/api/Category/getAll/active", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        data.forEach((item) => {
-          var option = document.createElement("option");
-          option.value = item.id;
-          option.text = item.name;
-          selectElement.appendChild(option);
-        });
-      })
-      .catch((error) => {
-        console.error("Lỗi khi tải dữ liệu từ API: " + error);
+  fetch("http://localhost:8080/api/Category/getAll/active", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      data.forEach((item) => {
+        var option = document.createElement("option");
+        option.value = item.id;
+        option.text = item.name;
+        selectElement.appendChild(option);
       });
-  } else {
-    // Xử lý trường hợp không có token (nếu cần)
-    console.error("Không tìm thấy token.");
-    // Ví dụ: Chuyển hướng đến trang đăng nhập
-    window.location.href = "/login.html";
-  }
+    })
+    .catch((error) => {
+      console.error("Lỗi khi tải dữ liệu từ API: " + error);
+    });
+  // if (token) {
+  //   fetch("http://localhost:8080/api/Category/getAll/active", {
+  //     headers: {
+  //       Authorization: `Bearer ${token}`,
+  //     },
+  //   })
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       data.forEach((item) => {
+  //         var option = document.createElement("option");
+  //         option.value = item.id;
+  //         option.text = item.name;
+  //         selectElement.appendChild(option);
+  //       });
+  //     })
+  //     .catch((error) => {
+  //       console.error("Lỗi khi tải dữ liệu từ API: " + error);
+  //     });
+  // } else {
+  //   // Xử lý trường hợp không có token (nếu cần)
+  //   console.error("Không tìm thấy token.");
+  //   // Ví dụ: Chuyển hướng đến trang đăng nhập
+  //   window.location.href = "/login.html";
+  // }
 });
 //brandID
 document.addEventListener("DOMContentLoaded", function () {

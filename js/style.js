@@ -1,5 +1,5 @@
 // URL of the API you want to call
-const apiUrl = "https://192.168.109.128/api/Style";
+const apiUrl = "https://192.168.109.128/.api/Style";
 
 // Get a reference to the table
 const table = document.getElementById("data-table");
