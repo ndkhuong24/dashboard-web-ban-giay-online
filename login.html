@@ -20,9 +20,28 @@
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
+    <style>
+        .notification {
+            z-index: 999;
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            background-color: rgb(154, 154, 236);
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            display: none;
+        }
+    </style>
+
 </head>
 
 <body class="bg-gradient-primary">
+
+    <div id="notification" class="notification">
+        <span id="notification-text"></span>
+    </div>
+
     <div class="container">
         <form method="post" action="/api/auth/login" id="loginForm">
             <!-- Outer Row -->
@@ -86,6 +105,18 @@
     <script src="js/sb-admin-2.min.js"></script>
 
     <script>
+        var notification = document.getElementById("notification");
+        var notificationText = document.getElementById("notification-text");
+
+        function showNotification(message) {
+            notificationText.textContent = message;
+            notification.style.display = "block";
+
+            setTimeout(function () {
+                notification.style.display = "none";
+            }, 3000);
+        }
+
         document.getElementById("loginButton").addEventListener("click", async function (event) {
             event.preventDefault();
 
@@ -113,6 +144,7 @@
                             window.location.replace('/index.html');
                         } else {
                             window.location.replace('/meomeo');
+                            // showNotification("Bạn không có quyền truy cập vào trang này");
                         }
                     }
                 })
