@@ -1,3 +1,57 @@
+document.getElementById("logoutButton").addEventListener("click", function () {
+  // Lấy token từ cookie
+  const token = getCookie("token");
+  // Kiểm tra xem token có tồn tại hay không
+  if (token) {
+    // Gửi yêu cầu POST đến API đăng xuất với token và bao gồm thông tin cookie
+    fetch("http://localhost:8080/api/auth/logout", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      // credentials: 'include', // Bao gồm thông tin cookie trong yêu cầu (nếu có)
+    })
+      .then((response) => response.json()) // Chuyển response sang dạng JSON
+      .then((data) => {
+        console.log(data); // In nội dung response
+        if (data.message === "You've been signed out!") {
+          console.log("hhh");
+          // Xóa cookie khi đăng xuất thành công
+          clearAllCookies();
+          // window.location.href = "/login.html";
+          console.log(document.token);
+        } else {
+          console.error("Lỗi khi đăng xuất:", data.message);
+        }
+      })
+      .catch((error) => {
+        // Xử lý lỗi mạng (nếu cần)
+        console.error("Lỗi mạng:", error);
+      });
+  } else {
+    // Xử lý trường hợp không có token (nếu cần)
+    console.error("Không tìm thấy token.");
+    // Ví dụ: Chuyển hướng đến trang đăng nhập
+    window.location.href = "/login.html";
+  }
+});
+
+// Hàm để lấy giá trị của cookie theo tên
+function getCookie(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(";").shift();
+}
+function clearAllCookies() {
+  const cookies = document.cookie.split(";");
+
+  for (const cookie of cookies) {
+    const eqPos = cookie.indexOf("=");
+    const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+    document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+  }
+}
+
 const anhChinh = document.getElementById("anhChinh");
 var anhChinhPreview = document.getElementById("anh-chinh-preview");
 const anhPhu = document.getElementById("anhPhu");

@@ -1,141 +1,184 @@
-document.addEventListener("DOMContentLoaded", function () {
-  var selectElement = document.getElementById("categoryID");
-  fetch("http://localhost:8080/api/Category/getAll/active", {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      data.forEach((item) => {
-        var option = document.createElement("option");
-        option.value = item.id;
-        option.text = item.name;
-        selectElement.appendChild(option);
-      });
-    })
-    .catch((error) => {
-      console.error("Lỗi khi tải dữ liệu từ API: " + error);
-    });
-  // if (token) {
-  //   fetch("http://localhost:8080/api/Category/getAll/active", {
-  //     headers: {
-  //       Authorization: `Bearer ${token}`,
-  //     },
-  //   })
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       data.forEach((item) => {
-  //         var option = document.createElement("option");
-  //         option.value = item.id;
-  //         option.text = item.name;
-  //         selectElement.appendChild(option);
-  //       });
-  //     })
-  //     .catch((error) => {
-  //       console.error("Lỗi khi tải dữ liệu từ API: " + error);
-  //     });
-  // } else {
-  //   // Xử lý trường hợp không có token (nếu cần)
-  //   console.error("Không tìm thấy token.");
-  //   // Ví dụ: Chuyển hướng đến trang đăng nhập
-  //   window.location.href = "/login.html";
-  // }
-});
-//brandID
-document.addEventListener("DOMContentLoaded", function () {
-  var selectElement = document.getElementById("brandID");
+function getCookie(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(";").shift();
+}
+function clearAllCookies() {
+  const cookies = document.cookie.split(";");
+  for (const cookie of cookies) {
+    const eqPos = cookie.indexOf("=");
+    const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+    document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+  }
+}
 
-  fetch("http://localhost:8080/api/Brand/getAll/active")
-    .then((response) => response.json())
-    .then((data) => {
-      data.forEach((item) => {
-        var option = document.createElement("option");
-        option.value = item.id;
-        option.text = item.name;
-        selectElement.appendChild(option);
-      });
-    })
-    .catch((error) => {
-      console.error("Lỗi khi tải dữ liệu từ API: " + error);
-    });
-});
-//sizeID
-document.addEventListener("DOMContentLoaded", function () {
-  var selectElement = document.getElementById("sizeID");
+const token = getCookie("token");
 
-  fetch("http://localhost:8080/api/Size/getAll/active")
-    .then((response) => response.json())
-    .then((data) => {
-      data.forEach((item) => {
-        var option = document.createElement("option");
-        option.value = item.id;
-        option.text = item.name;
-        selectElement.appendChild(option);
-      });
-    })
-    .catch((error) => {
-      console.error("Lỗi khi tải dữ liệu từ API: " + error);
-    });
-});
-//colorID
 document.addEventListener("DOMContentLoaded", function () {
-  var selectElement = document.getElementById("colorID");
-
-  fetch("http://localhost:8080/api/Color/getAll/active")
-    .then((response) => response.json())
-    .then((data) => {
-      data.forEach((item) => {
-        var option = document.createElement("option");
-        option.value = item.id;
-        option.text = item.name;
-        selectElement.appendChild(option);
-      });
+  if (token) {
+    var selectElement = document.getElementById("categoryID");
+    fetch("http://localhost:8080/api/Category/getAll/active", {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     })
-    .catch((error) => {
-      console.error("Lỗi khi tải dữ liệu từ API: " + error);
-    });
+      .then((response) => response.json())
+      .then((data) => {
+        data.forEach((item) => {
+          var option = document.createElement("option");
+          option.value = item.id;
+          option.text = item.name;
+          selectElement.appendChild(option);
+        });
+      })
+      .catch((error) => {
+        console.error("Lỗi khi tải dữ liệu từ API: " + error);
+      });
+  } else {
+    console.error("Không tìm thấy token.");
+    window.location.href = "/login.html";
+  }
 });
-//soleID
+
 document.addEventListener("DOMContentLoaded", function () {
-  var selectElement = document.getElementById("soleID");
-
-  fetch("http://localhost:8080/api/Sole/getAll/active")
-    .then((response) => response.json())
-    .then((data) => {
-      data.forEach((item) => {
-        var option = document.createElement("option");
-        option.value = item.id;
-        option.text = item.name;
-        selectElement.appendChild(option);
-      });
+  if (token) {
+    var selectElement = document.getElementById("brandID");
+    fetch("http://localhost:8080/api/Brand/getAll/active", {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     })
-    .catch((error) => {
-      console.error("Lỗi khi tải dữ liệu từ API: " + error);
-    });
+      .then((response) => response.json())
+      .then((data) => {
+        data.forEach((item) => {
+          var option = document.createElement("option");
+          option.value = item.id;
+          option.text = item.name;
+          selectElement.appendChild(option);
+        });
+      })
+      .catch((error) => {
+        console.error("Lỗi khi tải dữ liệu từ API: " + error);
+      });
+  } else {
+    console.error("Không tìm thấy token.");
+    window.location.href = "/login.html";
+  }
 });
-//materialID
+
 document.addEventListener("DOMContentLoaded", function () {
-  var selectElement = document.getElementById("materialID");
-
-  fetch("http://localhost:8080/api/Material/getAll/active")
-    .then((response) => response.json())
-    .then((data) => {
-      data.forEach((item) => {
-        var option = document.createElement("option");
-        option.value = item.id;
-        option.text = item.name;
-        selectElement.appendChild(option);
-      });
+  if (token) {
+    var selectElement = document.getElementById("sizeID");
+    fetch("http://localhost:8080/api/Size/getAll/active", {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     })
-    .catch((error) => {
-      console.error("Lỗi khi tải dữ liệu từ API: " + error);
-    });
+      .then((response) => response.json())
+      .then((data) => {
+        data.forEach((item) => {
+          var option = document.createElement("option");
+          option.value = item.id;
+          option.text = item.name;
+          selectElement.appendChild(option);
+        });
+      })
+      .catch((error) => {
+        console.error("Lỗi khi tải dữ liệu từ API: " + error);
+      });
+  } else {
+    console.error("Không tìm thấy token.");
+    window.location.href = "/login.html";
+  }
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+  if (token) {
+    var selectElement = document.getElementById("colorID");
+    fetch("http://localhost:8080/api/Color/getAll/active", {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        data.forEach((item) => {
+          var option = document.createElement("option");
+          option.value = item.id;
+          option.text = item.name;
+          selectElement.appendChild(option);
+        });
+      })
+      .catch((error) => {
+        console.error("Lỗi khi tải dữ liệu từ API: " + error);
+      });
+  } else {
+    console.error("Không tìm thấy token.");
+    window.location.href = "/login.html";
+  }
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+  if (token) {
+    var selectElement = document.getElementById("soleID");
+    fetch("http://localhost:8080/api/Sole/getAll/active", {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        data.forEach((item) => {
+          var option = document.createElement("option");
+          option.value = item.id;
+          option.text = item.name;
+          selectElement.appendChild(option);
+        });
+      })
+      .catch((error) => {
+        console.error("Lỗi khi tải dữ liệu từ API: " + error);
+      });
+  } else {
+    console.error("Không tìm thấy token.");
+    window.location.href = "/login.html";
+  }
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+  if (token) {
+    var selectElement = document.getElementById("materialID");
+    fetch("http://localhost:8080/api/Material/getAll/active", {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        data.forEach((item) => {
+          var option = document.createElement("option");
+          option.value = item.id;
+          option.text = item.name;
+          selectElement.appendChild(option);
+        });
+      })
+      .catch((error) => {
+        console.error("Lỗi khi tải dữ liệu từ API: " + error);
+      });
+  } else {
+    console.error("Không tìm thấy token.");
+    window.location.href = "/login.html";
+  }
+});
+
 document.addEventListener("DOMContentLoaded", function () {
   var selectElement = document.getElementById("productID");
 
-  // Hàm để tải danh sách Style từ API
   function loadStyles(styleId) {
     return fetch("https://192.168.109.128/api/Style/id/" + styleId)
       .then((response) => response.json())
@@ -162,9 +205,3 @@ document.addEventListener("DOMContentLoaded", function () {
       console.error("Lỗi khi tải dữ liệu từ API: " + error);
     });
 });
-// Hàm để lấy giá trị của cookie theo tên
-function getCookie(name) {
-  const value = `; ${document.cookie}`;
-  const parts = value.split(`; ${name}=`);
-  if (parts.length === 2) return parts.pop().split(";").shift();
-}
