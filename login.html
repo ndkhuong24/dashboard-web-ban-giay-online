@@ -88,7 +88,7 @@
     <script src="js/sb-admin-2.min.js"></script>
 
     <script>
-        document.getElementById("loginButton").addEventListener("click", function (event) {
+        document.getElementById("loginButton").addEventListener("click", async function (event) {
             event.preventDefault();
 
             const username = document.getElementById("username").value;
@@ -99,22 +99,23 @@
                 password: password
             };
 
-            fetch('http://localhost:8080/api/auth/login', {
+            await fetch('http://localhost:8080/api/auth/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(loginData)
             })
-                .then(response => response.json())
-                .then(data => {
+                .then(async (response) => {
+                    const data = await response.json()
                     if (data.token) {
                         // Set cookie với tên là "accessToken" và giá trị là accessToken từ phản hồi
                         setCookie("token", data.token, 7);
 
                         // Kiểm tra role và chuyển hướng nếu cần
                         if (data.roles.includes("ADMIN") || data.roles.includes("MANAGER")) {
-                            window.location.replace('/index.html');
+                            console.log("hehe")
+                            window.location.replace('/product-detail.html');
                         } else {
                             window.location.replace('/meomeo');
                         }
