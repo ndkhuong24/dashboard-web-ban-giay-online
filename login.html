@@ -107,7 +107,7 @@
                 .then(async (response) => {
                     const data = await response.json();
                     if (data.token) {
-                        localStorage.setItem('userData', JSON.stringify(data));
+                        localStorage.setItem('userData', data.fullname);
                         setCookie("token", data.token, 7);
                         if (data.roles.includes("ADMIN") || data.roles.includes("MANAGER")) {
                             window.location.replace('/index.html');

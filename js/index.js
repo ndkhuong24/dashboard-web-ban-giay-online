@@ -53,7 +53,8 @@ function checkCookie() {
 }
 window.addEventListener("load", checkCookie);
 
-const userData = JSON.parse(localStorage.getItem("userData"));
+const userData = localStorage.getItem("userData");
 if (userData) {
-  document.getElementById("fullname").innerText = userData.username;
+  //   console.log(userData);
+  document.getElementById("fullname").innerText = userData;
 }
