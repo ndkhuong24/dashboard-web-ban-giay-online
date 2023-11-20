@@ -313,25 +313,6 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Thêm sản phẩm</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- Add Modal -->
     <div class="modal fade" id="AddModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -465,7 +446,19 @@
             </div>
         </div>
     </div>
-
+<!-- Logout Modal-->
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">Bạn có muốn Đăng Xuất ?</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy</button>
+                <a class="btn btn-danger" id="logoutButton">Đăng Xuất</a>
+            </div>
+        </div>
+    </div>
+</div>
 
 
     <!-- Bootstrap core JavaScript-->
@@ -484,6 +477,62 @@
 
     <script src="js/product-detail.js"></script>
     <script src="js/product-detail-combobox.js"></script>
+
+    <script>
+    document.getElementById("logoutButton").addEventListener("click", function () {
+        // Lấy token từ cookie
+        const token = getCookie('token');
+        // Kiểm tra xem token có tồn tại hay không
+        if (token) {
+            // Gửi yêu cầu POST đến API đăng xuất với token và bao gồm thông tin cookie
+            fetch('http://localhost:8081/api/auth/logout', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
+                // credentials: 'include', // Bao gồm thông tin cookie trong yêu cầu (nếu có)
+            })
+                .then(response => response.json()) // Chuyển response sang dạng JSON
+                .then(data => {
+                    console.log(data);  // In nội dung response
+                    if (data.message === "You've been signed out!") {
+                        console.log("hhh");
+                        // Xóa cookie khi đăng xuất thành công
+                        clearAllCookies()
+                        // window.location.href = "/login.html";
+                        console.log(document.token)
+                    } else {
+                        console.error('Lỗi khi đăng xuất:', data.message);
+                    }
+                })
+                .catch(error => {
+                    // Xử lý lỗi mạng (nếu cần)
+                    console.error('Lỗi mạng:', error);
+                });
+        } else {
+            // Xử lý trường hợp không có token (nếu cần)
+            console.error('Không tìm thấy token.');
+            // Ví dụ: Chuyển hướng đến trang đăng nhập
+            window.location.href = "/login.html";
+        }
+    });
+
+    // Hàm để lấy giá trị của cookie theo tên
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+    }
+    function clearAllCookies() {
+        const cookies = document.cookie.split(";");
+
+        for (const cookie of cookies) {
+            const eqPos = cookie.indexOf("=");
+            const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+            document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+        }
+    }
+    </script>
 </body>
 
 </html>
