@@ -17,6 +17,8 @@ document.getElementById("logoutButton").addEventListener("click", function () {
           if (cookieNow === undefined) {
             window.location.href = "/login.html";
           }
+
+          localStorage.removeItem("userData");
         } else {
           console.error("Lỗi khi đăng xuất:");
         }
@@ -53,5 +55,5 @@ window.addEventListener("load", checkCookie);
 
 const userData = JSON.parse(localStorage.getItem("userData"));
 if (userData) {
-  console.log(userData);
+  document.getElementById("fullname").innerText = userData.username;
 }
