@@ -1,5 +1,5 @@
 // URL of the API you want to call
-const apiUrl = "https://192.168.109.128/.api/Style";
+const apiUrl = "http://localhost:5192/.api/Style";
 
 // Get a reference to the table
 const table = document.getElementById("data-table");
@@ -170,7 +170,7 @@ document.getElementById("searchButton").addEventListener("click", function () {
 
 function searchByName(searchPattern) {
   // Lấy dữ liệu từ API và render trang đầu tiên
-  fetch(`https://192.168.109.128/api/Style/searchName/${searchPattern}`)
+  fetch(`http://localhost:5192/api/Style/searchName/${searchPattern}`)
     .then((response) => response.json())
     .then((searhData) => {
       currentPage = 1;
@@ -191,7 +191,7 @@ table.addEventListener("click", function (event) {
       const StyleID = clickedRow.querySelector("td:first-child").textContent;
       document.getElementById("modalStyleId").value = StyleID;
 
-      fetch(`https://192.168.109.128/api/Style/id/${StyleID}`)
+      fetch(`http://localhost:5192/api/Style/id/${StyleID}`)
         .then((response) => response.json())
         .then((StyleDetailData) => {
           const StyleDetailDiv = document.getElementById("updateStyle");
@@ -235,7 +235,7 @@ table.addEventListener("click", function (event) {
 // Function để lấy dữ liệu Style bằng ID
 function fetchStyleById(styleId, callback) {
   // Đường dẫn API với ID
-  const apiUrl = `https://192.168.109.128/api/Style/id/${styleId}`;
+  const apiUrl = `http://localhost:5192/api/Style/id/${styleId}`;
 
   // Thực hiện yêu cầu GET đến API
   fetch(apiUrl)

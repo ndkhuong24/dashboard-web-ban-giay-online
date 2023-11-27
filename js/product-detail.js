@@ -103,7 +103,7 @@ document.getElementById("saveChanges").addEventListener("click", function (e) {
     var formData = new FormData();
     formData.append("file", file);
 
-    fetch("https://192.168.109.128/api/ProductDetail/upload-anh-chinh", {
+    fetch("http://localhost:5192/api/ProductDetail/upload-anh-chinh", {
       method: "POST",
       body: formData,
     })
@@ -130,7 +130,7 @@ function uploadanhPhu() {
       formData.append("files", files[i]);
     }
 
-    fetch("https://192.168.109.128/api/ProductDetail/upload-anh-phu", {
+    fetch("http://localhost:5192/api/ProductDetail/upload-anh-phu", {
       method: "POST",
       body: formData,
     })
@@ -213,7 +213,7 @@ function insertProductDetail() {
       },
     };
 
-    fetch("https://192.168.109.128/api/ProductDetail/insert", requestOptions)
+    fetch("http://localhost:5192/api/ProductDetail/insert", requestOptions)
       .then((response) => {
         if (response.ok) {
           tbody.innerHTML = "";
@@ -265,7 +265,7 @@ function renderTable(data, page) {
     row.innerHTML = `
       <td>${item.id}</td>
       <td>
-        <img src="https://192.168.109.128${
+        <img src="http://localhost:5192${
           item.path
         }" style="width: 100px;height: 100px;">
       </td>
@@ -284,7 +284,7 @@ function renderTable(data, page) {
 }
 
 function fetchDataAndPopulateTable() {
-  fetch("https://192.168.109.128/api/ProductDetail/getAll")
+  fetch("http://localhost:5192/api/ProductDetail/getAll")
     .then((response) => response.json())
     .then((apiData) => {
       data = apiData;
@@ -331,7 +331,7 @@ document.getElementById("searchButton").addEventListener("click", function () {
 });
 
 function searchByName(searchPattern) {
-  fetch(`https://192.168.109.128/api/ProductDetail/searchName/${searchPattern}`)
+  fetch(`http://localhost:5192/api/ProductDetail/searchName/${searchPattern}`)
     .then((response) => response.json())
     .then((searhData) => {
       currentPage = 1;
@@ -353,7 +353,7 @@ table.addEventListener("click", function (event) {
       const ProductId = clickedRow.querySelector("td:first-child").textContent;
       document.getElementById("modalProductId").value = ProductId;
 
-      fetch(`https://192.168.109.128/api/ProductDetail/getById/${ProductId}`)
+      fetch(`http://localhost:5192/api/ProductDetail/getById/${ProductId}`)
         .then((response) => response.json())
         .then((ProductDetailData) => {
           const productDetailDiv = document.getElementById(
@@ -407,16 +407,16 @@ table.addEventListener("click", function (event) {
     if (clickedRow) {
       const ProductId = clickedRow.querySelector("td:first-child").textContent;
 
-      fetch(`https://192.168.109.128/api/ProductDetail/getPDByID/${ProductId}`)
+      fetch(`http://localhost:5192/api/ProductDetail/getPDByID/${ProductId}`)
         .then((response) => response.json())
         .then((productInfo) => {
           fetch(
-            `https://192.168.109.128/api/ProductDetail/getImageChinhById/${ProductId}`
+            `http://localhost:5192/api/ProductDetail/getImageChinhById/${ProductId}`
           )
             .then((response) => response.json())
             .then((imageChinhInfo) => {
               fetch(
-                `https://192.168.109.128/api/ProductDetail/getImagePhuById/${ProductId}`
+                `http://localhost:5192/api/ProductDetail/getImagePhuById/${ProductId}`
               )
                 .then((response) => response.json())
                 .then((imagePhuInfo) => {
@@ -429,12 +429,12 @@ table.addEventListener("click", function (event) {
                     <p style="color: black;">Color: ${productInfo.colorName}</p>
                     <p style="color: black;">Sole: ${productInfo.soleName}</p>
                     <p style="color: black;">Ảnh sản phẩm</p>
-                    <img src="https://192.168.109.128${imageChinhInfo.path}" alt="Hình ảnh sản phẩm" style="max-width: 100px; max-height: 100px;">
+                    <img src="http://localhost:5192${imageChinhInfo.path}" alt="Hình ảnh sản phẩm" style="max-width: 100px; max-height: 100px;">
                   `;
 
                   for (const image of imagePhuInfo) {
                     productDetailHTML += `
-                      <img src="https://192.168.109.128${image.path}" alt="Hình ảnh sản phẩm" style="max-width: 100px; max-height: 100px;">
+                      <img src="http://localhost:5192${image.path}" alt="Hình ảnh sản phẩm" style="max-width: 100px; max-height: 100px;">
                     `;
                   }
 
@@ -456,7 +456,7 @@ table.addEventListener("click", function (event) {
 
 function fetchProductById(styleId, callback) {
   // Đường dẫn API với ID
-  const apiUrl = `https://192.168.109.128/api/ProductDetail/getById/${styleId}`;
+  const apiUrl = `http://localhost:5192/api/ProductDetail/getById/${styleId}`;
 
   // Thực hiện yêu cầu GET đến API
   fetch(apiUrl)
@@ -500,7 +500,7 @@ document.getElementById("confirmUpdate").addEventListener("click", function () {
     ).value;
 
     fetch(
-      `https://192.168.109.128/api/ProductDetail/update?id=${newId}&quantity=${newQuantity}&price=${newPrice}&status=${newStatus}`,
+      `http://localhost:5192/api/ProductDetail/update?id=${newId}&quantity=${newQuantity}&price=${newPrice}&status=${newStatus}`,
       {
         method: "PUT",
       }

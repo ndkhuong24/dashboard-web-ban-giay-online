@@ -180,7 +180,7 @@ document.addEventListener("DOMContentLoaded", function () {
   var selectElement = document.getElementById("productID");
 
   function loadStyles(styleId) {
-    return fetch("https://192.168.109.128/api/Style/id/" + styleId)
+    return fetch("http://localhost:5192/api/Style/id/" + styleId)
       .then((response) => response.json())
       .then((styleData) => styleData.name)
       .catch((error) => {
@@ -188,7 +188,7 @@ document.addEventListener("DOMContentLoaded", function () {
       });
   }
 
-  fetch("https://192.168.109.128/api/Product")
+  fetch("http://localhost:5192/api/Product")
     .then((response) => response.json())
     .then((data) => {
       data.forEach(async (item) => {

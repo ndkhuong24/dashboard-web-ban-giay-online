@@ -1,4 +1,4 @@
-const apiUrl = "https://192.168.109.128/api/Product";
+const apiUrl = "http://localhost:5192/api/Product";
 
 const table = document.getElementById("data-table");
 const tbody = table.querySelector("tbody");
@@ -25,7 +25,7 @@ function showNotification(message) {
 
 document.addEventListener("DOMContentLoaded", function () {
   var selectElement = document.getElementById("style_id");
-  fetch("https://192.168.109.128/api/Style/active")
+  fetch("http://localhost:5192/api/Style/active")
     .then((response) => response.json())
     .then((data) => {
       data.forEach((item) => {
@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 let styles = [];
 
-fetch("https://192.168.109.128/api/Style")
+fetch("http://localhost:5192/api/Style")
   .then((response) => response.json())
   .then((StylesData) => {
     styles = StylesData;
@@ -223,7 +223,7 @@ document.getElementById("searchButton").addEventListener("click", function () {
 });
 
 function searchByName(searchPattern) {
-  fetch(`https://192.168.109.128/api/Product/searchName/${searchPattern}`)
+  fetch(`http://localhost:5192/api/Product/searchName/${searchPattern}`)
     .then((response) => response.json())
     .then((searhData) => {
       currentPage = 1;
@@ -245,7 +245,7 @@ table.addEventListener("click", function (event) {
       const ProductID = clickedRow.querySelector("td:first-child").textContent;
       document.getElementById("modalProductId").value = ProductID;
 
-      fetch(`https://192.168.109.128/api/Product/${ProductID}`)
+      fetch(`http://localhost:5192/api/Product/${ProductID}`)
         .then((response) => response.json())
         .then((ProductDetailData) => {
           const UpdateDiv = document.getElementById("updateProduct");
@@ -297,7 +297,7 @@ table.addEventListener("click", function (event) {
           </form>
           `;
 
-          fetch(`https://192.168.109.128/api/Style/active`)
+          fetch(`http://localhost:5192/api/Style/active`)
             .then((response) => response.json())
             .then((StyleActiveData) => {
               const styleSelect = document.getElementById("newStyleId");
@@ -320,7 +320,7 @@ table.addEventListener("click", function (event) {
 });
 
 function fetchProductById(ProductId, callback) {
-  const apiUrl = `https://192.168.109.128/api/Product/${ProductId}`;
+  const apiUrl = `http://localhost:5192/api/Product/${ProductId}`;
   fetch(apiUrl)
     .then((response) => {
       if (!response.ok) {
