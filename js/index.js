@@ -57,3 +57,23 @@ const userData = localStorage.getItem("userData");
 if (userData) {
   document.getElementById("fullname").innerText = userData;
 }
+
+function fetchThongKe(){
+  fetch("http://localhost:8081/thongke/month")
+  .then((response)=>response.json())
+  .then((data)=>{
+    const html = document.getElementById("month")
+    html.innerHTML+=`
+    <div class="h5 mb-0 font-weight-bold text-gray-800">${data[0].sum} VND</div>
+    `
+  })
+  fetch("http://localhost:8081/thongke/year")
+  .then((response)=>response.json())
+  .then((data)=>{
+    const html = document.getElementById("year")
+    html.innerHTML+=`
+    <div class="h5 mb-0 font-weight-bold text-gray-800">${data[0].sum} VND</div>
+    `
+  })
+}
+fetchThongKe()
