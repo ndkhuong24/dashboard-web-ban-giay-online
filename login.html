@@ -103,8 +103,8 @@
     <script src="js/sb-admin-2.min.js"></script>
 
     <script>
-        var notification = document.getElementById("notification");
-        var notificationText = document.getElementById("notification-text");
+        const notification = document.getElementById("notification");
+        const notificationText = document.getElementById("notification-text");
 
         function showNotification(message) {
             notificationText.textContent = message;
@@ -164,8 +164,6 @@
             }
         }
 
-        checkCookie();
-
         function setCookie(cookieName, cookieValue, expirationDays) {
             const d = new Date();
             d.setTime(d.getTime() + (expirationDays * 24 * 60 * 60 * 1000));
@@ -178,6 +176,8 @@
             const parts = value.split(`; ${name}=`);
             if (parts.length === 2) return parts.pop().split(";").shift();
         }
+
+        checkCookie();
     </script>
 
 
